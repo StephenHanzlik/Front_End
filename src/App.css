@@ -30,3 +30,11 @@
     transform: rotate(360deg);
   }
 }
+
+#landing-mountian {
+  /* overflow: unset !important; */
+}
+
+#header-1 {
+  margin-top: -25%;
+}

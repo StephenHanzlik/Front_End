@@ -24,7 +24,11 @@ class App extends Component {
           </a>
         </header> */}
         <div>
-          <Parallax imageSrc={require('./images/landing-page-img.jpg')}/>
+          <Parallax id="landing-mountain" imageSrc={require('./images/landing-page-img.jpg')}/>
+          <h1 id="header-1" className="center orange-text text-lighten-2">SUNSHINE <img src="./images/skis-and-sticks.png" alt="skis" id="subHead"></img> DAYDREAM</h1>
+           <div className="row center">
+              <h5 className="header col s12 orange-text text-lighten-2">a backcountry snow and weather app</h5>
+           </div>
             <div className="section white">
               <div className="row container">
                 <h2 className="header">Parallax</h2>

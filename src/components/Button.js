@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import {BrowserRouter as Router, Link} from 'react-router-dom';
+
 
 const GenericButton = styled.button`
   color: #ffb74d;
@@ -15,7 +17,12 @@ const GenericButton = styled.button`
 class Button extends Component {
     render(){
         return (
-            <GenericButton>SNOTEL Console</GenericButton>
+            // refactor the button text as props so this button can be reused
+            <Router>
+                <Link to="/console">
+                    <GenericButton>SNOTEL Console</GenericButton>
+                </Link>
+            </Router>
         )
     }
 }

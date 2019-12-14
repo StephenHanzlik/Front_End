@@ -11,8 +11,7 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/" component={LandingPage}/>
-            <Route path="/console" component={()=><Console myProp={true}/>}/>
-
+            <Route path="/console" component={Console}/>
           </Switch>
         </Router>
       </div>

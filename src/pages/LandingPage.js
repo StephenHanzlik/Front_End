@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import '../App.css';
 import backGroundImg from '../images/landing-page-img.jpg';
-import LandingHeader from './LandingHeader';
-import Button from './Button';
+import LandingHeader from '../components/LandingHeader';
+import Button from '../components/Button';
 import styled from 'styled-components';
 import {withRouter} from 'react-router-dom';
 

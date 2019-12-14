@@ -4,6 +4,7 @@ import backGroundImg from '../images/landing-page-img.jpg';
 import LandingHeader from './LandingHeader';
 import Button from './Button';
 import styled from 'styled-components';
+import {withRouter} from 'react-router-dom';
 
 
 const Background = styled.div`
@@ -29,7 +30,7 @@ class LandingPage extends Component {
         <div>
             <Background/>
             <LandingHeaderContainer>
-                <LandingHeader/>
+              <LandingHeader/>
                 <Button/>
             </LandingHeaderContainer>
             <AboutContentContainer/>
@@ -38,4 +39,4 @@ class LandingPage extends Component {
     }
 }
 
-export default LandingPage;
+export default withRouter(LandingPage);

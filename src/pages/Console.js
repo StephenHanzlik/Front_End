@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import NavBar from '../components/NavBar';
-import PrimaryGraph from '../components/PrimaryGraph';
+import Graph from '../components/Graph';
 import Map from '../components/Map';
 import styled from 'styled-components';
 
 const MapWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+`;
+
+const GraphWrapper = styled.div`
     display: flex;
     justify-content: center;
 `;
@@ -19,7 +25,10 @@ class Console extends Component{
                 <MapWrapper>
                     <Map/>
                 </MapWrapper>
-                <PrimaryGraph/>
+                <GraphWrapper>
+                    <Graph/>
+                </GraphWrapper>
+                
             </div>
         )
     }

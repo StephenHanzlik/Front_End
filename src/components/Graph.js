@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { ResponsiveLine } from '@nivo/line'
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import testData from '../graphTestData';
+import styled from 'styled-components';
 
-console.log("testDate", testData.testData);
-
-const PrimaryGraphWrapper = styled.div`
+const GraphWrapper = styled.div`
     width: 1200px;
-    height: 60vh;
+    height: 30vh;
 `;
 
-class PrimaryGraph extends Component {
+class Graph extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,8 +19,7 @@ class PrimaryGraph extends Component {
     
     render(){
         return(
-            <PrimaryGraphWrapper>
-                {/* pass data with props not state */}
+            <GraphWrapper>
                 <ResponsiveLine
                     data={this.state.data}
                     margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
@@ -34,7 +32,7 @@ class PrimaryGraph extends Component {
                         tickSize: 5,
                         tickPadding: 5,
                         tickRotation: 0,
-                        legend: 'transportation',
+                        legend: 'Date',
                         legendOffset: 36,
                         legendPosition: 'middle'
                     }}
@@ -43,7 +41,7 @@ class PrimaryGraph extends Component {
                         tickSize: 5,
                         tickPadding: 5,
                         tickRotation: 0,
-                        legend: 'count',
+                        legend: 'Inches',
                         legendOffset: -40,
                         legendPosition: 'middle'
                     }}
@@ -81,14 +79,10 @@ class PrimaryGraph extends Component {
                             ]
                         }
                     ]}
-            />  
-        </PrimaryGraphWrapper>
-      
-  
-       
-
+                /> 
+            </GraphWrapper>
         )
     }
 }
 
-export default PrimaryGraph;
+export default Graph;

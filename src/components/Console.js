@@ -1,16 +1,6 @@
 import React, { Component } from 'react';
-import {withRouter} from 'react-router-dom';
-
 
 class Console extends Component{
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //       isActive: false,
-    //     };
-    //     this.myProp = this.myProp
-    //   }
-
 
     render(){
         return(
@@ -19,4 +9,4 @@ class Console extends Component{
     }
 }
 
-export default withRouter(Console);
+export default Console;

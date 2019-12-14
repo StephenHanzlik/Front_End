@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
 import skisImage from '../images/skis-and-sticks.png';
-import {withRouter} from 'react-router-dom';
-
 
 class LandingHeader extends Component {
     render(){
@@ -17,4 +15,4 @@ class LandingHeader extends Component {
     }
 }
 
-export default withRouter(LandingHeader);
+export default LandingHeader;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 class Console extends Component{
     render(){
@@ -8,4 +9,4 @@ class Console extends Component{
     }
 }
 
-export default Console;
+export default withRouter(Console);

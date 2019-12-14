@@ -10,12 +10,12 @@ class App extends Component {
       <div className="App">
         <Router>
           <Switch>
-            <Route path="/">
+            <Route exact path="/">
               <LandingPage/>
             </Route>
-            <Route path="/console">
+            <Route path="/console" >
               <Console/>
-            </Route>
+            </Route>s
           </Switch>
         </Router>
       </div>

@@ -1,6 +1,6 @@
 const myTestData = [
     {
-      "id": "japan",
+      "id": "Snow Depth",
       "color": "hsl(216, 70%, 50%)",
       "data": [
         {

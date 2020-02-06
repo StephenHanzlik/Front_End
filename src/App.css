@@ -30,3 +30,11 @@
     transform: rotate(360deg);
   }
 }
+
+#landing-mountain {
+  height: 100vh;
+}
+
+#header-1 {
+  margin-top: -25%;
+}

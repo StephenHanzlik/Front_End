@@ -15,26 +15,42 @@ class Graph extends Component {
         super(props);
         this.state = {
           data: testData.testData,
-          stations: []
+          observations: []
         };
+
+        this.wrapJsonData =  this.wrapJsonData.bind(this);
     }
 
     componentDidMount(){
         axios.get('http://localhost:3000/api/v1/observations')
         .then(response => {
-            console.log(response)
+            console.log("response", response)
+            // const tempResponse = this.wrapJsonData(response.data);
             this.setState({
-                stations: response.data
+                observations: response.data
             })
         })
         .catch(error => console.log(error))
+    }
+
+    wrapJsonData(data){
+        console.log("data", data);
+        const coOrdinateData = data.map((observation)=>{
+            return {"x": observation.Date, "y": observation.Air_Temperature_Observed_degF}
+        })
+
+        return [{
+            "id": "Snow Depth",
+            "color": "hsl(216, 70%, 50%)",
+            "data": [coOrdinateData]
+          }];
     }
     
     render(){
         return(
             <GraphWrapper>
                 <ResponsiveLine
-                    data={this.state.data}
+                    data={this.wrapJsonData(this.state.observations)}
                     margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
                     xScale={{ type: 'point' }}
                     yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}

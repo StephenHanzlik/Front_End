@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { ResponsiveLine } from '@nivo/line'
-// import styled from 'styled-components';
 import testData from '../graphTestData';
 import styled from 'styled-components';
 import axios from 'axios';

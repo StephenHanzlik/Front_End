@@ -21,10 +21,13 @@ class Graph extends Component {
     }
 
     componentDidMount(){
+        console.log("working Data: ", this.state.data);
+
+
         axios.get('http://localhost:3000/api/v1/observations')
         .then(response => {
-            console.log("response", response)
-            // const tempResponse = this.wrapJsonData(response.data);
+            console.log("API wrapped data", this.wrapJsonData(response.data))
+             
             this.setState({
                 observations: response.data
             })
@@ -34,22 +37,26 @@ class Graph extends Component {
 
     wrapJsonData(data){
         console.log("data", data);
-        const coOrdinateData = data.map((observation)=>{
-            return {"x": observation.Date, "y": observation.Air_Temperature_Observed_degF}
+        const snowDepthData = data.map((observation)=>{
+            return {"x": observation.Date, "y": parseInt(observation.Snow_Depth_In)}
         })
 
         return [{
             "id": "Snow Depth",
             "color": "hsl(216, 70%, 50%)",
-            "data": [coOrdinateData]
+            "data": snowDepthData
           }];
     }
     
+    //Sample Data
+    //this.state.data
+    //Live Data
+    //this.wrapJsonData(this.state.observations)
     render(){
         return(
             <GraphWrapper>
                 <ResponsiveLine
-                    data={this.wrapJsonData(this.state.observations)}
+                    data={this.state.data}
                     margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
                     xScale={{ type: 'point' }}
                     yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}
@@ -61,7 +68,7 @@ class Graph extends Component {
                         tickSize: 5,
                         tickPadding: 5,
                         tickRotation: 0,
-                        legend: 'transportation',
+                        legend: 'Month',
                         legendOffset: 36,
                         legendPosition: 'middle'
                     }}

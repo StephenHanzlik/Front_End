@@ -23,8 +23,8 @@ class Graph extends Component {
     componentDidMount(){
         console.log("working Data: ", this.state.data);
 
-
-        axios.get('http://localhost:3000/api/v1/observations')
+        //TODO:  Pull observation data here and display it for graph
+        axios.get('http://localhost:8081/EnosJava/api/snotel/stations')
         .then(response => {
             console.log("API wrapped data", this.wrapJsonData(response.data))
              

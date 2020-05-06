@@ -46,20 +46,26 @@ class Map extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            stations: []
+            stationGeoJson: []
         };
 
     }
 
     convertToGeoJson(stations){
     let geoJson = stations.map(station => {
-       let geoJsonObj = {
+       let coordinates = [];
+       let location = JSON.parse(station.location);
+
+       coordinates.push(location.lat);
+       coordinates.push(location.lng);
+
+       let geoJsonItem = {
             type: 'geojson',
             data: {
                    type: 'Feature',
                 geometry: {
                     type: 'Point',
-                coordinates: station.location
+                    coordinates: coordinates
                 },
                    properties: {
                     title: station.name,
@@ -67,7 +73,7 @@ class Map extends Component {
                     }
             }
            }
-        return geoJsonObj
+        return geoJsonItem
     })
     return geoJson;
     };
@@ -77,9 +83,11 @@ class Map extends Component {
         axios.get('http://localhost:8081/EnosJava/api/snotel/stations')
         .then(response => {
             console.log("Data in Map Component: ", response.data);
+
+            let tempGeoJson = this.convertToGeoJson(response.data);
              
             this.setState({
-                stations: response.data
+                stationGeoJson: tempGeoJson
             })
         })
         .catch(error => console.log(error))
@@ -105,11 +113,11 @@ class Map extends Component {
                 sourceId={'example_id'}
               />
             </div>
-                <Layer type="symbol" id="marker" 
+            {/* <Layer type="symbol" id="marker" 
                     paint={POSITION_CIRCLE_PAINT}
                 >
                     <Feature coordinates={[-0.13235092163085938,51.518250335096376]} />
-                </Layer>
+                </Layer> */}
             </MapBox>
         )
     }

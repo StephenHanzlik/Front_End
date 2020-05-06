@@ -79,6 +79,7 @@ class Map extends Component {
         return(
              <MapBox
                 style="mapbox://styles/mapbox/outdoors-v11"
+                zoom={[4]}
                 center={[-105.270546, 40.014984]}
                 containerStyle={{
                     width: '1200px',

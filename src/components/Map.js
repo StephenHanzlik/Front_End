@@ -1,22 +1,12 @@
 import React, { Component } from 'react';
-import ReactMapboxGl, { Layer, Feature, Source } from 'react-mapbox-gl';
+import ReactMapboxGl, { Layer, Source } from 'react-mapbox-gl';
 import axios from 'axios';
-import { svg } from '../images/test.svg';
 
 const MapBox = ReactMapboxGl({
     // This is a public sandbox token.  It should be hidden as environment variable once I get new token for production.
     accessToken:
       'pk.eyJ1Ijoic3RlcGhlbmhhbnpsaWsiLCJhIjoiY2o1d3l5ZGhqMDJ3azJ3cXFxc2FsYjQzcyJ9.nvGZW-k1vzXxmWxmadEPmw'
   });
-
-// // Define layout to use in Layer component
-// const layoutLayer = { 'icon-image': 'londonCycle' };
-
-
-// // Create an image for the Layer
-// const image = new Image();
-// image.src = 'data:image/svg+xml;charset=utf-8;base64,' + btoa(svg);
-// const images = ['londonCycle', image];
 
 const POSITION_CIRCLE_PAINT = {
     'circle-stroke-width': 4,
@@ -26,27 +16,13 @@ const POSITION_CIRCLE_PAINT = {
     'circle-stroke-color': 'white'
   };
 
-  const GEOJSON_SOURCE_OPTIONS = {
-    type: 'geojson',
-    data: {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [-0.13235092163085938,51.518250335096376]
-      },
-      properties: {
-        title: 'Mapbox DC',
-        'marker-symbol': 'monument'
-      }
-    }
-  };
-
 class Map extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            stationGeoJson: []
+            stationGeoJson: [],
+            renderStations: false
         };
 
     }
@@ -55,22 +31,23 @@ class Map extends Component {
     let geoJson = stations.map(station => {
        let coordinates = [];
        let location = JSON.parse(station.location);
-
-       coordinates.push(location.lat);
+       
        coordinates.push(location.lng);
+       coordinates.push(location.lat);
+      
 
        let geoJsonItem = {
             type: 'geojson',
             data: {
-                   type: 'Feature',
+                type: 'Feature',
                 geometry: {
                     type: 'Point',
                     coordinates: coordinates
                 },
-                   properties: {
+                properties: {
                     title: station.name,
                     'marker-symbol': 'monument'
-                    }
+                }
             }
            }
         return geoJsonItem
@@ -85,9 +62,12 @@ class Map extends Component {
             console.log("Data in Map Component: ", response.data);
 
             let tempGeoJson = this.convertToGeoJson(response.data);
+
+            console.log("tempGeoJSON: " + tempGeoJson)
              
             this.setState({
-                stationGeoJson: tempGeoJson
+                stationGeoJson: tempGeoJson,
+                renderStations: true
             })
         })
         .catch(error => console.log(error))
@@ -99,25 +79,31 @@ class Map extends Component {
         return(
              <MapBox
                 style="mapbox://styles/mapbox/outdoors-v11"
+                center={[-105.270546, 40.014984]}
                 containerStyle={{
                     width: '1200px',
                     height: '60vh'
                 }}
             >
-            <div>
-              <Source id="example_id" geoJsonSource={GEOJSON_SOURCE_OPTIONS} />
-              <Layer
-                type="circle"
-                id="example_id_marker"
-                paint={POSITION_CIRCLE_PAINT}
-                sourceId={'example_id'}
-              />
-            </div>
-            {/* <Layer type="symbol" id="marker" 
-                    paint={POSITION_CIRCLE_PAINT}
-                >
-                    <Feature coordinates={[-0.13235092163085938,51.518250335096376]} />
-                </Layer> */}
+            { 
+            // this.state.renderStations ? ( 
+                <div>
+                    {this.state.stationGeoJson.map((GEOJSON_SOURCE_OPTIONS, index) => (
+                        <div key={"container_" + index}>
+                            <Source id={GEOJSON_SOURCE_OPTIONS.data.properties.title} key={"source_" + index} geoJsonSource={GEOJSON_SOURCE_OPTIONS} />
+                            <Layer
+                                type="circle"
+                                key={"layer_" + index}
+                                id="id_marker"
+                                paint={POSITION_CIRCLE_PAINT}
+                                sourceId={GEOJSON_SOURCE_OPTIONS.data.properties.title}
+                            />   
+                        </div>                
+                    ))}
+    
+                </div>
+            // ) : undefined    
+            }
             </MapBox>
         )
     }

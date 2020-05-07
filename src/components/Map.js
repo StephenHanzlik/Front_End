@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactMapboxGl, { Layer, Source } from 'react-mapbox-gl';
+import ReactMapboxGl, { Layer, Source, Feature, GeoJSONLayer } from 'react-mapbox-gl';
 import axios from 'axios';
 
 const MapBox = ReactMapboxGl({
@@ -16,6 +16,19 @@ const POSITION_CIRCLE_PAINT = {
     'circle-stroke-color': 'white'
   };
 
+const circleLayout = { visibility: 'visible' };
+const circlePaint = { 'circle-color': 'white' };
+
+const symbolLayout = {
+    'text-field': '{place}',
+    'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+    'text-offset': [0, 0.6],
+    'text-anchor': 'top'
+  };
+  const symbolPaint = {
+    'text-color': 'white'
+  };
+
 class Map extends Component {
 
     constructor(props) {
@@ -28,7 +41,12 @@ class Map extends Component {
     }
 
     convertToGeoJson(stations){
-    let geoJson = stations.map(station => {
+    let geoJsonFeatureCollection = {
+        type: 'FeatureCollection',
+        features: []
+    };
+
+    stations.forEach(station => {
        let coordinates = [];
        let location = JSON.parse(station.location);
        
@@ -49,10 +67,26 @@ class Map extends Component {
                     'marker-symbol': 'monument'
                 }
             }
-           }
-        return geoJsonItem
+        }
+        geoJsonFeatureCollection.features.push(geoJsonItem);
+        console.log("geoJsonFeatureCollection Inner", geoJsonFeatureCollection)
+       
+        //     type: 'geojson',
+        //     data: {
+        //         type: 'Feature',
+        //         geometry: {
+        //             type: 'Point',
+        //             coordinates: coordinates
+        //         },
+        //         properties: {
+        //             title: station.name,
+        //             'marker-symbol': 'monument'
+        //         }
+        //     }
+        //    }
     })
-    return geoJson;
+    console.log("geoJsonFeatureCollection outer", geoJsonFeatureCollection)
+    return geoJsonFeatureCollection;
     };
 
     componentDidMount(){
@@ -63,7 +97,7 @@ class Map extends Component {
 
             let tempGeoJson = this.convertToGeoJson(response.data);
 
-            console.log("tempGeoJSON: " + tempGeoJson)
+            console.log("tempGeoJSON: ", tempGeoJson);
              
             this.setState({
                 stationGeoJson: tempGeoJson,
@@ -88,8 +122,21 @@ class Map extends Component {
             >
             { 
             // this.state.renderStations ? ( 
-                <div>
-                    {this.state.stationGeoJson.map((GEOJSON_SOURCE_OPTIONS, index) => (
+               <div>
+                           <GeoJSONLayer
+                                data={this.state.stationGeoJson}
+                                circleLayout={circleLayout}
+                                circlePaint={circlePaint}
+                                circleOnClick={this.onClickCircle}
+                                symbolLayout={symbolLayout}
+                                symbolPaint={symbolPaint}
+                            />
+
+                    {/* {this.state.stationGeoJson.map((GEOJSON_SOURCE_OPTIONS, index) => (
+                        // console.log("GEOJSON_SOURCE_OPTIONS: " + GEOJSON_SOURCE_OPTIONS)
+                        // console.log("index: ", index)
+
+                        //This renders only one dot
                         <div key={"container_" + index}>
                             <Source id={GEOJSON_SOURCE_OPTIONS.data.properties.title} key={"source_" + index} geoJsonSource={GEOJSON_SOURCE_OPTIONS} />
                             <Layer
@@ -99,9 +146,10 @@ class Map extends Component {
                                 paint={POSITION_CIRCLE_PAINT}
                                 sourceId={GEOJSON_SOURCE_OPTIONS.data.properties.title}
                             />   
-                        </div>                
+                        </div>
+                        
                     ))}
-    
+     */}
                 </div>
             // ) : undefined    
             }

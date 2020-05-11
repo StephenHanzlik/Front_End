@@ -21,8 +21,11 @@ class Map extends Component {
 
     convertToGeoJson(stations) {
         let geoJsonFeatureCollection = {
-            type: 'FeatureCollection',
-            features: []
+            "type": "geojson",
+            "data": {
+                type: 'FeatureCollection',
+                features: []
+            }
         };
 
         let features = [];
@@ -33,39 +36,35 @@ class Map extends Component {
             coordinates.push(location.lat);
 
             let geoJsonItem = {
-                'type': 'geojson',
-                'data': {
-                    'type': 'Feature',
-                    'geometry': {
-                        'type': 'Point',
-                        'coordinates': coordinates
-                    },
-                    'properties': {
-                        'title': station.name,
-                        'icon': 'monument'
-                    }
+                'type': 'Feature',
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': coordinates
+                },
+                'properties': {
+                    'title': station.name,
+                    'icon': 'monument'
                 }
-            }
+            };
+
             features.push(geoJsonItem);
         })
-        geoJsonFeatureCollection.features = features;
+        geoJsonFeatureCollection.data.features = features;
         return geoJsonFeatureCollection;
     };
 
     componentDidMount() {
-
+        //TODO: load this elsewhere and pass as props when rendering map component
         axios.get('http://localhost:8081/EnosJava/api/snotel/stations')
             .then(response => {
-                let tempGeoJson = this.convertToGeoJson(response.data);
-                this.setState({
-                    stationGeoJson: tempGeoJson,
-                    renderStations: true
-                }, this.loadMap())
+                let stationGeoJson = this.convertToGeoJson(response.data);
+                this.loadMap(stationGeoJson);
             })
             .catch(error => console.log(error))
     }
 
-    loadMap(){
+
+    loadMap(geoJson) {
         const map = new mapboxgl.Map({
             container: this.mapContainer,
             style: 'mapbox://styles/mapbox/streets-v11',
@@ -81,42 +80,11 @@ class Map extends Component {
             });
         });
 
+        console.log("geoJson: ", geoJson)
+
         map.on('load', function () {
-            map.addSource('points', {
-                'type': 'geojson',
-                'data': {
-                    'type': 'FeatureCollection',
-                    'features': [
-                        {
-                            // feature for Mapbox DC
-                            'type': 'Feature',
-                            'geometry': {
-                                'type': 'Point',
-                                'coordinates': [
-                                    -77.03238901390978,
-                                    38.913188059745586
-                                ]
-                            },
-                            'properties': {
-                                'title': 'Mapbox DC',
-                                'icon': 'monument'
-                            }
-                        },
-                        {
-                            // feature for Mapbox SF
-                            'type': 'Feature',
-                            'geometry': {
-                                'type': 'Point',
-                                'coordinates': [-122.414, 37.776]
-                            },
-                            'properties': {
-                                'title': 'Mapbox SF',
-                                'icon': 'harbor'
-                            }
-                        }
-                    ]
-                }
-            });
+            console.log("geoJson: ", JSON.stringify(geoJson))
+            map.addSource('points', geoJson);
             map.addLayer({
                 'id': 'points',
                 'type': 'symbol',

@@ -4,6 +4,8 @@ import axios from 'axios';
 
 
 // https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
+// https://docs.mapbox.com/mapbox-gl-js/example/add-a-marker/
+// https://docs.mapbox.com/help/tutorials/custom-markers-gl-js/
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RlcGhlbmhhbnpsaWsiLCJhIjoiY2thMGNkNnhiMDF5aDNubWtmbDNybmpjaCJ9.DHmoxylArLlQyZ1elyfyCA';
 
 class Map extends Component {
@@ -35,25 +37,28 @@ class Map extends Component {
             coordinates.push(location.lng);
             coordinates.push(location.lat);
 
-            // let geoJsonItem = {
-            //     'type': 'Feature',
-            //     'geometry': {
-            //         'type': 'Point',
-            //         'coordinates': coordinates
-            //     },
-            //     'properties': {
-            //         'title': station.name,
-            //         'icon': 'marker'
-            //     }
-            // };
+            console.log("station: ", station)
 
-            // features.push(geoJsonItem);
-            features.push(coordinates)
+            let geoJsonItem = {
+                'type': 'Feature',
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': coordinates
+                },
+                'properties': {
+                    'title': station.name,
+                    'elevation': station.elevation,
+                    'icon': 'marker'
+                }
+            };
+
+            features.push(geoJsonItem);
+            // features.push(coordinates)
         })
         geoJsonFeatureCollection.data.features = features;
-        // return geoJsonFeatureCollection;
-        return features;
-
+        return geoJsonFeatureCollection;
+        // return features;
+// 
     };
 
     componentDidMount() {
@@ -85,18 +90,27 @@ class Map extends Component {
 
         map.on('load', function () {
             console.log("geoJson: ", JSON.stringify(geoJson))
-            geoJson.forEach(coordinates =>{
+            geoJson.data.features.forEach(function (marker) {
+
+                // create a HTML element for each feature
+                // var el = document.createElement('div');
+                // el.className = 'marker';
+                
+                // make a marker for each feature and add to the map
+                //argument - el
                 new mapboxgl.Marker()
-                .setLngLat(coordinates)
-                .addTo(map);
-            })
+                    .setLngLat(marker.geometry.coordinates)
+                    .setPopup(new mapboxgl.Popup({ offset: 25 })
+                    .setHTML('<h5>' + marker.properties.title + '</h5><h5>' + marker.properties.elevation + 'ft</h5>'+'<button>Explore</button'))
+                    .addTo(map);
+            });
 
             // map.addSource('points', geoJson);
             // map.addLayer({
             //     'id': 'points',
             //     'type': 'symbol',
             //     'source': 'points',
-            //     'layout': {
+            //     'layout': {  
             //         // get the icon name from the source's "icon" property
             //         // concatenate the name to get an icon from the style's sprite sheet
             //         'icon-image': ['concat', ['get', 'icon'], '-15'],
@@ -107,9 +121,6 @@ class Map extends Component {
             //         'text-anchor': 'top'
             //     }
             // });
-            var marker = new mapboxgl.Marker()
-                .setLngLat([12.550343, 55.665957])
-                .addTo(map);
 
         });
     }

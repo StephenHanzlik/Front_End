@@ -35,22 +35,25 @@ class Map extends Component {
             coordinates.push(location.lng);
             coordinates.push(location.lat);
 
-            let geoJsonItem = {
-                'type': 'Feature',
-                'geometry': {
-                    'type': 'Point',
-                    'coordinates': coordinates
-                },
-                'properties': {
-                    'title': station.name,
-                    'icon': 'monument'
-                }
-            };
+            // let geoJsonItem = {
+            //     'type': 'Feature',
+            //     'geometry': {
+            //         'type': 'Point',
+            //         'coordinates': coordinates
+            //     },
+            //     'properties': {
+            //         'title': station.name,
+            //         'icon': 'marker'
+            //     }
+            // };
 
-            features.push(geoJsonItem);
+            // features.push(geoJsonItem);
+            features.push(coordinates)
         })
         geoJsonFeatureCollection.data.features = features;
-        return geoJsonFeatureCollection;
+        // return geoJsonFeatureCollection;
+        return features;
+
     };
 
     componentDidMount() {
@@ -67,7 +70,7 @@ class Map extends Component {
     loadMap(geoJson) {
         const map = new mapboxgl.Map({
             container: this.mapContainer,
-            style: 'mapbox://styles/mapbox/streets-v11',
+            style: 'mapbox://styles/stephenhanzlik/ck45yi8kp2hrp1drw58brvdro',
             center: [this.state.lng, this.state.lat],
             zoom: this.state.zoom
         });
@@ -80,26 +83,34 @@ class Map extends Component {
             });
         });
 
-        console.log("geoJson: ", geoJson)
-
         map.on('load', function () {
             console.log("geoJson: ", JSON.stringify(geoJson))
-            map.addSource('points', geoJson);
-            map.addLayer({
-                'id': 'points',
-                'type': 'symbol',
-                'source': 'points',
-                'layout': {
-                    // get the icon name from the source's "icon" property
-                    // concatenate the name to get an icon from the style's sprite sheet
-                    'icon-image': ['concat', ['get', 'icon'], '-15'],
-                    // get the title name from the source's "title" property
-                    'text-field': ['get', 'title'],
-                    'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-                    'text-offset': [0, 0.6],
-                    'text-anchor': 'top'
-                }
-            });
+            geoJson.forEach(coordinates =>{
+                new mapboxgl.Marker()
+                .setLngLat(coordinates)
+                .addTo(map);
+            })
+
+            // map.addSource('points', geoJson);
+            // map.addLayer({
+            //     'id': 'points',
+            //     'type': 'symbol',
+            //     'source': 'points',
+            //     'layout': {
+            //         // get the icon name from the source's "icon" property
+            //         // concatenate the name to get an icon from the style's sprite sheet
+            //         'icon-image': ['concat', ['get', 'icon'], '-15'],
+            //         // get the title name from the source's "title" property
+            //         'text-field': ['get', 'title'],
+            //         'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+            //         'text-offset': [0, 0.6],
+            //         'text-anchor': 'top'
+            //     }
+            // });
+            var marker = new mapboxgl.Marker()
+                .setLngLat([12.550343, 55.665957])
+                .addTo(map);
+
         });
     }
 

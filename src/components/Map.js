@@ -6,6 +6,8 @@ import axios from 'axios';
 // https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
 // https://docs.mapbox.com/mapbox-gl-js/example/add-a-marker/
 // https://docs.mapbox.com/help/tutorials/custom-markers-gl-js/
+
+//TODO:  This should be ENV variable
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RlcGhlbmhhbnpsaWsiLCJhIjoiY2thMGNkNnhiMDF5aDNubWtmbDNybmpjaCJ9.DHmoxylArLlQyZ1elyfyCA';
 
 class Map extends Component {
@@ -15,6 +17,7 @@ class Map extends Component {
         this.state = {
             lng: 5,
             lat: 34,
+            stationTriplet: '',
             zoom: 2
         };
 
@@ -58,7 +61,7 @@ class Map extends Component {
         geoJsonFeatureCollection.data.features = features;
         return geoJsonFeatureCollection;
         // return features;
-// 
+        // 
     };
 
     componentDidMount() {
@@ -91,38 +94,38 @@ class Map extends Component {
         map.on('load', function () {
             console.log("geoJson: ", JSON.stringify(geoJson))
             geoJson.data.features.forEach(function (marker) {
+                //**************************************************
+                // Work arounds for click events on Marker
+                //https://github.com/mapbox/mapbox-gl-js/issues/7793
+                //**************************************************
 
-                // create a HTML element for each feature
+                // Option 1 from Mapbox docs
                 // var el = document.createElement('div');
                 // el.className = 'marker';
                 
+                //Option 2 from above link
+                var el = document.createElement('div');
+                el.style.backgroundImage = 'url(https://placekitten.com/g/40/40/)';
+                el.style.width = 40 + 'px';
+                el.style.height = 40 + 'px';
+                el.style.cursor = 'pointer';
+                el.addEventListener('click', function () {
+                    alert('element event listener');
+                })
+
+
                 // make a marker for each feature and add to the map
                 //argument - el
-                new mapboxgl.Marker()
+                var aMarker = new mapboxgl.Marker(el)
                     .setLngLat(marker.geometry.coordinates)
                     .setPopup(new mapboxgl.Popup({ offset: 25 })
-                    .setHTML('<h5>' + marker.properties.title + '</h5><h5>' + marker.properties.elevation + 'ft</h5>'+'<button>Explore</button'))
-                    .addTo(map);
+                        .setHTML('<h5>' + marker.properties.title + '</h5><h5>' + marker.properties.elevation + 'ft</h5>' + '<button>Explore</button'))
+                    .addTo(map)
+                    .on('click', function () { alert("I was clicked") })
             });
 
-            // map.addSource('points', geoJson);
-            // map.addLayer({
-            //     'id': 'points',
-            //     'type': 'symbol',
-            //     'source': 'points',
-            //     'layout': {  
-            //         // get the icon name from the source's "icon" property
-            //         // concatenate the name to get an icon from the style's sprite sheet
-            //         'icon-image': ['concat', ['get', 'icon'], '-15'],
-            //         // get the title name from the source's "title" property
-            //         'text-field': ['get', 'title'],
-            //         'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-            //         'text-offset': [0, 0.6],
-            //         'text-anchor': 'top'
-            //     }
-            // });
-
         });
+
     }
 
     render() {

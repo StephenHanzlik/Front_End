@@ -21,13 +21,9 @@ class Graph extends Component {
     }
 
     componentDidMount(){
-        console.log("working Data: ", this.state.data);
-
         //TODO:  Pull observation data here and display it for graph
         axios.get('http://localhost:8081/EnosJava/api/snotel/stations')
-        .then(response => {
-            console.log("API wrapped data", this.wrapJsonData(response.data))
-             
+        .then(response => {             
             this.setState({
                 observations: response.data
             })
@@ -36,7 +32,6 @@ class Graph extends Component {
     }
 
     wrapJsonData(data){
-        console.log("data", data);
         const snowDepthData = data.map((observation)=>{
             return {"x": observation.Date, "y": parseInt(observation.Snow_Depth_In)}
         })

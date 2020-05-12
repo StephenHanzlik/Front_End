@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import mapboxgl from 'mapbox-gl';
 import axios from 'axios';
+import MapBox from './MapBox';
 
 
 // https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
@@ -22,10 +23,9 @@ class Map extends Component {
             stationTriplet: '',
             stationName: '',
             stationTimeZone: 0,
-            stationWind: false
+            stationWind: false,
+            geoJson: ''
         };
-
-        this.loadMap = this.loadMap.bind(this);
     }
 
     convertToGeoJson(stations) {
@@ -74,92 +74,15 @@ class Map extends Component {
         axios.get('http://localhost:8081/EnosJava/api/snotel/stations')
             .then(response => {
                 let stationGeoJson = this.convertToGeoJson(response.data);
-                this.loadMap(stationGeoJson);
-            })
-            .catch(error => console.log(error))
-    }
-
-
-    loadMap(geoJson) {
-        const map = new mapboxgl.Map({
-            container: this.mapContainer,
-            style: 'mapbox://styles/stephenhanzlik/ck45yi8kp2hrp1drw58brvdro',
-            center: [this.state.lng, this.state.lat],
-            zoom: this.state.zoom
-        });
-
-        map.on('move', () => {
-            this.setState({
-                lng: map.getCenter().lng.toFixed(4),
-                lat: map.getCenter().lat.toFixed(4),
-                zoom: map.getZoom().toFixed(2)
-            });
-        });
-
-        let markers = [];
-        let tempStation;
-
-        map.on('load', () => {
-
-            geoJson.data.features.forEach((marker) => {
-                //**************************************************
-                // Work arounds for click events on Marker
-                //https://github.com/mapbox/mapbox-gl-js/issues/7793
-                //**************************************************
-
-                // Option 1 from Mapbox docs
-                // var el = document.createElement('div');
-                // el.className = 'marker';
-
-                //Option 2 from above link
-                var el = document.createElement('div');
-                //
-                //https://placekitten.com/g/40/40/
-                el.style.backgroundImage = 'url(https://i.ibb.co/WvGxZpY/snowflake-1.jpg)';
-                el.style.width = '40px';
-                el.style.height = '40px';
-                el.style.cursor = 'pointer';
-                el.style.backgroundColor = '#26a69a'
-                el.style.borderRadius = '50%'
-                el.addEventListener('click', (e) => {
-
-                    console.log("marker", marker);
-                    this.setState({
-                        lng: marker.geometry.coordinates[0],
-                        lat: marker.geometry.coordinates[1],
-                        stationName: marker.properties.title,
-                        stationTimeZone: marker.properties.timezone.toString(),
-                        stationElevation: marker.properties.elevation,
-                        stationTriplet: marker.properties.triplet,
-                        stationWind: marker.properties.wind.toString()
-                    })
-
-
-
-
+                this.setState({
+                    geoJson: stationGeoJson
                 })
 
-
-                let aMarker = new mapboxgl.Marker(el)
-                    .setLngLat(marker.geometry.coordinates)
-                    .setPopup(new mapboxgl.Popup({ offset: 25 })
-                        .setHTML('<h5>' + marker.properties.title + '</h5><h5>' + marker.properties.elevation + 'ft</h5>' + '<button>Details</button>'))
-                    .addTo(map)
-
-                markers.push(aMarker);
-
-                //argument - el
-                // var bMarker = new mapboxgl.Marker(el)
-                //     .setLngLat(marker.geometry.coordinates)
-                //     .setPopup(new mapboxgl.Popup({ offset: 25 })
-                //     .setHTML('<h5>' + marker.properties.title + '</h5><h5>' + marker.properties.elevation + 'ft</h5>' + '<button>Details</button'))
-                //     .addTo(map)
-
-
-            });
-
-        })
-
+                //This will be handled when MapBox component mounts
+                // this.loadMap(stationGeoJson);
+                
+            })
+            .catch(error => console.log(error))
     }
 
     render() {
@@ -167,12 +90,13 @@ class Map extends Component {
         return (
 
             <div>
-                <div>
+                {/* <div>
                     <div>Triplet: {this.state.stationTriplet } | Name: {this.state.stationName} | Elevation: {this.state.stationElevation}</div>
                     <div>Location: {this.state.lng},{this.state.lat} | Timezone: {this.state.stationTimezone} | Wind: {this.state.stationWind}</div>
-                </div>
-                <div ref={el => this.mapContainer = el} className='mapContainer' />
+                </div> */}
+                <MapBox geoJson={this.state.geoJson}></MapBox>
             </div>
+            
 
         )
     }

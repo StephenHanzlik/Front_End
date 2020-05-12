@@ -15,10 +15,10 @@ class Map extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            lng: 5,
-            lat: 34,
+            lng: -105.270546,
+            lat: 40.014984,
             stationTriplet: '',
-            zoom: 2
+            zoom: 4
         };
 
         this.loadMap = this.loadMap.bind(this);
@@ -39,8 +39,6 @@ class Map extends Component {
             let location = JSON.parse(station.location);
             coordinates.push(location.lng);
             coordinates.push(location.lat);
-
-            console.log("station: ", station)
 
             let geoJsonItem = {
                 'type': 'Feature',
@@ -91,9 +89,24 @@ class Map extends Component {
             });
         });
 
+        let markers = [];
+
+        map.on("click", function(e) {
+            console.log("Click Event!")
+
+            markers.forEach((marker)=>{
+                console.log("e.originalEvent.target", e.originalEvent.target)
+                console.log('marker.getElement()', marker.getElement())
+                if (e.originalEvent.target === marker.getElement()) {
+                    console.log("we hit the marker!", marker)
+                  }
+            });
+
+
+        })
+
         map.on('load', function () {
-            console.log("geoJson: ", JSON.stringify(geoJson))
-            geoJson.data.features.forEach(function (marker) {
+            geoJson.data.features.forEach( (marker)=> {
                 //**************************************************
                 // Work arounds for click events on Marker
                 //https://github.com/mapbox/mapbox-gl-js/issues/7793
@@ -102,26 +115,38 @@ class Map extends Component {
                 // Option 1 from Mapbox docs
                 // var el = document.createElement('div');
                 // el.className = 'marker';
-                
+
                 //Option 2 from above link
                 var el = document.createElement('div');
-                el.style.backgroundImage = 'url(https://placekitten.com/g/40/40/)';
-                el.style.width = 40 + 'px';
-                el.style.height = 40 + 'px';
+                //
+                //https://placekitten.com/g/40/40/
+                el.style.backgroundImage = 'url(https://i.ibb.co/WvGxZpY/snowflake-1.jpg)';
+                el.style.width = '40px';
+                el.style.height = '40px';
                 el.style.cursor = 'pointer';
+                el.style.backgroundColor = '#26a69a'
+                el.style.borderRadius = '50%'
                 el.addEventListener('click', function () {
-                    alert('element event listener');
+                    // alert('element event listener');
                 })
 
 
-                // make a marker for each feature and add to the map
+                let aMarker = new mapboxgl.Marker(el)
+                .setLngLat(marker.geometry.coordinates)
+                .setPopup(new mapboxgl.Popup({ offset: 25 })
+                .setHTML('<h5>' + marker.properties.title + '</h5><h5>' + marker.properties.elevation + 'ft</h5>' + '<button>Details</button>'))
+                .addTo(map)
+
+                markers.push(aMarker);
+
                 //argument - el
-                var aMarker = new mapboxgl.Marker(el)
-                    .setLngLat(marker.geometry.coordinates)
-                    .setPopup(new mapboxgl.Popup({ offset: 25 })
-                        .setHTML('<h5>' + marker.properties.title + '</h5><h5>' + marker.properties.elevation + 'ft</h5>' + '<button>Explore</button'))
-                    .addTo(map)
-                    .on('click', function () { alert("I was clicked") })
+                // var bMarker = new mapboxgl.Marker(el)
+                //     .setLngLat(marker.geometry.coordinates)
+                //     .setPopup(new mapboxgl.Popup({ offset: 25 })
+                //     .setHTML('<h5>' + marker.properties.title + '</h5><h5>' + marker.properties.elevation + 'ft</h5>' + '<button>Details</button'))
+                //     .addTo(map)
+
+
             });
 
         });

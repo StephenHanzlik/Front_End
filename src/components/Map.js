@@ -17,8 +17,12 @@ class Map extends Component {
         this.state = {
             lng: -105.270546,
             lat: 40.014984,
+            zoom: 4,
+            stationElevation: '',
             stationTriplet: '',
-            zoom: 4
+            stationName: '',
+            stationTimeZone: 0,
+            stationWind: false
         };
 
         this.loadMap = this.loadMap.bind(this);
@@ -49,6 +53,9 @@ class Map extends Component {
                 'properties': {
                     'title': station.name,
                     'elevation': station.elevation,
+                    'triplet': station.triplet,
+                    'timezone': station.timezone,
+                    'wind': station.wind,
                     'icon': 'marker'
                 }
             };
@@ -90,23 +97,11 @@ class Map extends Component {
         });
 
         let markers = [];
+        let tempStation;
 
-        map.on("click", function(e) {
-            console.log("Click Event!")
+        map.on('load', () => {
 
-            markers.forEach((marker)=>{
-                console.log("e.originalEvent.target", e.originalEvent.target)
-                console.log('marker.getElement()', marker.getElement())
-                if (e.originalEvent.target === marker.getElement()) {
-                    console.log("we hit the marker!", marker)
-                  }
-            });
-
-
-        })
-
-        map.on('load', function () {
-            geoJson.data.features.forEach( (marker)=> {
+            geoJson.data.features.forEach((marker) => {
                 //**************************************************
                 // Work arounds for click events on Marker
                 //https://github.com/mapbox/mapbox-gl-js/issues/7793
@@ -126,16 +121,28 @@ class Map extends Component {
                 el.style.cursor = 'pointer';
                 el.style.backgroundColor = '#26a69a'
                 el.style.borderRadius = '50%'
-                el.addEventListener('click', function () {
-                    // alert('element event listener');
+                el.addEventListener('click', (e) => {
+
+                    console.log("event", e);
+                    this.setState({
+                        stationName: marker.properties.title,
+                        stationTimeZone: marker.properties.timezone,
+                        stationElevation: marker.properties.elevation,
+                        stationTriplet: marker.properties.triplet,
+                        stationWind: marker.properties.wind
+                    })
+
+
+
+
                 })
 
 
                 let aMarker = new mapboxgl.Marker(el)
-                .setLngLat(marker.geometry.coordinates)
-                .setPopup(new mapboxgl.Popup({ offset: 25 })
-                .setHTML('<h5>' + marker.properties.title + '</h5><h5>' + marker.properties.elevation + 'ft</h5>' + '<button>Details</button>'))
-                .addTo(map)
+                    .setLngLat(marker.geometry.coordinates)
+                    .setPopup(new mapboxgl.Popup({ offset: 25 })
+                        .setHTML('<h5>' + marker.properties.title + '</h5><h5>' + marker.properties.elevation + 'ft</h5>' + '<button>Details</button>'))
+                    .addTo(map)
 
                 markers.push(aMarker);
 
@@ -149,7 +156,7 @@ class Map extends Component {
 
             });
 
-        });
+        })
 
     }
 
@@ -160,6 +167,8 @@ class Map extends Component {
             <div>
                 <div>
                     <div>Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom: {this.state.zoom}</div>
+                    <div>Triplet: {this.state.stationTriplet } | Name: {this.state.stationName} | Elevation: {this.state.stationElevation}</div>
+                    <div>Location: {this.state.lng},{this.state.lat} | Timezone: {this.state.stationTimezone} | Wind: {this.state.stationWind}</div>
                 </div>
                 <div ref={el => this.mapContainer = el} className='mapContainer' />
             </div>

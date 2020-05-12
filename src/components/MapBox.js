@@ -47,7 +47,8 @@ class MapBox extends Component {
                 el.style.width = '40px';
                 el.style.height = '40px';
                 el.style.cursor = 'pointer';
-                el.style.backgroundColor = '#26a69a'
+                //Materialize teal
+                // el.style.backgroundColor = '#26a69a'
                 el.style.borderRadius = '50%'
                 el.addEventListener('click', (e) => {
                     this.setState({

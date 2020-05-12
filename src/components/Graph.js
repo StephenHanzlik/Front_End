@@ -68,7 +68,12 @@ class Graph extends Component {
                     data={this.wrapObservations(this.state.observations)}
                     margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
                     xScale={{ type: 'point' }}
-                    yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}
+                    // xScale={{ 
+                    //     type: 'point',
+                    //     xFormat: 'yyyy-MM-dd',
+                    //     precision: 'month'
+                    //  }}
+                    yScale={{ type: 'linear', min: '0', max: 'auto', stacked: true, reverse: false }}
                     curve="natural"
                     axisTop={null}
                     axisRight={null}
@@ -91,13 +96,15 @@ class Graph extends Component {
                         legendPosition: 'middle'
                     }}
                     colors={{ scheme: 'paired' }}
-                    pointSize={10}
-                    pointColor={{ theme: 'background' }}
-                    pointBorderWidth={2}
-                    pointBorderColor={{ from: 'serieColor' }}
-                    pointLabel="y"
-                    pointLabelYOffset={-12}
+                    // pointSize={10}
+                    // pointColor={{ theme: 'background' }}
+                    // pointBorderWidth={2}
+                    // pointBorderColor={{ from: 'serieColor' }}
+                    // pointLabel="y"
+                    // pointLabelYOffset={-12}
                     enableArea={true}
+                    enablePoints={false}
+                    enableGridX={false}
                     useMesh={true}
                     legends={[
                         {

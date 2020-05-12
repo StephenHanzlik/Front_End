@@ -123,13 +123,15 @@ class Map extends Component {
                 el.style.borderRadius = '50%'
                 el.addEventListener('click', (e) => {
 
-                    console.log("event", e);
+                    console.log("marker", marker);
                     this.setState({
+                        lng: marker.geometry.coordinates[0],
+                        lat: marker.geometry.coordinates[1],
                         stationName: marker.properties.title,
-                        stationTimeZone: marker.properties.timezone,
+                        stationTimeZone: marker.properties.timezone.toString(),
                         stationElevation: marker.properties.elevation,
                         stationTriplet: marker.properties.triplet,
-                        stationWind: marker.properties.wind
+                        stationWind: marker.properties.wind.toString()
                     })
 
 
@@ -166,7 +168,6 @@ class Map extends Component {
 
             <div>
                 <div>
-                    <div>Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom: {this.state.zoom}</div>
                     <div>Triplet: {this.state.stationTriplet } | Name: {this.state.stationName} | Elevation: {this.state.stationElevation}</div>
                     <div>Location: {this.state.lng},{this.state.lat} | Timezone: {this.state.stationTimezone} | Wind: {this.state.stationWind}</div>
                 </div>

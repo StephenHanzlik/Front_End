@@ -17,7 +17,7 @@ class Map extends Component {
             stationWind: false,
             geoJson: ''
         };
-        this.getStationData = this.getStationData.bind(this);
+        this.getObservations = this.getObservations.bind(this);
     }
 
     componentDidMount() {
@@ -70,8 +70,8 @@ class Map extends Component {
         return geoJsonFeatureCollection;
     };
 
-    getStationData(triplet){
-        this.props.getStationData(triplet);
+    getObservations(triplet){
+        this.props.getObservations(triplet);
     }
 
     render() {
@@ -79,7 +79,7 @@ class Map extends Component {
             <div>
                 <MapBox 
                     geoJson={this.state.geoJson}
-                    getStationData={this.getStationData}
+                    getObservations={this.getObservations}
                 ></MapBox>
             </div>
         )

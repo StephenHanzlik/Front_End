@@ -20,18 +20,6 @@ class Graph extends Component {
         this.getMonthName = this.getMonthName.bind(this);
     }
 
-    componentDidMount() {
-        //TODO:  Pull observation data here and display it for graph
-        // axios.get('http://localhost:8081/EnosJava/api/snotel/stations')
-        // .then(response => {             
-        //     this.setState({
-        //         observations: response.data
-        //     })
-        // })
-        // .catch(error => console.log(error))
-        // console.log("mount this.props.observations", this.props.observations)
-    }
-
     componentDidUpdate() {
         if (this.state.observations !== this.props.observations) {
             this.setState({

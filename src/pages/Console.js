@@ -24,10 +24,10 @@ class Console extends Component{
             observations: '',
             stationTriplet: ''
         };
-        this.getStationData = this.getStationData.bind(this);
+        this.getObservations = this.getObservations.bind(this);
     }
 
-    getStationData(triplet){
+    getObservations(triplet){
         console.log('triplet', triplet)
         axios.get(`http://localhost:8081/EnosJava/api/snotel/observations/${triplet}?from=2019-10-14&to=2020-04-14`)
         .then(response => {
@@ -46,7 +46,7 @@ class Console extends Component{
                 <NavBar/>
                 <MapWrapper>
                     <Map
-                        getStationData={this.getStationData}
+                        getObservations={this.getObservations}
                     />
                 </MapWrapper>
                 <GraphWrapper>

@@ -59,7 +59,7 @@ class MapBox extends Component {
                         stationElevation: marker.properties.elevation,
                         stationTriplet: marker.properties.triplet,
                         stationWind: marker.properties.wind.toString()
-                    }, this.props.getStationData(marker.properties.triplet))
+                    }, this.props.getObservations(marker.properties.triplet))
                 })
 
                 let aMarker = new mapboxgl.Marker(el)

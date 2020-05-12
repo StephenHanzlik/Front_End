@@ -29,7 +29,7 @@ class Console extends Component{
 
     getStationData(triplet){
         console.log('triplet', triplet)
-        axios.get(`http://localhost:8081/EnosJava/api/snotel/observations/${triplet}?from=2019-12-01&to=2020-04-14`)
+        axios.get(`http://localhost:8081/EnosJava/api/snotel/observations/${triplet}?from=2019-10-14&to=2020-04-14`)
         .then(response => {
             this.setState({
                 stationTriplet: triplet,

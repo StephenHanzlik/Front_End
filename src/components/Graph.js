@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ResponsiveLine } from '@nivo/line'
 import testData from '../graphTestData';
 import styled from 'styled-components';
+import moment from "moment";
 
 const GraphWrapper = styled.div`
     width: 1200px;
@@ -16,6 +17,7 @@ class Graph extends Component {
             observations: []
         };
         this.wrapObservations = this.wrapObservations.bind(this);
+        this.getRequiredDateFormat = this.getRequiredDateFormat.bind(this);
     }
 
     componentDidMount() {
@@ -27,32 +29,31 @@ class Graph extends Component {
         //     })
         // })
         // .catch(error => console.log(error))
-        console.log("mount this.props.observations", this.props.observations)
+        // console.log("mount this.props.observations", this.props.observations)
     }
 
     componentDidUpdate(){
-        console.log("update this.props.observations", this.props.observations)
         if(this.state.observations !== this.props.observations){
             this.setState({          
                 observations: this.props.observations
-            }, console.log("state set this.props.observations", this.props.observations));
+            });
         }
     }
 
     wrapObservations(observations) {
-        console.log("observations", observations)
         const snowDepthData = observations.map((observation) => {
             return { "x": observation.date, "y": parseInt(observation.snowDepth) }
-        })
-        
-        console.log('snowDepthData', snowDepthData)
-
+        });
         return [{
             "id": "Snow Depth",
             "color": "hsl(216, 70%, 50%)",
             "data": snowDepthData
         }];
     }
+
+    getRequiredDateFormat(timeStamp, format = "MM-DD-YYYY") {
+        return moment(timeStamp).format(format);
+    };
 
     //Sample Data
     //this.state.data
@@ -68,11 +69,6 @@ class Graph extends Component {
                     data={this.wrapObservations(this.state.observations)}
                     margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
                     xScale={{ type: 'point' }}
-                    // xScale={{ 
-                    //     type: 'point',
-                    //     xFormat: 'yyyy-MM-dd',
-                    //     precision: 'month'
-                    //  }}
                     yScale={{ type: 'linear', min: '0', max: 'auto', stacked: true, reverse: false }}
                     curve="natural"
                     axisTop={null}
@@ -84,7 +80,21 @@ class Graph extends Component {
                         tickRotation: 0,
                         legend: 'Month',
                         legendOffset: 36,
-                        legendPosition: 'middle'
+                        legendPosition: 'middle',
+                        format: values => {
+                            // console.log("values", values);
+                            let observations = this.state.observations;
+                            const month = values.toString().slice(5, 7);
+                            const day = values.toString().slice(8, 10);
+                            console.log("month", month)
+                            // console.log("observations", observations)
+                            console.log("day", day)
+                            if (day === '01') {
+                                observations = observations.filter(item => item !== month);
+                              return `${this.getRequiredDateFormat(values, "MMMM")}`;
+                            } 
+                            else return "";
+                          },
                     }}
                     axisLeft={{
                         orient: 'left',

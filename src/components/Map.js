@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import mapboxgl from 'mapbox-gl';
 import axios from 'axios';
 import MapBox from './MapBox';
 
@@ -18,6 +17,7 @@ class Map extends Component {
             stationWind: false,
             geoJson: ''
         };
+        this.getStationData = this.getStationData.bind(this);
     }
 
     componentDidMount() {
@@ -70,10 +70,17 @@ class Map extends Component {
         return geoJsonFeatureCollection;
     };
 
+    getStationData(triplet){
+        this.props.getStationData(triplet);
+    }
+
     render() {
         return (
             <div>
-                <MapBox geoJson={this.state.geoJson}></MapBox>
+                <MapBox 
+                    geoJson={this.state.geoJson}
+                    getStationData={this.getStationData}
+                ></MapBox>
             </div>
         )
     }

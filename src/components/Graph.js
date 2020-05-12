@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { ResponsiveLine } from '@nivo/line'
 import testData from '../graphTestData';
 import styled from 'styled-components';
-import axios from 'axios';
 
 const GraphWrapper = styled.div`
     width: 1200px;
@@ -13,45 +12,60 @@ class Graph extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          data: testData.testData,
-          observations: []
+            data: testData.testData,
+            observations: []
         };
-
-        this.wrapJsonData =  this.wrapJsonData.bind(this);
+        this.wrapObservations = this.wrapObservations.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         //TODO:  Pull observation data here and display it for graph
-        axios.get('http://localhost:8081/EnosJava/api/snotel/stations')
-        .then(response => {             
-            this.setState({
-                observations: response.data
-            })
-        })
-        .catch(error => console.log(error))
+        // axios.get('http://localhost:8081/EnosJava/api/snotel/stations')
+        // .then(response => {             
+        //     this.setState({
+        //         observations: response.data
+        //     })
+        // })
+        // .catch(error => console.log(error))
+        console.log("mount this.props.observations", this.props.observations)
     }
 
-    wrapJsonData(data){
-        const snowDepthData = data.map((observation)=>{
-            return {"x": observation.Date, "y": parseInt(observation.Snow_Depth_In)}
+    componentDidUpdate(){
+        console.log("update this.props.observations", this.props.observations)
+        if(this.state.observations !== this.props.observations){
+            this.setState({          
+                observations: this.props.observations
+            }, console.log("state set this.props.observations", this.props.observations));
+        }
+    }
+
+    wrapObservations(observations) {
+        console.log("observations", observations)
+        const snowDepthData = observations.map((observation) => {
+            return { "x": observation.date, "y": parseInt(observation.snowDepth) }
         })
+        
+        console.log('snowDepthData', snowDepthData)
 
         return [{
             "id": "Snow Depth",
             "color": "hsl(216, 70%, 50%)",
             "data": snowDepthData
-          }];
+        }];
     }
-    
+
     //Sample Data
     //this.state.data
     //Live Data
     //this.wrapJsonData(this.state.observations)
-    render(){
-        return(
+    render() {
+        return (
             <GraphWrapper>
-                <ResponsiveLine
-                    data={this.state.data}
+                { this.props.observations === [] ?
+                    <h3>Select a Station</h3>
+                    :
+                    <ResponsiveLine
+                    data={this.wrapObservations(this.state.observations)}
                     margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
                     xScale={{ type: 'point' }}
                     yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}
@@ -112,6 +126,8 @@ class Graph extends Component {
                         }
                     ]}
                 />
+                }
+                
             </GraphWrapper>
         )
     }

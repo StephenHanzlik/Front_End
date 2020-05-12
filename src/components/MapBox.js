@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import mapboxgl from 'mapbox-gl';
-import axios from 'axios';
 
 //TODO:  This should be ENV variable
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RlcGhlbmhhbnpsaWsiLCJhIjoiY2thMGNkNnhiMDF5aDNubWtmbDNybmpjaCJ9.DHmoxylArLlQyZ1elyfyCA';
@@ -41,9 +40,8 @@ class MapBox extends Component {
 
         map.on('load', () => {  
             this.props.geoJson.data.features.forEach((marker) => {
-                // Work arounds for click events on Marker
-                //https://github.com/mapbox/mapbox-gl-js/issues/7793
-                var el = document.createElement('div');
+
+                let el = document.createElement('div');
 
                 el.style.backgroundImage = 'url(https://i.ibb.co/WvGxZpY/snowflake-1.jpg)';
                 el.style.width = '40px';
@@ -60,13 +58,13 @@ class MapBox extends Component {
                         stationElevation: marker.properties.elevation,
                         stationTriplet: marker.properties.triplet,
                         stationWind: marker.properties.wind.toString()
-                    })
+                    }, this.props.getStationData(marker.properties.triplet))
                 })
 
                 let aMarker = new mapboxgl.Marker(el)
                     .setLngLat(marker.geometry.coordinates)
                     .setPopup(new mapboxgl.Popup({ offset: 25 })
-                        .setHTML('<h5>' + marker.properties.title + '</h5><h5>' + marker.properties.elevation + 'ft</h5>' + '<button>Details</button>'))
+                        .setHTML('<h5>' + marker.properties.title + '</h5><h5>' + marker.properties.elevation + 'ft</h5><button>Details</button>'))
                     .addTo(map)
                 markers.push(aMarker);
             });

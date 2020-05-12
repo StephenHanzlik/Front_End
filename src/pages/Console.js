@@ -3,6 +3,7 @@ import NavBar from '../components/NavBar';
 import Graph from '../components/Graph';
 import Map from '../components/Map';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const MapWrapper = styled.div`
     display: flex;
@@ -16,17 +17,42 @@ const GraphWrapper = styled.div`
 `;
 
 class Console extends Component{
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            observations: '',
+            stationTriplet: ''
+        };
+        this.getStationData = this.getStationData.bind(this);
+    }
+
+    getStationData(triplet){
+        console.log('triplet', triplet)
+        axios.get(`http://localhost:8081/EnosJava/api/snotel/observations/${triplet}?from=2020-01-13&to=2020-04-14`)
+        .then(response => {
+            this.setState({
+                stationTriplet: triplet,
+                observations: response.data
+            })
+        })
+        .catch(error => console.log(error))
+    }
+
     render(){
         return(
-            // eventualy pass props to graph and allow for 
-            // customization of the dashboard
+            // Todo: Make stations API call here and pass as props to Map
             <div>
                 <NavBar/>
                 <MapWrapper>
-                    <Map/>
+                    <Map
+                        getStationData={this.getStationData}
+                    />
                 </MapWrapper>
                 <GraphWrapper>
-                    <Graph/>
+                    <Graph
+                        observations={this.state.observations}
+                    />
                 </GraphWrapper>
                 
             </div>

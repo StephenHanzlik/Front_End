@@ -21,7 +21,7 @@ class Map extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:8081/EnosJava/api/snotel/stations')
+        axios.get('/EnosJava/api/snotel/stations')
             .then(response => {
                 let stationGeoJson = this.convertToGeoJson(response.data);
                 this.setState({

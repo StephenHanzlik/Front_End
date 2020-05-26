@@ -23,7 +23,6 @@ class Map extends Component {
     componentDidMount() {
         axios.get('/api/snotel/stations')
             .then(response => {
-                console.log("resp", response)
                 let stationGeoJson = this.convertToGeoJson(response.data);
                 this.setState({
                     geoJson: stationGeoJson

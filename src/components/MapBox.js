@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import mapboxgl from 'mapbox-gl';
 
-//TODO:  This should be ENV variable
-mapboxgl.accessToken = 'pk.eyJ1Ijoic3RlcGhlbmhhbnpsaWsiLCJhIjoiY2thMGNkNnhiMDF5aDNubWtmbDNybmpjaCJ9.DHmoxylArLlQyZ1elyfyCA';
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 class MapBox extends Component {
 

@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import Console from './pages/Console';
+import Details from './pages/Details';
+
 
 class App extends Component {
   render() {
@@ -18,6 +20,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={LandingPage}/>
             <Route exact path="/console" component={Console}/>
+            <Route exact path="/details" component={Details}/>
           </Switch>
         </Router>
       </div>

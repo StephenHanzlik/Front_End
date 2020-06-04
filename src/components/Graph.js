@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { ResponsiveLine } from '@nivo/line'
 import testData from '../graphTestData';
 import styled from 'styled-components';
-import moment from "moment";
 
 const GraphWrapper = styled.div`
     width: 1200px;
@@ -29,12 +28,17 @@ class Graph extends Component {
     }
 
     wrapObservations(observations) {
-        let snowDepthData = observations.filter(observation => isNaN(parseInt(observations.snowDepth)))
-        console.log("snowDepthData 1:", snowDepthData)
+
+        console.log("observations 1: ", observations)
+
+        let snowDepthData = observations.filter(observation => {
+            return !isNaN(parseInt(observation.snowDepth))
+        })
+
         snowDepthData = snowDepthData.map(observation => {
-                                    return  { "x": observation.date, "y": parseInt(observations.snowDepth) }
-                                 });
-        console.log('snowDepthData 2:', snowDepthData)
+            return  { "x": observation.date, "y": parseInt(observation.snowDepth) }
+        });
+        
         return [{
             "id": "Snow Depth",
             "color": "hsl(216, 70%, 50%)",

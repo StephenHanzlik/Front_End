@@ -88,8 +88,6 @@ class Map extends Component {
         //     console.log("no geo json loaded")
         //     return null;
         // }
-        console.log("geo json loaded")
-
         return (
 
             <div>

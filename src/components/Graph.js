@@ -29,9 +29,12 @@ class Graph extends Component {
     }
 
     wrapObservations(observations) {
-        const snowDepthData = observations.map((observation) => {
-            return { "x": observation.date, "y": parseInt(observation.snowDepth) }
-        });
+        let snowDepthData = observations.filter(observation => isNaN(parseInt(observations.snowDepth)))
+        console.log("snowDepthData 1:", snowDepthData)
+        snowDepthData = snowDepthData.map(observation => {
+                                    return  { "x": observation.date, "y": parseInt(observations.snowDepth) }
+                                 });
+        console.log('snowDepthData 2:', snowDepthData)
         return [{
             "id": "Snow Depth",
             "color": "hsl(216, 70%, 50%)",

@@ -20,15 +20,24 @@ class Map extends Component {
         this.getObservations = this.getObservations.bind(this);
     }
 
-    componentDidMount() {
-        axios.get('/api/snotel/stations')
+    async componentDidMount() {
+        try{
+            axios.get('/api/snotel/stations')
             .then(response => {
                 let stationGeoJson = this.convertToGeoJson(response.data);
+                console.log("stationGeoJson", stationGeoJson)
                 this.setState({
                     geoJson: stationGeoJson
+                }, function(){
+                    console.log("state changed:", this.state)
                 })
             })
             .catch(error => console.log(error))
+        }
+        catch(error){
+            console.log("there was an error: ", error);
+        } 
+       
     }
 
     convertToGeoJson(stations) {
@@ -75,7 +84,14 @@ class Map extends Component {
     }
 
     render() {
+        // if(!this.state.geoJson.length){
+        //     console.log("no geo json loaded")
+        //     return null;
+        // }
+        console.log("geo json loaded")
+
         return (
+
             <div>
                 <MapBox 
                     geoJson={this.state.geoJson}

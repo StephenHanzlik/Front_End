@@ -21,8 +21,6 @@ class Details extends Component{
         }, function(){console.log(this.state)})
     }
 
-
-
     render(){
         return(
             <NavBar></NavBar>

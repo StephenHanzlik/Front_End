@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import mapboxgl from 'mapbox-gl';
 import {Link} from 'react-router-dom';
 
-// mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
-mapboxgl.accessToken = "pk.eyJ1Ijoic3RlcGhlbmhhbnpsaWsiLCJhIjoiY2thMGNkNnhiMDF5aDNubWtmbDNybmpjaCJ9.DHmoxylArLlQyZ1elyfyCA"
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
+// mapboxgl.accessToken = "pk.eyJ1Ijoic3RlcGhlbmhhbnpsaWsiLCJhIjoiY2thMGNkNnhiMDF5aDNubWtmbDNybmpjaCJ9.DHmoxylArLlQyZ1elyfyCA"
 console.log("process.env", process.env);
 
 class MapBox extends Component {

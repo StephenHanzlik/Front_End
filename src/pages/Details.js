@@ -5,16 +5,23 @@ import NavBar from '../components/NavBar';
 
 class Details extends Component{
 
-    // constructor(props) {
-    //     super(props);
-        // this.state = {
-        //     observations: '',
-        //     stationTriplet: ''
-        //     // geoJson: ''
-        // };
-        // this.getObservations = this.getObservations.bind(this);
-        // this.getStations = this.getStations.bind(this);
-    // }
+    constructor(props) {
+        super(props);
+        this.state = {
+            stationTriplet: ''
+        };
+    }
+
+    componentDidMount(){
+        let url = window.location.href;
+        let triplet = url.slice(url.indexOf("details/") + 8);
+        console.log("triplet", triplet)
+        this.setState({
+            stationTriplet: triplet
+        }, function(){console.log(this.state)})
+    }
+
+
 
     render(){
         return(

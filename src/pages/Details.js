@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import NavBar from '../components/NavBar';
-// import styled from 'styled-components';
+import Map from '../components/Map'
+import styled from 'styled-components';
+
+const MapWrapper = styled.div`
+    width: 1200px;
+    height: 30vh;
+    background: red;
+`;
 
 
 class Details extends Component{
@@ -23,7 +30,13 @@ class Details extends Component{
 
     render(){
         return(
-            <NavBar></NavBar>
+            <div>
+                <NavBar/>
+                <MapWrapper>
+                    <Map></Map>
+                </MapWrapper>
+            </div>
+
         )
     }
 }

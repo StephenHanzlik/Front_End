@@ -64,11 +64,6 @@ class MapBox extends Component {
                     }, this.props.getObservations(marker.properties.triplet))
                 })
 
-                // let button = document.createElement('div')
-                // button.addEventListener('click', (e) => {
-                //     console.log("even listener is working")
-                // })
-
                 let aMarker = new mapboxgl.Marker(el)
                     .setLngLat(marker.geometry.coordinates)
                     .setPopup(new mapboxgl.Popup({ offset: 25 })
@@ -82,8 +77,6 @@ class MapBox extends Component {
             });
         })
     }
-
-
 
     render() {
         return (

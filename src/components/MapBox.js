@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import mapboxgl from 'mapbox-gl';
+import {Link} from 'react-router-dom';
 
 // mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 mapboxgl.accessToken = "pk.eyJ1Ijoic3RlcGhlbmhhbnpsaWsiLCJhIjoiY2thMGNkNnhiMDF5aDNubWtmbDNybmpjaCJ9.DHmoxylArLlQyZ1elyfyCA"
@@ -63,16 +64,26 @@ class MapBox extends Component {
                     }, this.props.getObservations(marker.properties.triplet))
                 })
 
+                // let button = document.createElement('div')
+                // button.addEventListener('click', (e) => {
+                //     console.log("even listener is working")
+                // })
+
                 let aMarker = new mapboxgl.Marker(el)
                     .setLngLat(marker.geometry.coordinates)
                     .setPopup(new mapboxgl.Popup({ offset: 25 })
-                        .setHTML("<h5>" + marker.properties.title + "</h5><h5>" + marker.properties.elevation + "ft</h5><button onClick=\"alert('test')\">Details</button>"))
-                    .addTo(map)
+                        .setHTML(
+                            `<h5>${marker.properties.title}</h5><h5>${marker.properties.elevation}ft</h5>
+                        <button onClick="window.location.href = '/details/${marker.properties.triplet}';">Details</button>`
+                    ))
+                    .addTo(map) 
 
                 markers.push(aMarker);
             });
         })
     }
+
+
 
     render() {
         return (

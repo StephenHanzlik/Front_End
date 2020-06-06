@@ -40,12 +40,10 @@ class MapBox extends Component {
         let markers = [];
 
         map.on('load', () => {  
-            console.log("this.props", this.props)
 
             this.props.geoJson.data.features.forEach((marker) => {
 
                 let el = document.createElement('div');
-
                 el.style.backgroundImage = 'url(https://i.ibb.co/WvGxZpY/snowflake-1.jpg)';
                 el.style.width = '40px';
                 el.style.height = '40px';
@@ -68,8 +66,9 @@ class MapBox extends Component {
                 let aMarker = new mapboxgl.Marker(el)
                     .setLngLat(marker.geometry.coordinates)
                     .setPopup(new mapboxgl.Popup({ offset: 25 })
-                        .setHTML('<h5>' + marker.properties.title + '</h5><h5>' + marker.properties.elevation + 'ft</h5><button>Details</button>'))
+                        .setHTML("<h5>" + marker.properties.title + "</h5><h5>" + marker.properties.elevation + "ft</h5><button onClick=\"alert('test')\">Details</button>"))
                     .addTo(map)
+
                 markers.push(aMarker);
             });
         })

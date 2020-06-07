@@ -4,9 +4,13 @@ import Map from '../components/Map'
 import styled from 'styled-components';
 
 const MapWrapper = styled.div`
-    width: 1200px;
-    height: 30vh;
+    width: 50%;
     background: red;
+`;
+
+const DataWrapper = styled.div`
+    width: 50%;
+    background: green;
 `;
 
 
@@ -35,6 +39,8 @@ class Details extends Component{
                 <MapWrapper>
                     <Map></Map>
                 </MapWrapper>
+                <DataWrapper>
+                </DataWrapper>
             </div>
 
         )

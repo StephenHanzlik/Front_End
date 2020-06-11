@@ -62,7 +62,8 @@ class Console extends Component{
         })
         .catch(error => console.log(error))
     }
-
+    
+//TODO: used in both Console and Details - Refactor
     convertToGeoJson(stations) {
         //TODO: Could abstract this away as a class
         let geoJsonFeatureCollection = {

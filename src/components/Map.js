@@ -8,9 +8,6 @@ class Map extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            lng: -105.270546,
-            lat: 40.014984,
-            zoom: 4,
             stationElevation: '',
             stationTriplet: '',
             stationName: '',
@@ -20,11 +17,12 @@ class Map extends Component {
     }
 
     componentDidMount() {
+        console.log("myProps: ", this.props)
         const map = new mapboxgl.Map({
             container: this.mapContainer,
             style: 'mapbox://styles/stephenhanzlik/ck45yi8kp2hrp1drw58brvdro',
-            center: [this.state.lng, this.state.lat],
-            zoom: this.state.zoom
+            center: [this.props.lng, this.props.lat],
+            zoom: this.props.zoom
         });
 
         map.on('move', () => {

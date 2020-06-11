@@ -101,6 +101,10 @@ class Details extends Component{
                 <MapWrapper>
                     <Map
                         geoJson={this.state.geoJson}
+                        // lng={this.state.geoJson ? this.state.geoJson.data.features[0].geometry.coordinates[0] : -105.270546}
+                        lng={this.state.geoJson ? this.state.geoJson.data.features[0].geometry.coordinates[0] : -105.270546}
+                        lat={this.state.geoJson ? this.state.geoJson.data.features[0].geometry.coordinates[1] : 40.014984}
+                        zoom={9}
                     />
                 </MapWrapper>
                 <DataWrapper>

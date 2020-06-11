@@ -62,7 +62,7 @@ class Console extends Component{
         })
         .catch(error => console.log(error))
     }
-    
+
 //TODO: used in both Console and Details - Refactor
     convertToGeoJson(stations) {
         //TODO: Could abstract this away as a class
@@ -111,6 +111,9 @@ class Console extends Component{
                     <Map
                         getObservations={this.getObservations}
                         geoJson={this.state.geoJson}
+                        lng={-105.270546}
+                        lat={40.014984}
+                        zoom={4}
                     />
                 </MapWrapper>
                 <GraphWrapper>

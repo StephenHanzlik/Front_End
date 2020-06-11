@@ -26,7 +26,27 @@ class Console extends Component{
             geoJson: ''
         };
         this.getObservations = this.getObservations.bind(this);
-        // this.getStations = this.getStations.bind(this);
+        this.getStations = this.getStations.bind(this);
+    }
+
+    componentDidMount() {
+        this.getStations();
+    }
+
+    async getStations(){
+        try{
+             await axios.get('/api/snotel/stations')
+             .then(response => {
+                 let stationGeoJson = this.convertToGeoJson(response.data);
+                 this.setState({
+                     geoJson: stationGeoJson
+                 })
+             })
+             .catch(error => console.log(error))
+         }
+         catch(error){
+             console.log("there was an error: ", error);
+         } 
     }
 
     getObservations(triplet){
@@ -41,26 +61,6 @@ class Console extends Component{
             }, )
         })
         .catch(error => console.log(error))
-    }
-
-    async componentDidMount() {
-        try{
-            axios.get('/api/snotel/stations')
-            .then(response => {
-                let stationGeoJson = this.convertToGeoJson(response.data);
-                console.log("stationGeoJson", stationGeoJson)
-                this.setState({
-                    geoJson: stationGeoJson
-                }, function(){
-                    console.log("state changed:", this.state)
-                })
-            })
-            .catch(error => console.log(error))
-        }
-        catch(error){
-            console.log("there was an error: ", error);
-        } 
-       
     }
 
     convertToGeoJson(stations) {
@@ -103,12 +103,7 @@ class Console extends Component{
     };
 
     render(){
-        
-        console.log("Console getObservations: ", this.getObservations)
-
         return(
-
-            // Todo: Make stations API call here and pass as props to Map
             <div>
                 <NavBar/>
                 <MapWrapper>

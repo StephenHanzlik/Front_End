@@ -21,9 +21,9 @@ class Console extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            observations: '',
-            stationTriplet: ''
-            // geoJson: ''
+            observations: [],
+            stationTriplet: '',
+            geoJson: ''
         };
         this.getObservations = this.getObservations.bind(this);
         // this.getStations = this.getStations.bind(this);
@@ -43,27 +43,78 @@ class Console extends Component{
         .catch(error => console.log(error))
     }
 
-    // getStations(){
-    //     axios.get('/api/snotel/stations')
-    //     .then(response => {
-    //         let stationGeoJson = this.convertToGeoJson(response.data);
-    //         console.log("stationGeoJson", stationGeoJson)
-    //         this.setState({
-    //             geoJson: stationGeoJson
-    //         })
-    //     })
-    //     .catch(error => console.log(error))
-    // }
+    async componentDidMount() {
+        try{
+            axios.get('/api/snotel/stations')
+            .then(response => {
+                let stationGeoJson = this.convertToGeoJson(response.data);
+                console.log("stationGeoJson", stationGeoJson)
+                this.setState({
+                    geoJson: stationGeoJson
+                }, function(){
+                    console.log("state changed:", this.state)
+                })
+            })
+            .catch(error => console.log(error))
+        }
+        catch(error){
+            console.log("there was an error: ", error);
+        } 
+       
+    }
+
+    convertToGeoJson(stations) {
+        //TODO: Could abstract this away as a class
+        let geoJsonFeatureCollection = {
+            "type": "geojson",
+            "data": {
+                type: 'FeatureCollection',
+                features: []
+            }
+        };
+
+        let features = [];
+        stations.forEach(station => {
+            let coordinates = [];
+            let location = JSON.parse(station.location);
+            coordinates.push(location.lng);
+            coordinates.push(location.lat);
+
+            //TODO: Could abstract this away as a class
+            let geoJsonItem = {
+                'type': 'Feature',
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': coordinates
+                },
+                'properties': {
+                    'title': station.name,
+                    'elevation': station.elevation,
+                    'triplet': station.triplet,
+                    'timezone': station.timezone,
+                    'wind': station.wind,
+                    'icon': 'marker'
+                }
+            };
+            features.push(geoJsonItem);
+        })
+        geoJsonFeatureCollection.data.features = features;
+        return geoJsonFeatureCollection;
+    };
 
     render(){
+        
+        console.log("Console getObservations: ", this.getObservations)
+
         return(
+
             // Todo: Make stations API call here and pass as props to Map
             <div>
                 <NavBar/>
                 <MapWrapper>
                     <Map
                         getObservations={this.getObservations}
-                        // geoJson={this.getObservations}
+                        geoJson={this.state.geoJson}
                     />
                 </MapWrapper>
                 <GraphWrapper>

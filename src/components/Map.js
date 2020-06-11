@@ -6,38 +6,7 @@ class Map extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            lng: -105.270546,
-            lat: 40.014984,
-            zoom: 4,
-            stationElevation: '',
-            stationTriplet: '',
-            stationName: '',
-            stationTimeZone: 0,
-            stationWind: false,
-            geoJson: ''
-        };
         this.getObservations = this.getObservations.bind(this);
-    }
-
-    async componentDidMount() {
-        try{
-            axios.get('/api/snotel/stations')
-            .then(response => {
-                let stationGeoJson = this.convertToGeoJson(response.data);
-                console.log("stationGeoJson", stationGeoJson)
-                this.setState({
-                    geoJson: stationGeoJson
-                }, function(){
-                    console.log("state changed:", this.state)
-                })
-            })
-            .catch(error => console.log(error))
-        }
-        catch(error){
-            console.log("there was an error: ", error);
-        } 
-       
     }
 
     convertToGeoJson(stations) {
@@ -92,7 +61,7 @@ class Map extends Component {
 
             <div>
                 <MapBox 
-                    geoJson={this.state.geoJson}
+                    geoJson={this.props.geoJson}
                     getObservations={this.getObservations}
                 ></MapBox>
             </div>

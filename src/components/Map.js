@@ -49,9 +49,10 @@ class Map extends Component {
     };
 
     getObservations(triplet){
-        //TODO: Should move this function in from console
         this.props.getObservations(triplet);
     }
+
+
 
     render() {
         // if(!this.state.geoJson.length){

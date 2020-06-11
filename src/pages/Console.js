@@ -58,7 +58,7 @@ class Console extends Component{
             this.setState({
                 stationTriplet: triplet,
                 observations: response.data
-            }, )
+            })
         })
         .catch(error => console.log(error))
     }

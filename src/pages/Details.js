@@ -24,12 +24,20 @@ class Details extends Component{
     }
 
     componentDidMount(){
-        let url = window.location.href;
-        let triplet = url.slice(url.indexOf("details/") + 8);
-        console.log("triplet", triplet)
+        let triplet = this.getStationTriplet();
         this.setState({
             stationTriplet: triplet
-        }, function(){console.log(this.state)})
+        })
+    }
+
+    //TODO:  Impliment redux to reduce API calls
+    getStationTriplet(){
+        let url = window.location.href;
+        return url.slice(url.indexOf("details/") + 8);
+    }
+
+    getStationObservations(){
+
     }
 
     render(){
@@ -37,7 +45,9 @@ class Details extends Component{
             <div>
                 <NavBar/>
                 <MapWrapper>
-                    <Map></Map>
+                    <Map
+                        geoJson={this.state.geoJson}
+                    />
                 </MapWrapper>
                 <DataWrapper>
                 </DataWrapper>

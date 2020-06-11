@@ -40,8 +40,7 @@ class MapBox extends Component {
         let markers = [];
 
         map.on('load', () => {  
-            console.log("MapBox 43 this.props: ", this.props);
-            
+                        
             this.props.geoJson.data.features.forEach((marker) => {
 
                 let el = document.createElement('div');

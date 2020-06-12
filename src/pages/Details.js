@@ -6,16 +6,15 @@ import axios from 'axios';
 
 const MapWrapper = styled.div`
     background: red;
-    display: inline-block;
 `;
 
 const DataWrapper = styled.div`
     background: green;
-    display: inline-block;
 `;
 
 const Row = styled.div`
-    text-align:center;
+    display: flex;
+    justify-content: center;
 `;
 
 class Details extends Component{
@@ -24,6 +23,10 @@ class Details extends Component{
         super(props);
         this.state = {
             stationTriplet: '',
+            stationName: '',
+            stationElevation: '',
+            lat: '',
+            lng: '',
             geoJson: ''
         };
     }
@@ -43,9 +46,15 @@ class Details extends Component{
     getStationObservations(triplet){
         axios.get(`/api/snotel/stations/${triplet}`)
         .then(response => {
+             let observation = response.data[0];
              let stationGeoJson = this.convertToGeoJson(response.data);
              this.setState({
-                 geoJson: stationGeoJson
+                stationTriplet: observation.triplet,
+                stationName: observation.name,
+                stationElevation: observation.elevation,
+                lat: JSON.parse(observation.location).lat,
+                lng: JSON.parse(observation.location).lng,
+                geoJson: stationGeoJson
              })
         })
          .catch(error => console.log(error))
@@ -110,25 +119,12 @@ class Details extends Component{
                     }
                     </MapWrapper>
                     <DataWrapper>
-                        <form>
-                            <label>
-                                Name:
-                                <input type="text" name="name" />
-                            </label>
-                            <label>
-                                Test:
-                                <input type="text" name="name" />
-                            </label>
-                            <label>
-                                What:
-                                <input type="text" name="name" />
-                            </label>
-                            <label>
-                                lorum:
-                                <input type="text" name="name" />
-                            </label>
-                            <input type="submit" value="Submit" />
-                        </form>
+                    <div>
+                        <h5>Station</h5>
+                        <div>Name: {this.state.stationName} | Elevation: {this.state.stationElevation}ft</div>
+                        <div>Location: {this.state.lng},{this.state.lat} | Triplet: {this.state.stationTriplet }</div>
+                        <h5>Current Conditions</h5>
+                    </div>
                     </DataWrapper>
                 </Row>
             </div>

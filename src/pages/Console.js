@@ -33,20 +33,15 @@ class Console extends Component{
         this.getStations();
     }
 
-    async getStations(){
-        try{
-             await axios.get('/api/snotel/stations')
-             .then(response => {
-                 let stationGeoJson = this.convertToGeoJson(response.data);
-                 this.setState({
-                     geoJson: stationGeoJson
-                 })
+    getStations(){
+        axios.get('/api/snotel/stations')
+            .then(response => {
+                let stationGeoJson = this.convertToGeoJson(response.data);
+                this.setState({
+                 geoJson: stationGeoJson
              })
-             .catch(error => console.log(error))
-         }
-         catch(error){
-             console.log("there was an error: ", error);
-         } 
+         })
+            .catch(error => console.log(error)) 
     }
 
     getObservations(triplet){
@@ -108,6 +103,7 @@ class Console extends Component{
             <div>
                 <NavBar/>
                 <MapWrapper>
+                { this.state && this.state.geoJson &&
                     <Map
                         getObservations={this.getObservations}
                         geoJson={this.state.geoJson}
@@ -115,6 +111,7 @@ class Console extends Component{
                         lat={40.014984}
                         zoom={4}
                     />
+                }
                 </MapWrapper>
                 <GraphWrapper>
                     <Graph

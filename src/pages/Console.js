@@ -110,6 +110,8 @@ class Console extends Component{
                         lng={-105.270546}
                         lat={40.014984}
                         zoom={4}
+                        mapHeight={58}
+                        mapWidth={87}
                     />
                 }
                 </MapWrapper>

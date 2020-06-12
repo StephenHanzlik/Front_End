@@ -5,8 +5,11 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 const MapWrapper = styled.div`
-    width: 50%;
     background: red;
+    height: 67vh;
+    width: 45vw; 
+    position: relative;
+    // overflow: auto
 `;
 
 const DataWrapper = styled.div`
@@ -100,6 +103,8 @@ class Details extends Component{
                         lng={this.state.geoJson.data.features[0].geometry.coordinates[0]}
                         lat={this.state.geoJson.data.features[0].geometry.coordinates[1]}
                         zoom={9}
+                        mapHeight={67}
+                        mapWidth={45}
                     />
                 }
                 </MapWrapper>

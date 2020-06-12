@@ -6,17 +6,17 @@ import axios from 'axios';
 
 const MapWrapper = styled.div`
     background: red;
-    height: 67vh;
-    width: 45vw; 
-    position: relative;
-    // overflow: auto
+    display: inline-block;
 `;
 
 const DataWrapper = styled.div`
-    width: 50%;
     background: green;
+    display: inline-block;
 `;
 
+const Row = styled.div`
+    text-align:center;
+`;
 
 class Details extends Component{
 
@@ -96,22 +96,42 @@ class Details extends Component{
         return(
             <div>
                 <NavBar/>
-                <MapWrapper>
-                { this.state && this.state.geoJson &&
-                    <Map
-                        geoJson={this.state.geoJson}
-                        lng={this.state.geoJson.data.features[0].geometry.coordinates[0]}
-                        lat={this.state.geoJson.data.features[0].geometry.coordinates[1]}
-                        zoom={9}
-                        mapHeight={67}
-                        mapWidth={45}
-                    />
-                }
-                </MapWrapper>
-                <DataWrapper>
-                </DataWrapper>
+                <Row>
+                    <MapWrapper>
+                    { this.state && this.state.geoJson &&
+                      <Map
+                            geoJson={this.state.geoJson}
+                            lng={this.state.geoJson.data.features[0].geometry.coordinates[0]}
+                            lat={this.state.geoJson.data.features[0].geometry.coordinates[1]}
+                            zoom={9}
+                            mapHeight={67}
+                            mapWidth={45}
+                        />
+                    }
+                    </MapWrapper>
+                    <DataWrapper>
+                        <form>
+                            <label>
+                                Name:
+                                <input type="text" name="name" />
+                            </label>
+                            <label>
+                                Test:
+                                <input type="text" name="name" />
+                            </label>
+                            <label>
+                                What:
+                                <input type="text" name="name" />
+                            </label>
+                            <label>
+                                lorum:
+                                <input type="text" name="name" />
+                            </label>
+                            <input type="submit" value="Submit" />
+                        </form>
+                    </DataWrapper>
+                </Row>
             </div>
-
         )
     }
 }

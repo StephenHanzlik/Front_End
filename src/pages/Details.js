@@ -27,14 +27,17 @@ class Details extends Component{
             stationElevation: '',
             lat: '',
             lng: '',
-            geoJson: ''
+            geoJson: '',
+            observations: ''
         };
     }
 
     componentDidMount(){
         //currently setting station observations to state but not triplet
         //TODO: Should also configure zoom and center as props to map
-        this.getStationObservations(this.getStationTriplet());
+        let stationTriplet = this.getStationTriplet();
+        this.getStation(stationTriplet);
+        this.getObservations(stationTriplet);
     }
 
     //TODO:  Impliment redux to reduce API calls
@@ -43,7 +46,7 @@ class Details extends Component{
         return url.slice(url.indexOf("details/") + 8);
     }
 
-    getStationObservations(triplet){
+    getStation(triplet){
         axios.get(`/api/snotel/stations/${triplet}`)
         .then(response => {
              let observation = response.data[0];
@@ -58,6 +61,21 @@ class Details extends Component{
              })
         })
          .catch(error => console.log(error))
+    }
+
+    getObservations(triplet){
+        //TODO: There is probably another endpoint for individual day reports however
+        //Current conditions should grab most recent complete data.   May have to grab 5 days worth and concat to values.
+        //Could also dynamically display fields if data is present.  For example, airTemp Max and Min are not always present
+        axios.get(`/api/snotel/observations/${triplet}?from=2020-6-01&to=${new Date().toJSON().slice(0,10)}`)
+        .then(response => {
+            console.log("Observation Details Resp", response)            
+            this.setState({
+                stationTriplet: triplet,
+                observations: response.data
+            })
+        })
+        .catch(error => console.log(error))
     }
 
     //TODO: used in both Console and Details - Refactor
@@ -101,7 +119,14 @@ class Details extends Component{
     };
 
     render(){
-        console.log("Details Render - this.state.geoJson: ", this.state.geoJson)
+        console.log("Deatils Render - this.state.observations: ", this.state.observations);
+        // console.log("Deatils Render - this.state.observations.pop(): ", this.state.observations.pop());
+        let currentObservation;
+    
+        if(this.state.observations){
+            currentObservation = this.state.observations.pop()
+        }
+
         return(
             <div>
                 <NavBar/>
@@ -119,12 +144,19 @@ class Details extends Component{
                     }
                     </MapWrapper>
                     <DataWrapper>
-                    <div>
-                        <h5>Station</h5>
-                        <div>Name: {this.state.stationName} | Elevation: {this.state.stationElevation}ft</div>
-                        <div>Location: {this.state.lng},{this.state.lat} | Triplet: {this.state.stationTriplet }</div>
-                        <h5>Current Conditions</h5>
-                    </div>
+                    { this.state && this.state.observations &&
+                        <div>
+                            <h5>Station</h5>
+                            <div>Name: {this.state.stationName} | Elevation: {this.state.stationElevation}ft</div>
+                            <div>Location: {this.state.lng},{this.state.lat} | Triplet: {this.state.stationTriplet }</div>
+                            <h5>Current Conditions*</h5>
+                            <div>Snow Depth: {currentObservation.snowDepth} | Change in Snow Depth: {currentObservation.changeInSnowDepth}</div>
+                            <div>Snow Water Equivalent: {currentObservation.snowWaterEquivalent} | Change in Snow Water Equivalent: {currentObservation.changeInSnowWaterEquivalent}</div>  
+                            <div>Date: {currentObservation.date} | Air Temp: {currentObservation.airTemperatureObserved}</div>
+                            <div>Air Temp Min: {currentObservation.airTemperatureMin} | Air Temp Max: {currentObservation.airTemperatureMax}</div>
+                    {/* Metoer burst technology can be impaired by storms.  Snow pack data is not always up to date and should be noted if outdated values are used */}
+                        </div>
+                    }
                     </DataWrapper>
                 </Row>
             </div>

@@ -37,20 +37,15 @@ class Details extends Component{
         return url.slice(url.indexOf("details/") + 8);
     }
 
-    async getStationObservations(triplet){
-        try{
-            await axios.get(`/api/snotel/stations/${triplet}`)
-            .then(response => {
-                let stationGeoJson = this.convertToGeoJson(response.data);
-                this.setState({
-                    geoJson: stationGeoJson
-                }, function(){console.log("State Set - this.state: ", this.state.geoJson)})
-            })
-            .catch(error => console.log(error))
-        }
-        catch(error){
-            console.log("there was an error: ", error);
-        } 
+    getStationObservations(triplet){
+        axios.get(`/api/snotel/stations/${triplet}`)
+        .then(response => {
+             let stationGeoJson = this.convertToGeoJson(response.data);
+             this.setState({
+                 geoJson: stationGeoJson
+             })
+        })
+         .catch(error => console.log(error))
     }
 
     //TODO: used in both Console and Details - Refactor
@@ -99,13 +94,14 @@ class Details extends Component{
             <div>
                 <NavBar/>
                 <MapWrapper>
+                { this.state && this.state.geoJson &&
                     <Map
                         geoJson={this.state.geoJson}
-                        // lng={this.state.geoJson ? this.state.geoJson.data.features[0].geometry.coordinates[0] : -105.270546}
-                        lng={this.state.geoJson ? this.state.geoJson.data.features[0].geometry.coordinates[0] : -105.270546}
-                        lat={this.state.geoJson ? this.state.geoJson.data.features[0].geometry.coordinates[1] : 40.014984}
+                        lng={this.state.geoJson.data.features[0].geometry.coordinates[0]}
+                        lat={this.state.geoJson.data.features[0].geometry.coordinates[1]}
                         zoom={9}
                     />
+                }
                 </MapWrapper>
                 <DataWrapper>
                 </DataWrapper>

@@ -29,7 +29,8 @@ class Details extends Component{
             lat: '',
             lng: '',
             geoJson: '',
-            observations: ''
+            observations: '',
+            currentObservationIndex: ''
         };
     }
 
@@ -72,8 +73,8 @@ class Details extends Component{
         .then(response => {
             console.log("Observation Details Resp", response)            
             this.setState({
-                stationTriplet: triplet,
-                observations: response.data
+                observations: response.data,
+                currentObservationIndex: response.data.length - 1
             })
         })
         .catch(error => console.log(error))
@@ -120,7 +121,16 @@ class Details extends Component{
     };
 
     previousObservation(param){
-        console.log('param is:', param)
+        const currentIndex = this.state.currentObservationIndex;
+        if(currentIndex > 0){
+            let newIndex = currentIndex - 1;
+            this.setState({
+                currentObservationIndex: newIndex
+            })
+        }else{
+            //TODO:  Toast notifactions.  Prompt user to graph for more historical data.
+            console.log("You are on the last item");
+        }
     }
 
     nextObservation(param){
@@ -132,7 +142,7 @@ class Details extends Component{
         let observations = this.state.observations;
     
         if(observations){
-            currentObservation = observations[observations.length - 1];
+            currentObservation = observations[this.state.currentObservationIndex];
         }
 
         return(

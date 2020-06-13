@@ -75,10 +75,6 @@ class Map extends Component {
     render() {
         return (
             <div>
-                {/* <div>
-                    <div>Triplet: {this.state.stationTriplet } | Name: {this.state.stationName} | Elevation: {this.state.stationElevation}</div>
-                    <div>Location: {this.state.lng},{this.state.lat} | Timezone: {this.state.stationTimeZone} | Wind: {this.state.stationWind}</div>
-                </div> */}
                 <div ref={el => this.mapContainer = el} style={{height: `${this.props.mapHeight}vh`,width: `${this.props.mapWidth}vw`
                 }} className='mapContainer' />
             </div>

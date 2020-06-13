@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import NavBar from '../components/NavBar';
-import Map from '../components/Map'
+import Map from '../components/Map';
+import ArrowButton from '../components/ArrowButton';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -149,11 +150,14 @@ class Details extends Component{
                             <h5>Station</h5>
                             <div>Name: {this.state.stationName} | Elevation: {this.state.stationElevation}ft</div>
                             <div>Location: {this.state.lng},{this.state.lat} | Triplet: {this.state.stationTriplet }</div>
-                            <h5>Current Conditions*</h5>
-                            <div>Snow Depth: {currentObservation.snowDepth} | Change in Snow Depth: {currentObservation.changeInSnowDepth}</div>
-                            <div>Snow Water Equivalent: {currentObservation.snowWaterEquivalent} | Change in Snow Water Equivalent: {currentObservation.changeInSnowWaterEquivalent}</div>  
-                            <div>Date: {currentObservation.date} | Air Temp: {currentObservation.airTemperatureObserved}</div>
-                            <div>Air Temp Min: {currentObservation.airTemperatureMin} | Air Temp Max: {currentObservation.airTemperatureMax}</div>
+                            <h4>Current Conditions</h4>
+                            <ArrowButton/><h5>{currentObservation.date}</h5>
+                            <div>Snow Depth: {currentObservation.snowDepth}" | Δ: {currentObservation.changeInSnowDepth}"</div>
+                            <div>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}" | Δ: {currentObservation.changeInSnowWaterEquivalent}"</div>  
+                            <div>Air Temp: {currentObservation.airTemperatureObserved}°F</div>
+                            { currentObservation.airTemperatureMin && currentObservation.airTemperatureMax &&
+                                <div>Air Temp Min: {currentObservation.airTemperatureMin}°F | Air Temp Max: {currentObservation.airTemperatureMax}°F</div>
+                            }
                     {/* Metoer burst technology can be impaired by storms.  Snow pack data is not always up to date and should be noted if outdated values are used */}
                         </div>
                     }

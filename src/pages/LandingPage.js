@@ -31,7 +31,10 @@ class LandingPage extends Component {
             <Background/>
             <LandingHeaderContainer>
               <LandingHeader/>
-                <Button/>
+                <Button
+                    text="SNOTEL Console"
+                    link="/console"
+                />
             </LandingHeaderContainer>
             <AboutContentContainer/>
         </div> 

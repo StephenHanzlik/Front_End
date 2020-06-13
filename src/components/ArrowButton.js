@@ -9,22 +9,23 @@ const ButtonWrapper = styled.div`
     height: 28px;
 `;
 
-const LeftArrowButton = styled.img`
+const Img = styled.img`
     max-width:100%;
     max-height:100%
-`;
-
-const RightArrowButton = styled.image`
-    background-image: url(${rightArrowImg});
 `;
 
 class ArrowButton extends Component {
 
     render(){
         return (
-        <ButtonWrapper>
-            <LeftArrowButton src={leftArrowImg}/>
-        </ButtonWrapper>
+            <ButtonWrapper>
+            { this.props.leftArrow &&
+                <Img src={leftArrowImg}/>
+            }
+            { this.props.rightArrow &&
+                <Img src={rightArrowImg}/>
+            }
+            </ButtonWrapper>
         )
     }
 }

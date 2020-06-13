@@ -151,7 +151,7 @@ class Details extends Component{
                             <div>Name: {this.state.stationName} | Elevation: {this.state.stationElevation}ft</div>
                             <div>Location: {this.state.lng},{this.state.lat} | Triplet: {this.state.stationTriplet }</div>
                             <h4>Current Conditions</h4>
-                            <ArrowButton/><h5>{currentObservation.date}</h5>
+                            <ArrowButton leftArrow={true}/><h5>{currentObservation.date}</h5><ArrowButton rightArrow={true}/>
                             <div>Snow Depth: {currentObservation.snowDepth}" | Δ: {currentObservation.changeInSnowDepth}"</div>
                             <div>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}" | Δ: {currentObservation.changeInSnowWaterEquivalent}"</div>  
                             <div>Air Temp: {currentObservation.airTemperatureObserved}°F</div>

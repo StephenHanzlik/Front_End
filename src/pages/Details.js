@@ -129,12 +129,23 @@ class Details extends Component{
             })
         }else{
             //TODO:  Toast notifactions.  Prompt user to graph for more historical data.
-            console.log("You are on the last item");
+            alert("You are on the last item.  Use Graph for more historical data");
         }
     }
 
     nextObservation(param){
-        console.log('param is:', param)
+        const currentIndex = this.state.currentObservationIndex;
+        console.log("currentIndex: ", currentIndex);
+        console.log("this.state.observations.length", this.state.observations.length)
+        if(currentIndex < this.state.observations.length - 1){
+            let newIndex = currentIndex + 1;
+            this.setState({
+                currentObservationIndex: newIndex
+            })
+        }else{
+            //TODO:  Toast notifactions.  Prompt user to graph for more historical data.
+            alert("You are on the last item.  Use Graph for more historical data");
+        }
     }
 
     render(){
@@ -180,7 +191,12 @@ class Details extends Component{
                             </Row>
                             <div>Snow Depth: {currentObservation.snowDepth}" | Δ: {currentObservation.changeInSnowDepth}"</div>
                             <div>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}" | Δ: {currentObservation.changeInSnowWaterEquivalent}"</div>  
-                            <div>Air Temp: {currentObservation.airTemperatureObserved}°F</div>
+                            { currentObservation.airTemperatureObserved &&
+                                <div>Air Temp: {currentObservation.airTemperatureObserved}°F</div>
+                            }
+                            { currentObservation.airTemperatureAverage &&
+                                <div>Air Temp Average: {currentObservation.airTemperatureAverage}°F</div>
+                            }
                             { currentObservation.airTemperatureMin && currentObservation.airTemperatureMax &&
                                 <div>Air Temp Min: {currentObservation.airTemperatureMin}°F | Air Temp Max: {currentObservation.airTemperatureMax}°F</div>
                             }

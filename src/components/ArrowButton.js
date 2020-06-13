@@ -5,9 +5,9 @@ import rightArrowImg from '../images/right-arrow.png';
 
 
 const ButtonWrapper = styled.div`
-    width: 28px;
-    height: 28px;
-    margin: 12px 5px 10px 5px;
+    width: 20px;
+    height: 20px;
+    margin: 16px 8px 10px 8px;
 `;
 
 const Img = styled.img`

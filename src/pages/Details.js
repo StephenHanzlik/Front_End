@@ -119,13 +119,20 @@ class Details extends Component{
         return geoJsonFeatureCollection;
     };
 
+    previousObservation(param){
+        console.log('param is:', param)
+    }
+
+    nextObservation(param){
+        console.log('param is:', param)
+    }
+
     render(){
-        console.log("Deatils Render - this.state.observations: ", this.state.observations);
-        // console.log("Deatils Render - this.state.observations.pop(): ", this.state.observations.pop());
         let currentObservation;
+        let observations = this.state.observations;
     
-        if(this.state.observations){
-            currentObservation = this.state.observations.pop()
+        if(observations){
+            currentObservation = observations[observations.length - 1];
         }
 
         return(
@@ -150,9 +157,16 @@ class Details extends Component{
                             <h5>Station</h5>
                             <div>Name: {this.state.stationName} | Elevation: {this.state.stationElevation}ft</div>
                             <div>Location: {this.state.lng},{this.state.lat} | Triplet: {this.state.stationTriplet }</div>
-                            <h4>Current Conditions</h4>
+                            <h5>Observations</h5>
                             <Row>
-                                <ArrowButton leftArrow={true}/><h5>{currentObservation.date}</h5><ArrowButton rightArrow={true}/>
+                                <div onClick={()=>this.previousObservation("test value 1")}>
+                                    <ArrowButton leftArrow={true}/>
+                                </div>
+                                <h5 >{currentObservation.date}</h5>
+                                <div onClick={()=>this.nextObservation("test value 2")}>
+                                    <ArrowButton rightArrow={true}/>
+                                </div>
+                                
                             </Row>
                             <div>Snow Depth: {currentObservation.snowDepth}" | Δ: {currentObservation.changeInSnowDepth}"</div>
                             <div>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}" | Δ: {currentObservation.changeInSnowWaterEquivalent}"</div>  

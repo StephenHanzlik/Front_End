@@ -127,55 +127,55 @@ class Details extends Component{
         }
 
         return(
-            <div>
-                <NavBar/>
-                <Row>
-                    <MapWrapper>
-                    { this.state && this.state.geoJson &&
-                      <Map
-                            geoJson={this.state.geoJson}
-                            lng={this.state.geoJson.data.features[0].geometry.coordinates[0]}
-                            lat={this.state.geoJson.data.features[0].geometry.coordinates[1]}
-                            zoom={9}
-                            mapHeight={67}
-                            mapWidth={45}
-                        />
-                    }
-                    </MapWrapper>
-                    <DataWrapper>
-                    { this.state && this.state.observations &&
-                        <div>
-                            <h5>{this.state.stationName}</h5>
-                            <h5>{this.state.stationElevation}ft</h5>
-                            <div>{this.state.lng}, {this.state.lat}</div>
-                            <div>{this.state.stationTriplet }</div>
-                            <Row>
-                                <div onClick={()=>this.previousObservation("test value 1")}>
-                                    <ArrowButton leftArrow={true}/>
-                                </div>
-                                <h5 >{currentObservation.date}</h5>
-                                <div onClick={()=>this.nextObservation("test value 2")}>
-                                    <ArrowButton rightArrow={true}/>
-                                </div>
-                                
-                            </Row>
-                            <div>Snow Depth: {currentObservation.snowDepth}" | Δ: {currentObservation.changeInSnowDepth}"</div>
-                            <div>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}" | Δ: {currentObservation.changeInSnowWaterEquivalent}"</div>  
-                            { currentObservation.airTemperatureObserved &&
-                                <div>Air Temp: {currentObservation.airTemperatureObserved}°F</div>
-                            }
-                            { currentObservation.airTemperatureAverage &&
-                                <div>Air Temp Average: {currentObservation.airTemperatureAverage}°F</div>
-                            }
-                            { currentObservation.airTemperatureMin && currentObservation.airTemperatureMax &&
-                                <div>Air Temp Min: {currentObservation.airTemperatureMin}°F | Air Temp Max: {currentObservation.airTemperatureMax}°F</div>
-                            }
-                    {/* Metoer burst technology can be impaired by storms.  Snow pack data is not always up to date and should be noted if outdated values are used */}
-                        </div>
-                    }
-                    </DataWrapper>
-                </Row>
-            </div>
+
+            <div>{
+                 this.state && this.state.geoJson && this.state.observations &&
+                <div>
+                    <NavBar/>
+                    <Row>
+                        <MapWrapper>
+                        <Map
+                                geoJson={this.state.geoJson}
+                                lng={this.state.geoJson.data.features[0].geometry.coordinates[0]}
+                                lat={this.state.geoJson.data.features[0].geometry.coordinates[1]}
+                                zoom={9}
+                                mapHeight={67}
+                                mapWidth={45}
+                            />
+                        </MapWrapper>
+                        <DataWrapper>
+                            {/* TODO: This could probably be its own component */}
+                            <div>
+                                <h5>{this.state.stationName}</h5>
+                                <h5>{this.state.stationElevation}ft</h5>
+                                <div>{this.state.lng}, {this.state.lat}</div>
+                                <div>{this.state.stationTriplet }</div>
+                                <Row>
+                                    <div onClick={()=>this.previousObservation("test value 1")}>
+                                        <ArrowButton leftArrow={true}/>
+                                    </div>
+                                    <h5 >{currentObservation.date}</h5>
+                                    <div onClick={()=>this.nextObservation("test value 2")}>
+                                        <ArrowButton rightArrow={true}/>
+                                    </div>
+                                    
+                                </Row>
+                                <div>Snow Depth: {currentObservation.snowDepth}" | Δ: {currentObservation.changeInSnowDepth}"</div>
+                                <div>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}" | Δ: {currentObservation.changeInSnowWaterEquivalent}"</div>  
+                                { currentObservation.airTemperatureObserved &&
+                                    <div>Air Temp: {currentObservation.airTemperatureObserved}°F</div>
+                                }
+                                { currentObservation.airTemperatureAverage &&
+                                    <div>Air Temp Average: {currentObservation.airTemperatureAverage}°F</div>
+                                }
+                                { currentObservation.airTemperatureMin && currentObservation.airTemperatureMax &&
+                                    <div>Air Temp Min: {currentObservation.airTemperatureMin}°F | Air Temp Max: {currentObservation.airTemperatureMax}°F</div>
+                                }
+                            </div>
+                        </DataWrapper>
+                    </Row>
+                </div>
+            }</div>
         )
     }
 }

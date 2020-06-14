@@ -68,9 +68,6 @@ class Details extends Component{
     }
 
     getObservations(triplet){
-        //TODO: There is probably another endpoint for individual day reports however
-        //Current conditions should grab most recent complete data.   May have to grab 5 days worth and concat to values.
-        //Could also dynamically display fields if data is present.  For example, airTemp Max and Min are not always present
         axios.get(`/api/snotel/observations/${triplet}?from=2020-6-01&to=${new Date().toJSON().slice(0,10)}`)
         .then(response => {
             console.log("Observation Details Resp", response)            
@@ -82,27 +79,20 @@ class Details extends Component{
         .catch(error => console.log(error))
     }
 
-    //TODO: used in both Console and Details - Refactor
     convertToGeoJson(stations) {
 
         let geoJsonFeatureCollection = new GeoJsonFeatureCollection();
         
-        // let features = [];
         stations.forEach(station => {
-            // let coordinates = [];
             let location = JSON.parse(station.location);
-            // coordinates.push(location.lng);
-            // coordinates.push(location.lat);
-
-            let geoJsonItem = new GeoJsonFeature(location.lng, location.lat, station.name, station.triplet, station.timezone, station.wind);
-            // features.push(geoJsonItem);
-            geoJsonFeatureCollection.data.features.push(geoJsonItem)
+            let geoJsonFeature = new GeoJsonFeature(location.lng, location.lat, station.name, station.triplet, station.timezone, station.wind);
+            geoJsonFeatureCollection.data.features.push(geoJsonFeature);
         })
-        // geoJsonFeatureCollection.data.features = features;
+
         return geoJsonFeatureCollection;
     };
 
-    previousObservation(param){
+    previousObservation(){
         const currentIndex = this.state.currentObservationIndex;
         if(currentIndex > 0){
             let newIndex = currentIndex - 1;
@@ -110,12 +100,12 @@ class Details extends Component{
                 currentObservationIndex: newIndex
             })
         }else{
-            //TODO:  Toast notifactions.  Prompt user to graph for more historical data.
+            //TODO:  Nicer notifactions.  Prompt user to graph for more historical data.
             alert("You are on the last item.  Use Graph for more historical data.");
         }
     }
 
-    nextObservation(param){
+    nextObservation(){
         const currentIndex = this.state.currentObservationIndex;
         if(currentIndex < this.state.observations.length - 1){
             let newIndex = currentIndex + 1;
@@ -123,7 +113,7 @@ class Details extends Component{
                 currentObservationIndex: newIndex
             })
         }else{
-            //TODO:  Toast notifactions.  Prompt user to graph for more historical data.
+            //TODO:  Nicer notifactions. 
             alert("You are on the current day.");
         }
     }

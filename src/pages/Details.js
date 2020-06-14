@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import NavBar from '../components/NavBar';
 import Map from '../components/Map';
 import ArrowButton from '../components/ArrowButton';
+import Button from '../components/Button';
+import Graph from '../components/Graph';
 import GeoJsonFeatureCollection from '../classes/geoJsonFeatureCollection'; 
 import GeoJsonFeature from '../classes/geoJsonFeature'; 
 import styled from 'styled-components';
@@ -32,7 +34,8 @@ class Details extends Component{
             lng: '',
             geoJson: '',
             observations: '',
-            currentObservationIndex: ''
+            currentObservationIndex: '',
+            mountGraph: false
         };
     }
 
@@ -118,6 +121,13 @@ class Details extends Component{
         }
     }
 
+    toggleGraph(){
+        let mountGraph = this.state.mountGraph;
+        this.setState({
+            mountGraph: !mountGraph
+        })
+    }
+
     render(){
         let currentObservation;
         let observations = this.state.observations;
@@ -171,9 +181,18 @@ class Details extends Component{
                                 { currentObservation.airTemperatureMin && currentObservation.airTemperatureMax &&
                                     <div>Air Temp Min: {currentObservation.airTemperatureMin}°F | Air Temp Max: {currentObservation.airTemperatureMax}°F</div>
                                 }
+                                <div onClick={()=>this.toggleGraph()}   >
+                                    <Button/>
+                                </div>
                             </div>
                         </DataWrapper>
                     </Row>
+                    {this.state.mountGraph &&
+                        <Graph
+                            observations={this.state.observations}
+                         />
+                    }
+
                 </div>
             }</div>
         )

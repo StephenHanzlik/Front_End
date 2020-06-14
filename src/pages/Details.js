@@ -145,10 +145,10 @@ class Details extends Component{
                     <DataWrapper>
                     { this.state && this.state.observations &&
                         <div>
-                            <h5>Station</h5>
-                            <div>Name: {this.state.stationName} | Elevation: {this.state.stationElevation}ft</div>
-                            <div>Location: {this.state.lng},{this.state.lat} | Triplet: {this.state.stationTriplet }</div>
-                            <h5>Observations</h5>
+                            <h5>{this.state.stationName}</h5>
+                            <h5>{this.state.stationElevation}ft</h5>
+                            <div>{this.state.lng}, {this.state.lat}</div>
+                            <div>{this.state.stationTriplet }</div>
                             <Row>
                                 <div onClick={()=>this.previousObservation("test value 1")}>
                                     <ArrowButton leftArrow={true}/>

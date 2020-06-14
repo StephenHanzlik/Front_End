@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import NavBar from '../components/NavBar';
 import Map from '../components/Map';
 import ArrowButton from '../components/ArrowButton';
+import GeoJsonFeatureCollection from '../classes/geoJsonFeatureCollection'; 
+import GeoJsonFeature from '../classes/geoJsonFeature'; 
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -82,15 +84,9 @@ class Details extends Component{
 
     //TODO: used in both Console and Details - Refactor
     convertToGeoJson(stations) {
-        //TODO: Could abstract this away as a class
-        let geoJsonFeatureCollection = {
-            "type": "geojson",
-            "data": {
-                type: 'FeatureCollection',
-                features: []
-            }
-        };
 
+        let geoJsonFeatureCollection = new GeoJsonFeatureCollection();
+        
         let features = [];
         stations.forEach(station => {
             let coordinates = [];
@@ -98,25 +94,11 @@ class Details extends Component{
             coordinates.push(location.lng);
             coordinates.push(location.lat);
 
-            //TODO: Could abstract this away as a class
-            let geoJsonItem = {
-                'type': 'Feature',
-                'geometry': {
-                    'type': 'Point',
-                    'coordinates': coordinates
-                },
-                'properties': {
-                    'title': station.name,
-                    'elevation': station.elevation,
-                    'triplet': station.triplet,
-                    'timezone': station.timezone,
-                    'wind': station.wind,
-                    'icon': 'marker'
-                }
-            };
-            features.push(geoJsonItem);
+            let geoJsonItem = new GeoJsonFeature(coordinates, station.name, station.triplet, station.timezone, station.wind);
+            // features.push(geoJsonItem);
+            geoJsonFeatureCollection.data.features.push(geoJsonItem)
         })
-        geoJsonFeatureCollection.data.features = features;
+        // geoJsonFeatureCollection.data.features = features;
         return geoJsonFeatureCollection;
     };
 
@@ -129,14 +111,12 @@ class Details extends Component{
             })
         }else{
             //TODO:  Toast notifactions.  Prompt user to graph for more historical data.
-            alert("You are on the last item.  Use Graph for more historical data");
+            alert("You are on the last item.  Use Graph for more historical data.");
         }
     }
 
     nextObservation(param){
         const currentIndex = this.state.currentObservationIndex;
-        console.log("currentIndex: ", currentIndex);
-        console.log("this.state.observations.length", this.state.observations.length)
         if(currentIndex < this.state.observations.length - 1){
             let newIndex = currentIndex + 1;
             this.setState({
@@ -144,7 +124,7 @@ class Details extends Component{
             })
         }else{
             //TODO:  Toast notifactions.  Prompt user to graph for more historical data.
-            alert("You are on the last item.  Use Graph for more historical data");
+            alert("You are on the current day.");
         }
     }
 

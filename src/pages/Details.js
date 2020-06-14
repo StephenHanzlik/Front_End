@@ -87,14 +87,14 @@ class Details extends Component{
 
         let geoJsonFeatureCollection = new GeoJsonFeatureCollection();
         
-        let features = [];
+        // let features = [];
         stations.forEach(station => {
-            let coordinates = [];
+            // let coordinates = [];
             let location = JSON.parse(station.location);
-            coordinates.push(location.lng);
-            coordinates.push(location.lat);
+            // coordinates.push(location.lng);
+            // coordinates.push(location.lat);
 
-            let geoJsonItem = new GeoJsonFeature(coordinates, station.name, station.triplet, station.timezone, station.wind);
+            let geoJsonItem = new GeoJsonFeature(location.lng, location.lat, station.name, station.triplet, station.timezone, station.wind);
             // features.push(geoJsonItem);
             geoJsonFeatureCollection.data.features.push(geoJsonItem)
         })

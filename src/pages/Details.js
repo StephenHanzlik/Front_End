@@ -73,7 +73,6 @@ class Details extends Component{
     getObservations(triplet){
         axios.get(`/api/snotel/observations/${triplet}?from=2020-6-01&to=${new Date().toJSON().slice(0,10)}`)
         .then(response => {
-            console.log("Observation Details Resp", response)            
             this.setState({
                 observations: response.data,
                 currentObservationIndex: response.data.length - 1
@@ -88,7 +87,8 @@ class Details extends Component{
         
         stations.forEach(station => {
             let location = JSON.parse(station.location);
-            let geoJsonFeature = new GeoJsonFeature(location.lng, location.lat, station.name, station.triplet, station.timezone, station.wind);
+            let geoJsonFeature = new GeoJsonFeature(location.lng, location.lat, station.name, station.elevation, station.triplet, station.timezone, station.wind);
+            console.log("geoJsonFeature - details: ", geoJsonFeature);
             geoJsonFeatureCollection.data.features.push(geoJsonFeature);
         })
 

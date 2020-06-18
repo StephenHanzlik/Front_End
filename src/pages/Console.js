@@ -77,16 +77,15 @@ class Console extends Component {
     };
 
     render() {
-        console.log("store.getState().geoJson: ", store.getState().geoJson)
-        console.log("props: ", this.props)
+        let features = this.props.geoJson.data.features;
         return (
             <div>
                 <NavBar />
                 <MapWrapper>
-                    {this.state && store.getState().geoJson.data.features.length > 0 &&
+                    {features.length > 0 &&
                         <Map
                             getObservations={this.getObservations}
-                            geoJson={store.getState().geoJson}
+                            geoJson={this.props.geoJson}
                             lng={-105.270546}
                             lat={40.014984}
                             zoom={4}

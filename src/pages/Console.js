@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 import store from '../store';
+import {connect}  from 'react-redux';
 
 const MapWrapper = styled.div`
     display: flex;
@@ -77,6 +78,7 @@ class Console extends Component {
 
     render() {
         console.log("store.getState().geoJson: ", store.getState().geoJson)
+        console.log("props: ", this.props)
         return (
             <div>
                 <NavBar />
@@ -103,4 +105,9 @@ class Console extends Component {
     }
 }
 
-export default Console;
+const mapStateToProps = (state) => {
+    return {
+        geoJson: state.geoJson
+    }
+  }
+export default connect(mapStateToProps)(Console);

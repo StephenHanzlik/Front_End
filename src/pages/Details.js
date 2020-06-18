@@ -9,6 +9,9 @@ import GeoJsonFeature from '../classes/geoJsonFeature';
 import styled from 'styled-components';
 import axios from 'axios';
 
+import store from '../store';
+
+
 const MapWrapper = styled.div`
     background: red;
 `;
@@ -58,14 +61,18 @@ class Details extends Component{
         .then(response => {
              let observation = response.data[0];
              let stationGeoJson = this.convertToGeoJson(response.data);
-             this.setState({
-                stationTriplet: observation.triplet,
-                stationName: observation.name,
-                stationElevation: observation.elevation,
-                lat: JSON.parse(observation.location).lat,
-                lng: JSON.parse(observation.location).lng,
-                geoJson: stationGeoJson
-             })
+             store.dispatch({
+                type: 'SET_GEOJSON',
+                payload: stationGeoJson
+            })
+            //  this.setState({
+            //     stationTriplet: observation.triplet,
+            //     stationName: observation.name,
+            //     stationElevation: observation.elevation,
+            //     lat: JSON.parse(observation.location).lat,
+            //     lng: JSON.parse(observation.location).lng,
+            //     geoJson: stationGeoJson
+            //  })
         })
          .catch(error => console.log(error))
     }

@@ -1,10 +1,6 @@
 import GeoJsonFeatureCollection from '../classes/geoJsonFeatureCollection';
 
-const initialState = {
-    geoJson: new GeoJsonFeatureCollection()
-} 
-
-const geoJsonReducer = (state = initialState, action) => {
+const geoJsonReducer = (state = new GeoJsonFeatureCollection(), action) => {
     switch (action.type) {
         case "SET_GEOJSON":
             return Object.assign({}, state, action.payload)

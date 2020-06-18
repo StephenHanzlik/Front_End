@@ -7,9 +7,7 @@ const initialState = {
 const geoJsonReducer = (state = initialState, action) => {
     switch (action.type) {
         case "SET_GEOJSON":
-            return Object.assign({}, state, {
-                geoJson: action.payload
-            })
+            return Object.assign({}, state, action.payload)
         default:
             return state;
     }

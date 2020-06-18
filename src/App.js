@@ -27,7 +27,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-      change: state.change
+      geoJson: state.geoJson
   }
 }
 const mapDispatchToProps = (dispatch) => {

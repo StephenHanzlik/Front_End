@@ -45,11 +45,6 @@ class Console extends Component {
                     type: 'SET_GEOJSON',
                     payload: stationGeoJson
                 })
-
-                console.log("MY STORE: ", store.getState())
-                // this.setState({
-                //     geoJson: stationGeoJson
-                // })
             })
             .catch(error => console.log(error))
     }
@@ -81,14 +76,15 @@ class Console extends Component {
     };
 
     render() {
+        console.log("store.getState().geoJson: ", store.getState().geoJson)
         return (
             <div>
                 <NavBar />
                 <MapWrapper>
-                    {this.state && this.state.geoJson &&
+                    {this.state && store.getState().geoJson.data.features.length > 0 &&
                         <Map
                             getObservations={this.getObservations}
-                            geoJson={this.state.geoJson}
+                            geoJson={store.getState().geoJson}
                             lng={-105.270546}
                             lat={40.014984}
                             zoom={4}

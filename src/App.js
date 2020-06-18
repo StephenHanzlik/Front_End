@@ -5,11 +5,13 @@ import LandingPage from './pages/LandingPage';
 import Console from './pages/Console';
 import Details from './pages/Details';
 
+import {connect}  from 'react-redux';
+import {setGeoJson} from './actions/setGeoJson';
+
 
 class App extends Component {
   render() {
     return (
-
       <div className="App">
         <Router basename={process.env.REACT_APP_ROUTER_BASE || ''}>
           <Switch>
@@ -19,8 +21,23 @@ class App extends Component {
           </Switch>
         </Router>
       </div>
+
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+      change: state.change
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+        changeNum: (number) => {
+            dispatch(setGeoJson(number));
+      }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+

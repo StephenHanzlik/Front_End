@@ -21,7 +21,6 @@ class App extends Component {
           </Switch>
         </Router>
       </div>
-
     );
   }
 }
@@ -33,8 +32,8 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-        changeNum: (number) => {
-            dispatch(setGeoJson(number));
+        setGeoJson: (geoJson) => {
+            dispatch(setGeoJson(geoJson));
       }
   }
 }

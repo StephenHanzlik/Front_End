@@ -7,6 +7,8 @@ import GeoJsonFeature from '../classes/geoJsonFeature';
 import styled from 'styled-components';
 import axios from 'axios';
 
+import store from '../store';
+
 const MapWrapper = styled.div`
     display: flex;
     justify-content: center;
@@ -39,9 +41,15 @@ class Console extends Component {
         axios.get('/api/snotel/stations')
             .then(response => {
                 let stationGeoJson = this.convertToGeoJson(response.data);
-                this.setState({
-                    geoJson: stationGeoJson
+                store.dispatch({
+                    type: 'SET_GEOJSON',
+                    payload: stationGeoJson
                 })
+
+                console.log("MY STORE: ", store.getState())
+                // this.setState({
+                //     geoJson: stationGeoJson
+                // })
             })
             .catch(error => console.log(error))
     }

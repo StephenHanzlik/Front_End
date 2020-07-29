@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import mapboxgl from 'mapbox-gl';
 
+import store from '../store';
+import {connect}  from 'react-redux';
+
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 class Map extends Component {
@@ -35,6 +38,9 @@ class Map extends Component {
         let markers = [];
 
         map.on('load', () => {  
+
+            console.log("Map - this.props", this.props)
+            console.log("Map - this.state", this.state)
                         
             this.props.geoJson.data.features.forEach((marker) => {
 
@@ -82,4 +88,13 @@ class Map extends Component {
     }
 }
 
-export default Map;
+const mapStateToProps = (state) => {
+    console.log("Map - state in mapStateToProps", state);
+    console.log("Map - state.data in mapStateToProps", state.data);
+    return {
+        geoJson: state
+    }
+}
+export default connect(mapStateToProps)(Map);
+
+// export default Map;

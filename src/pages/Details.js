@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 import store from '../store';
+import {connect}  from 'react-redux';
 
 
 const MapWrapper = styled.div`
@@ -45,26 +46,28 @@ class Details extends Component{
     componentDidMount(){
         //currently setting station observations to state but not triplet
         //TODO: Should also configure zoom and center as props to map
-        let stationTriplet = this.getStationTriplet();
-        this.getStation(stationTriplet);
-        this.getObservations(stationTriplet);
+        // let stationTriplet = this.getStationTriplet();
+        // this.getStation(stationTriplet);
+        console.log("XX - Detials - store.getState()", store.getState());
+
+        this.getObservations("1151:UT:SNTL");
     }
 
     //TODO:  Impliment redux to reduce API calls
-    getStationTriplet(){
-        let url = window.location.href;
-        return url.slice(url.indexOf("details/") + 8);
-    }
+    // getStationTriplet(){
+    //     let url = window.location.href;
+    //     return url.slice(url.indexOf("details/") + 8);
+    // }
 
-    getStation(triplet){
-        axios.get(`/api/snotel/stations/${triplet}`)
-        .then(response => {
-             let observation = response.data[0];
-             let stationGeoJson = this.convertToGeoJson(response.data);
-             store.dispatch({
-                type: 'SET_GEOJSON',
-                payload: stationGeoJson
-            })
+    // getStation(triplet){
+    //     axios.get(`/api/snotel/stations/${triplet}`)
+    //     .then(response => {
+    //          let observation = response.data[0];
+    //          let stationGeoJson = this.convertToGeoJson(response.data);
+    //          store.dispatch({
+    //             type: 'SET_GEOJSON',
+    //             payload: stationGeoJson
+    //         })
             //  this.setState({
             //     stationTriplet: observation.triplet,
             //     stationName: observation.name,
@@ -73,9 +76,9 @@ class Details extends Component{
             //     lng: JSON.parse(observation.location).lng,
             //     geoJson: stationGeoJson
             //  })
-        })
-         .catch(error => console.log(error))
-    }
+    //     })
+    //      .catch(error => console.log(error))
+    // }
 
     getObservations(triplet){
         axios.get(`/api/snotel/observations/${triplet}?from=2020-6-01&to=${new Date().toJSON().slice(0,10)}`)
@@ -110,7 +113,7 @@ class Details extends Component{
                 currentObservationIndex: newIndex
             })
         }else{
-            //TODO:  Nicer notifactions.  Prompt user to graph for more historical data.
+            //TODO:  Nicer notifactions.
             alert("You are on the last item.  Use Graph for more historical data.");
         }
     }
@@ -142,11 +145,18 @@ class Details extends Component{
         if(observations){
             currentObservation = observations[this.state.currentObservationIndex];
         }
+        let features;
+        if(this.props.geoJson){
+             features = this.props.geoJson.data.features;
+        }else{
+            features = []
+        }
 
+        console.log("Details - props: ", this.props)
+        console.log("Details - features: ", features);
         return(
-
-            <div>{
-                 this.state && this.state.geoJson && this.state.observations &&
+            <div>
+                {features.length > 0 && this.state.observations &&
                 <div>
                     <NavBar/>
                     <Row>
@@ -206,4 +216,12 @@ class Details extends Component{
     }
 }
 
-export default Details;
+const mapStateToProps = (state, ownProps) => {
+    console.log("Details - State in mapStateToProps", state)
+    console.log("Details - ownProps in mapStateToProps", ownProps)
+    return {
+        geoJson: state
+    }
+}
+export default connect(mapStateToProps)(Details);
+// export default Details;  

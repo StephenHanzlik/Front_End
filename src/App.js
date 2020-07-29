@@ -6,7 +6,7 @@ import Console from './pages/Console';
 import Details from './pages/Details';
 
 import {connect}  from 'react-redux';
-import {setGeoJson} from './actions/setGeoJson';
+// import {setGeoJson} from './actions/setGeoJson';
 
 
 class App extends Component {
@@ -26,17 +26,23 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log("App - mapStateToProps")
+  console.log("App - state", state)
   return {
       geoJson: state.geoJson
   }
 }
-const mapDispatchToProps = (dispatch) => {
-  return {
-        setGeoJson: (geoJson) => {
-            dispatch(setGeoJson(geoJson));
-      }
-  }
-}
+// const mapDispatchToProps = (dispatch) => {
+//   console.log("App - mapDispatchToProps", dispatch)
+//   return {
+//         setGeoJson: (geoJson) => {
+//             dispatch(setGeoJson(geoJson));
+//       }
+//   }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+// export default connect(mapStateToProps, mapDispatchToProps)(App);
+// export default connect(null)(App);
+export default connect(mapStateToProps)(App);
+
 

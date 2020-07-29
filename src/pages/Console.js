@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 import store from '../store';
-import {connect}  from 'react-redux';
+// import {connect}  from 'react-redux';
 
 const MapWrapper = styled.div`
     display: flex;
@@ -42,10 +42,12 @@ class Console extends Component {
         axios.get('/api/snotel/stations')
             .then(response => {
                 let stationGeoJson = this.convertToGeoJson(response.data);
+                console.log("Console - Got stationGeoJson", stationGeoJson)
                 store.dispatch({
                     type: 'SET_GEOJSON',
                     payload: stationGeoJson
                 })
+                console.log("Console -  Dispatch Updated", store.getState())
             })
             .catch(error => console.log(error))
     }
@@ -77,36 +79,50 @@ class Console extends Component {
     };
 
     render() {
-        let features = this.props.geoJson.data.features;
+        // let features;
+        // if(this.state.geoJson){
+        //     //  features = this.props.geoJson.data.features;
+        //     features = this.state.geoJson.data.features;
+        // }else{
+        //     features = []
+        // }
+        // console.log("Console - props: ", this.props)
+        // console.log("Console - features: ", features)
         return (
             <div>
                 <NavBar />
-                <MapWrapper>
-                    {features.length > 0 &&
-                        <Map
-                            getObservations={this.getObservations}
-                            geoJson={this.props.geoJson}
-                            lng={-105.270546}
-                            lat={40.014984}
-                            zoom={4}
-                            mapHeight={58}
-                            mapWidth={87}
+                {/* {features.length > 0 && */}
+                <div>
+                    <MapWrapper>
+
+                            <Map
+                                getObservations={this.getObservations}
+                                // geoJson={this.props.geoJson}
+                                lng={-105.270546}
+                                lat={40.014984}
+                                zoom={4}
+                                mapHeight={58}
+                                mapWidth={87}
+                            />
+                    </MapWrapper>
+                    <GraphWrapper>
+                        <Graph
+                            observations={this.state.observations}
                         />
-                    }
-                </MapWrapper>
-                <GraphWrapper>
-                    <Graph
-                        observations={this.state.observations}
-                    />
-                </GraphWrapper>
+                    </GraphWrapper>
+                </div>
+                {/* } */}
             </div>
         )
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        geoJson: state.geoJson
-    }
-  }
-export default connect(mapStateToProps)(Console);
+// const mapStateToProps = (state) => {
+//     console.log("Console - State in mapStateToProps", state);
+//     console.log("Console - store.getState()", store.getState());
+//     return {
+//         geoJson: state.geoJson
+//     }
+// }
+// export default connect(mapStateToProps)(Console);
+export default Console

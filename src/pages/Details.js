@@ -14,7 +14,7 @@ const MapWrapper = styled.div`
 `;
 
 const DataWrapper = styled.div`
-    background: green;
+    height: 10px;
 `;
 
 const Row = styled.div`
@@ -156,45 +156,47 @@ class Details extends Component{
                     <NavBar/>
                     <Row>
                         <MapWrapper>
-                        <Map
+                            <Map
                                 geoJson={this.state.geoJson}
                                 lng={this.state.lng}
                                 lat={this.state.lat}
                                 // lng={this.state.geoJson.data.features[0].geometry.coordinates[0]}
                                 // lat={this.state.geoJson.data.features[0].geometry.coordinates[1]}
                                 zoom={12}
-                                mapHeight={67}
-                                mapWidth={45}
+                                // mapHeight={67}
+                                // mapWidth={45}
+                                mapHeight={59}
+                                mapWidth={30}
                             />
                         </MapWrapper>
                         <DataWrapper>
                             {/* TODO: This could probably be its own component */}
                             <div>
-                                <h5>{this.state.stationName}</h5>
-                                <h5>{this.state.stationElevation}ft</h5>
-                                <div>{this.state.lng}, {this.state.lat}</div>
-                                <div>{this.state.stationTriplet }</div>
+                                <h3>{this.state.stationName}</h3>
+                                <h3>{this.state.stationElevation}ft</h3>
+                                {/* <div>{this.state.lng}, {this.state.lat}</div>
+                                <div>{this.state.stationTriplet }</div> */}
                                 <Row>
                                     <div onClick={()=>this.previousObservation("test value 1")}>
                                         <ArrowButton leftArrow={true}/>
                                     </div>
-                                    <h5 >{currentObservation.date}</h5>
+                                    <h5>{currentObservation.date}</h5>
                                     <div onClick={()=>this.nextObservation("test value 2")}>
                                         <ArrowButton rightArrow={true}/>
                                     </div>
                                     
                                 </Row>
-                                <div>Snow Depth: {currentObservation.snowDepth}" | Δ: {currentObservation.changeInSnowDepth}"</div>
-                                <div>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}" | Δ: {currentObservation.changeInSnowWaterEquivalent}"</div>  
-                                { currentObservation.airTemperatureObserved &&
-                                    <div>Air Temp: {currentObservation.airTemperatureObserved}°F</div>
-                                }
-                                { currentObservation.airTemperatureAverage &&
-                                    <div>Air Temp Average: {currentObservation.airTemperatureAverage}°F</div>
-                                }
-                                { currentObservation.airTemperatureMin && currentObservation.airTemperatureMax &&
-                                    <div>Air Temp Min: {currentObservation.airTemperatureMin}°F | Air Temp Max: {currentObservation.airTemperatureMax}°F</div>
-                                }
+                                <h5>Snow Depth: {currentObservation.snowDepth}" | Δ: {currentObservation.changeInSnowDepth}"</h5>
+                                <h5>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}" | Δ: {currentObservation.changeInSnowWaterEquivalent}"</h5>  
+                                {/* { currentObservation.airTemperatureObserved && */}
+                                    <h5>Air Temp: {currentObservation.airTemperatureObserved}°F</h5>
+                                {/* } */}
+                                {/* { currentObservation.airTemperatureAverage && */}
+                                    <h5>Air Temp Average: {currentObservation.airTemperatureAverage}°F</h5>
+                                {/* } */}
+                                {/* { currentObservation.airTemperatureMin && currentObservation.airTemperatureMax && */}
+                                    <h5>Air Temp Min: {currentObservation.airTemperatureMin}°F | Air Temp Max: {currentObservation.airTemperatureMax}°F</h5>
+                                {/* } */}
                                 <div onClick={()=>this.toggleGraph()}   >
                                     <Button/>
                                 </div>

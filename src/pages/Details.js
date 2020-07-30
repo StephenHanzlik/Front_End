@@ -44,6 +44,7 @@ class Details extends Component{
         //TODO: Should also configure zoom and center as props to map
         let stationTriplet = this.getStationTriplet();
         this.getStation(stationTriplet);
+        this.getStations();
         this.getObservations(stationTriplet);
     }
 
@@ -57,17 +58,28 @@ class Details extends Component{
         axios.get(`/api/snotel/stations/${triplet}`)
         .then(response => {
              let observation = response.data[0];
-             let stationGeoJson = this.convertToGeoJson(response.data);
+            //  let stationGeoJson = this.convertToGeoJson(response.data);
              this.setState({
                 stationTriplet: observation.triplet,
                 stationName: observation.name,
                 stationElevation: observation.elevation,
                 lat: JSON.parse(observation.location).lat,
                 lng: JSON.parse(observation.location).lng,
-                geoJson: stationGeoJson
+                // geoJson: stationGeoJson
              })
         })
          .catch(error => console.log(error))
+    }
+
+    getStations(){
+        axios.get('/api/snotel/stations')
+            .then(response => {
+                let stationGeoJson = this.convertToGeoJson(response.data);
+                this.setState({
+                 geoJson: stationGeoJson
+             })
+         })
+            .catch(error => console.log(error)) 
     }
 
     getObservations(triplet){
@@ -146,9 +158,11 @@ class Details extends Component{
                         <MapWrapper>
                         <Map
                                 geoJson={this.state.geoJson}
-                                lng={this.state.geoJson.data.features[0].geometry.coordinates[0]}
-                                lat={this.state.geoJson.data.features[0].geometry.coordinates[1]}
-                                zoom={9}
+                                lng={this.state.lng}
+                                lat={this.state.lat}
+                                // lng={this.state.geoJson.data.features[0].geometry.coordinates[0]}
+                                // lat={this.state.geoJson.data.features[0].geometry.coordinates[1]}
+                                zoom={12}
                                 mapHeight={67}
                                 mapWidth={45}
                             />

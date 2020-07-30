@@ -10,17 +10,26 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 const MapWrapper = styled.div`
-    background: red;
+    padding-right: 10px;
 `;
 
 const DataWrapper = styled.div`
+    padding-left: 10px;
     height: 10px;
+`;
+
+const DisplayRow = styled.div`
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
 `;
 
 const Row = styled.div`
     display: flex;
     justify-content: center;
 `;
+
+
 
 class Details extends Component{
 
@@ -154,18 +163,14 @@ class Details extends Component{
                  this.state && this.state.geoJson && this.state.observations &&
                 <div>
                     <NavBar/>
-                    <Row>
+                    <DisplayRow>
                         <MapWrapper>
                             <Map
                                 geoJson={this.state.geoJson}
                                 lng={this.state.lng}
                                 lat={this.state.lat}
-                                // lng={this.state.geoJson.data.features[0].geometry.coordinates[0]}
-                                // lat={this.state.geoJson.data.features[0].geometry.coordinates[1]}
                                 zoom={12}
-                                // mapHeight={67}
-                                // mapWidth={45}
-                                mapHeight={59}
+                                mapHeight={43}
                                 mapWidth={30}
                             />
                         </MapWrapper>
@@ -174,8 +179,6 @@ class Details extends Component{
                             <div>
                                 <h3>{this.state.stationName}</h3>
                                 <h3>{this.state.stationElevation}ft</h3>
-                                {/* <div>{this.state.lng}, {this.state.lat}</div>
-                                <div>{this.state.stationTriplet }</div> */}
                                 <Row>
                                     <div onClick={()=>this.previousObservation("test value 1")}>
                                         <ArrowButton leftArrow={true}/>
@@ -188,21 +191,17 @@ class Details extends Component{
                                 </Row>
                                 <h5>Snow Depth: {currentObservation.snowDepth}" | Δ: {currentObservation.changeInSnowDepth}"</h5>
                                 <h5>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}" | Δ: {currentObservation.changeInSnowWaterEquivalent}"</h5>  
-                                {/* { currentObservation.airTemperatureObserved && */}
-                                    <h5>Air Temp: {currentObservation.airTemperatureObserved}°F</h5>
-                                {/* } */}
-                                {/* { currentObservation.airTemperatureAverage && */}
-                                    <h5>Air Temp Average: {currentObservation.airTemperatureAverage}°F</h5>
-                                {/* } */}
-                                {/* { currentObservation.airTemperatureMin && currentObservation.airTemperatureMax && */}
+                                <h5>Air Temp: {currentObservation.airTemperatureObserved}°F</h5>
+                                <h5>Air Temp Average: {currentObservation.airTemperatureAverage}°F</h5>
+                                <Row>
                                     <h5>Air Temp Min: {currentObservation.airTemperatureMin}°F | Air Temp Max: {currentObservation.airTemperatureMax}°F</h5>
-                                {/* } */}
-                                <div onClick={()=>this.toggleGraph()}   >
-                                    <Button/>
-                                </div>
+                                    <div onClick={()=>this.toggleGraph()}>
+                                        <Button text={"graph"}/>
+                                    </div>
+                                </Row>  
                             </div>
                         </DataWrapper>
-                    </Row>
+                    </DisplayRow>
                     {this.state.mountGraph &&
                         <Graph
                             observations={this.state.observations}

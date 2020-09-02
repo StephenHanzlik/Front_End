@@ -4,8 +4,8 @@ import Map from '../components/Map';
 import ArrowButton from '../components/ArrowButton';
 import Button from '../components/Button';
 import Graph from '../components/Graph';
-import GeoJsonFeatureCollection from '../classes/geoJsonFeatureCollection'; 
-import GeoJsonFeature from '../classes/geoJsonFeature'; 
+import GeoJsonFeatureCollection from '../classes/geoJsonFeatureCollection';
+import GeoJsonFeature from '../classes/geoJsonFeature';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -31,7 +31,7 @@ const Row = styled.div`
 
 
 
-class Details extends Component{
+class Details extends Component {
 
     constructor(props) {
         super(props);
@@ -48,7 +48,7 @@ class Details extends Component{
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         //currently setting station observations to state but not triplet
         //TODO: Should also configure zoom and center as props to map
         let stationTriplet = this.getStationTriplet();
@@ -58,54 +58,64 @@ class Details extends Component{
     }
 
     //TODO:  Impliment redux to reduce API calls
-    getStationTriplet(){
+    getStationTriplet() {
         let url = window.location.href;
         return url.slice(url.indexOf("details/") + 8);
     }
 
-    getStation(triplet){
+    getStation(triplet) {
         axios.get(`/api/snotel/stations/${triplet}`)
-        .then(response => {
-             let observation = response.data[0];
-            //  let stationGeoJson = this.convertToGeoJson(response.data);
-             this.setState({
-                stationTriplet: observation.triplet,
-                stationName: observation.name,
-                stationElevation: observation.elevation,
-                lat: JSON.parse(observation.location).lat,
-                lng: JSON.parse(observation.location).lng,
-                // geoJson: stationGeoJson
-             })
-        })
-         .catch(error => console.log(error))
+            .then(response => {
+                let observation = response.data[0];
+                //  let stationGeoJson = this.convertToGeoJson(response.data);
+                this.setState({
+                    stationTriplet: observation.triplet,
+                    stationName: observation.name,
+                    stationElevation: observation.elevation,
+                    lat: JSON.parse(observation.location).lat,
+                    lng: JSON.parse(observation.location).lng,
+                    // geoJson: stationGeoJson
+                })
+            })
+            .catch(error => console.log(error))
     }
 
-    getStations(){
+    getStations() {
         axios.get('/api/snotel/stations')
             .then(response => {
                 let stationGeoJson = this.convertToGeoJson(response.data);
                 this.setState({
-                 geoJson: stationGeoJson
-             })
-         })
-            .catch(error => console.log(error)) 
+                    geoJson: stationGeoJson
+                })
+            })
+            .catch(error => console.log(error))
     }
 
-    getObservations(triplet){
-        axios.get(`/api/snotel/observations/${triplet}?from=2020-6-01&to=${new Date().toJSON().slice(0,10)}`)
-        .then(response => {
-            this.setState({
-                observations: response.data,
-                currentObservationIndex: response.data.length - 1
+    getObservations(triplet, startDate) {
+        //console component is hard coded for 90 days of snow data.  This will be configurable.
+        if (!startDate) {
+            let currentDate = Date.now();
+            startDate = currentDate - 7776000000 //90 days
+
+            currentDate = new Date(currentDate).toJSON().slice(0, 10)
+            startDate = new Date(startDate).toJSON().slice(0, 10)
+        }
+
+        axios.get(`/api/snotel/observations/${triplet}?from=2020-6-01&to=${new Date().toJSON().slice(0, 10)}`)
+            .then(response => {
+                this.setState({
+                    observations: response.data,
+                    currentObservationIndex: response.data.length - 1
+                })
             })
-        })
-        .catch(error => console.log(error))
+            .catch(error => console.log(error))
     }
+
 
     convertToGeoJson(stations) {
 
         let geoJsonFeatureCollection = new GeoJsonFeatureCollection();
-        
+
         stations.forEach(station => {
             let location = JSON.parse(station.location);
             let geoJsonFeature = new GeoJsonFeature(location.lng, location.lat, station.name, station.elevation, station.triplet, station.timezone, station.wind);
@@ -116,56 +126,57 @@ class Details extends Component{
         return geoJsonFeatureCollection;
     };
 
-    previousObservation(){
+    previousObservation() {
         const currentIndex = this.state.currentObservationIndex;
-        if(currentIndex > 0){
+        if (currentIndex > 0) {
             let newIndex = currentIndex - 1;
             this.setState({
                 currentObservationIndex: newIndex
             })
-        }else{
+        } else {
             //TODO:  Nicer notifactions.  Prompt user to graph for more historical data.
             alert("You are on the last item.  Use Graph for more historical data.");
         }
     }
 
-    nextObservation(){
+    nextObservation() {
         const currentIndex = this.state.currentObservationIndex;
-        if(currentIndex < this.state.observations.length - 1){
+        if (currentIndex < this.state.observations.length - 1) {
             let newIndex = currentIndex + 1;
             this.setState({
                 currentObservationIndex: newIndex
             })
-        }else{
+        } else {
             //TODO:  Nicer notifactions. 
             alert("You are on the current day.");
         }
     }
 
-    toggleGraph(){
+    toggleGraph() {
         let mountGraph = this.state.mountGraph;
         this.setState({
             mountGraph: !mountGraph
         })
     }
 
-    render(){
+    render() {
         let currentObservation;
         let observations = this.state.observations;
-    
-        if(observations){
+
+        if (observations) {
             currentObservation = observations[this.state.currentObservationIndex];
         }
 
-        return(
+        return (
 
             <div>{
-                 this.state && this.state.geoJson && this.state.observations &&
+                this.state && this.state.geoJson && this.state.observations &&
                 <div>
-                    <NavBar/>
+                    <NavBar />
                     <DisplayRow>
                         <MapWrapper>
                             <Map
+                                getObservations={this.getObservations}
                                 geoJson={this.state.geoJson}
                                 lng={this.state.lng}
                                 lat={this.state.lat}
@@ -180,32 +191,32 @@ class Details extends Component{
                                 <h3>{this.state.stationName}</h3>
                                 <h3>{this.state.stationElevation}ft</h3>
                                 <Row>
-                                    <div onClick={()=>this.previousObservation("test value 1")}>
-                                        <ArrowButton leftArrow={true}/>
+                                    <div onClick={() => this.previousObservation("test value 1")}>
+                                        <ArrowButton leftArrow={true} />
                                     </div>
                                     <h5>{currentObservation.date}</h5>
-                                    <div onClick={()=>this.nextObservation("test value 2")}>
-                                        <ArrowButton rightArrow={true}/>
+                                    <div onClick={() => this.nextObservation("test value 2")}>
+                                        <ArrowButton rightArrow={true} />
                                     </div>
-                                    
+
                                 </Row>
                                 <h5>Snow Depth: {currentObservation.snowDepth}" | Δ: {currentObservation.changeInSnowDepth}"</h5>
-                                <h5>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}" | Δ: {currentObservation.changeInSnowWaterEquivalent}"</h5>  
+                                <h5>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}" | Δ: {currentObservation.changeInSnowWaterEquivalent}"</h5>
                                 <h5>Air Temp: {currentObservation.airTemperatureObserved}°F</h5>
                                 <h5>Air Temp Average: {currentObservation.airTemperatureAverage}°F</h5>
                                 <Row>
                                     <h5>Air Temp Min: {currentObservation.airTemperatureMin}°F | Air Temp Max: {currentObservation.airTemperatureMax}°F</h5>
-                                    <div onClick={()=>this.toggleGraph()}>
-                                        <Button text={"graph"}/>
+                                    <div onClick={() => this.toggleGraph()}>
+                                        <Button text={"graph"} />
                                     </div>
-                                </Row>  
+                                </Row>
                             </div>
                         </DataWrapper>
                     </DisplayRow>
                     {this.state.mountGraph &&
                         <Graph
                             observations={this.state.observations}
-                         />
+                        />
                     }
 
                 </div>

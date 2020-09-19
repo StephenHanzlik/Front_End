@@ -8,6 +8,9 @@ const GraphWrapper = styled.div`
     height: 30vh;
 `;
 
+//Graph Types
+//Snow
+
 class Graph extends Component {
     constructor(props) {
         super(props);

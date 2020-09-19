@@ -44,7 +44,8 @@ class Details extends Component {
             geoJson: '',
             observations: '',
             currentObservationIndex: '',
-            mountGraph: false
+            mountGraph: false,
+            graphs: ['1', '2', '3', '4', '5']
         };
     }
 
@@ -235,12 +236,12 @@ class Details extends Component {
                             </div>
                         </DataWrapper>
                     </DisplayRow>
-                    {this.state.mountGraph &&
-                        <Graph
-                            observations={this.state.observations}
-                        />
-                    }
-
+                    {/* <DisplayRow> */}
+                        {this.state.graphs.map(graph => (
+                            // <li>{'<GRAPH>'}</li>
+                        <Graph>{graph}</Graph>
+                        ))}
+                    {/* </DisplayRow> */}
                 </div>
             }</div>
         )

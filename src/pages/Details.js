@@ -200,10 +200,32 @@ class Details extends Component {
                                     </div>
 
                                 </Row>
-                                <h5>Snow Depth: {currentObservation.snowDepth}" | Δ: {currentObservation.changeInSnowDepth}"</h5>
-                                <h5>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}" | Δ: {currentObservation.changeInSnowWaterEquivalent}"</h5>
-                                <h5>Air Temp: {currentObservation.airTemperatureObserved}°F</h5>
-                                <h5>Air Temp Average: {currentObservation.airTemperatureAverage}°F</h5>
+                                <Row>
+                                    <h5>Snow Depth: {currentObservation.snowDepth}" | Δ: {currentObservation.changeInSnowDepth}"</h5>
+                                    <div onClick={() => this.toggleGraph()}>
+                                        <Button text={"graph"} />
+                                    </div>
+                                </Row>
+                                <Row>
+                                    <h5>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}" | Δ: {currentObservation.changeInSnowWaterEquivalent}"</h5>
+                                    <div onClick={() => this.toggleGraph()}>
+                                        <Button text={"graph"} />
+                                    </div>
+                                </Row>
+                                <Row>
+                                    <h5>Air Temp: {currentObservation.airTemperatureObserved}°F</h5>
+                                    <div onClick={() => this.toggleGraph()}>
+                                        <Button text={"graph"} />
+                                    </div>
+                                </Row>
+                                
+                                <Row>
+                                    <h5>Air Temp Average: {currentObservation.airTemperatureAverage}°F</h5>
+                                    <div onClick={() => this.toggleGraph()}>
+                                        <Button text={"graph"} />
+                                    </div>
+                                </Row>
+                                
                                 <Row>
                                     <h5>Air Temp Min: {currentObservation.airTemperatureMin}°F | Air Temp Max: {currentObservation.airTemperatureMax}°F</h5>
                                     <div onClick={() => this.toggleGraph()}>

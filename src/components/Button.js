@@ -17,7 +17,6 @@ class Button extends Component {
 
     render(){
         return (
-            // refactor the button text as props so this button can be reused
               <Link to={this.props.link}>
                  <GenericButton>{this.props.text}</GenericButton>
               </Link>

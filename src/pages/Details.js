@@ -210,26 +210,26 @@ class Details extends Component {
                                 </Row>
                                 <Row>
                                     <h5>Snow Depth: {currentObservation.snowDepth}" | Δ: {currentObservation.changeInSnowDepth}"</h5>
-                                    <div onClick={() => this.toggleGraph('Snow Depth')}>
+                                    <div onClick={() => this.toggleGraph('snowDepth')}>
                                         <Button text={"graph"} />
                                     </div>
                                 </Row>
                                 <Row>
                                     <h5>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}" | Δ: {currentObservation.changeInSnowWaterEquivalent}"</h5>
-                                    <div onClick={() => this.toggleGraph('Snow Water')}>
+                                    <div onClick={() => this.toggleGraph('snowWaterEquivalent')}>
                                         <Button text={"graph"} />
                                     </div>
                                 </Row>
                                 <Row>
                                     <h5>Air Temp: {currentObservation.airTemperatureObserved}°F</h5>
-                                    <div onClick={() => this.toggleGraph('Air Temp Observed')}>
+                                    <div onClick={() => this.toggleGraph('airTemperatureObserved')}>
                                         <Button text={"graph"} />
                                     </div>
                                 </Row>
 
                                 <Row>
                                     <h5>Air Temp Average: {currentObservation.airTemperatureAverage}°F</h5>
-                                    <div onClick={() => this.toggleGraph('Air Temp Average')}>
+                                    <div onClick={() => this.toggleGraph('airTemperatureAverage')}>
                                         <Button text={"graph"} />
                                     </div>
                                 </Row>

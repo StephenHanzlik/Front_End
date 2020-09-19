@@ -30,19 +30,81 @@ class Graph extends Component {
         }
     }
 
-    wrapObservations(observations) {
-
-        let snowDepthData = observations.filter(observation => {
-            return !isNaN(parseInt(observation.snowDepth))
+    safeParseAndMap(observations, graphType){
+        return observations.filter(observation => {
+            return !isNaN(parseInt(observation[graphType]))
         }).map(observation => {
-            return  { "x": observation.date, "y": parseInt(observation.snowDepth) }
+            return  { "x": observation.date, "y": parseInt(observation[graphType]) }
         });
+    }
 
-        return [{
-            "id": "Snow Depth",
-            "color": "hsl(216, 70%, 50%)",
-            "data": snowDepthData
-        }];
+    wrapObservations(observations) {
+        let graphType = this.props.graphType;
+
+        if(graphType === "snowDepth"){
+            let snowDepthData = this.safeParseAndMap(observations, graphType)
+            return [{
+                "id": "Snow Depth",
+                "color": "hsl(216, 70%, 50%)",
+                "data": snowDepthData
+            }];
+        }
+
+        if(graphType === "snowWaterEquivalent"){
+            let snowWaterData = this.safeParseAndMap(observations, graphType)
+            return [{
+                "id": "Snow Water Equivalent",
+                "color": "hsl(216, 70%, 50%)",
+                "data": snowWaterData
+            }];
+        }
+
+        if(graphType === "airTemperatureObserved"){
+            let snowWaterData = this.safeParseAndMap(observations, graphType)
+            return [{
+                "id": "Air Temperature Observed",
+                "color": "hsl(216, 70%, 50%)",
+                "data": snowWaterData
+            }];
+        }
+
+        if(graphType === "airTemperatureObserved"){
+            let snowWaterData = this.safeParseAndMap(observations, graphType)
+            return [{
+                "id": "Air Temperature Observed",
+                "color": "hsl(216, 70%, 50%)",
+                "data": snowWaterData
+            }];
+        }
+
+        if(graphType === "airTemperatureAverage"){
+            let snowWaterData = this.safeParseAndMap(observations, graphType)
+            return [{
+                "id": "Air Temperature Average",
+                "color": "hsl(216, 70%, 50%)",
+                "data": snowWaterData
+            }];
+        }
+
+        if(graphType === "airTemperatureAverage"){
+            let snowWaterData = this.safeParseAndMap(observations, graphType)
+            return [{
+                "id": "Air Temperature Average",
+                "color": "hsl(216, 70%, 50%)",
+                "data": snowWaterData
+            }];
+        }
+
+        //TODO: We want a default way to handle this.  Right now it just passes air temp avr when it doesn't know
+        else {
+            let snowWaterData = this.safeParseAndMap(observations, graphType)
+            return [{
+                "id": "Air Temperature Average",
+                "color": "hsl(216, 70%, 50%)",
+                "data": snowWaterData
+            }];
+        }
+
     }
 
     getMonthName(monthNumber) {

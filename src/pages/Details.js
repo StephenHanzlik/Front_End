@@ -45,7 +45,7 @@ class Details extends Component {
             observations: '',
             currentObservationIndex: '',
             mountGraph: false,
-            graphs: ['1', '2', '3', '4', '5']
+            graphs: []
         };
     }
 
@@ -104,6 +104,7 @@ class Details extends Component {
 
         axios.get(`/api/snotel/observations/${triplet}?from=2020-6-01&to=${new Date().toJSON().slice(0, 10)}`)
             .then(response => {
+                console.log("OBSERVATIONS: ", response.data)
                 this.setState({
                     observations: response.data,
                     currentObservationIndex: response.data.length - 1
@@ -120,7 +121,6 @@ class Details extends Component {
         stations.forEach(station => {
             let location = JSON.parse(station.location);
             let geoJsonFeature = new GeoJsonFeature(location.lng, location.lat, station.name, station.elevation, station.triplet, station.timezone, station.wind);
-            console.log("geoJsonFeature - details: ", geoJsonFeature);
             geoJsonFeatureCollection.data.features.push(geoJsonFeature);
         })
 
@@ -153,10 +153,17 @@ class Details extends Component {
         }
     }
 
-    toggleGraph() {
-        let mountGraph = this.state.mountGraph;
+    toggleGraph(graphType) {
+        let tempGraphs = this.state.graphs;
+
+        let index = tempGraphs.indexOf(graphType);
+        if (index > -1) {
+            tempGraphs.splice(index, 1)
+        } else {
+            tempGraphs.push(graphType)
+        }
         this.setState({
-            mountGraph: !mountGraph
+            graphs: tempGraphs
         })
     }
 
@@ -203,45 +210,45 @@ class Details extends Component {
                                 </Row>
                                 <Row>
                                     <h5>Snow Depth: {currentObservation.snowDepth}" | Δ: {currentObservation.changeInSnowDepth}"</h5>
-                                    <div onClick={() => this.toggleGraph()}>
+                                    <div onClick={() => this.toggleGraph('Snow Depth')}>
                                         <Button text={"graph"} />
                                     </div>
                                 </Row>
                                 <Row>
                                     <h5>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}" | Δ: {currentObservation.changeInSnowWaterEquivalent}"</h5>
-                                    <div onClick={() => this.toggleGraph()}>
+                                    <div onClick={() => this.toggleGraph('Snow Water')}>
                                         <Button text={"graph"} />
                                     </div>
                                 </Row>
                                 <Row>
                                     <h5>Air Temp: {currentObservation.airTemperatureObserved}°F</h5>
-                                    <div onClick={() => this.toggleGraph()}>
+                                    <div onClick={() => this.toggleGraph('Air Temp Observed')}>
                                         <Button text={"graph"} />
                                     </div>
                                 </Row>
-                                
+
                                 <Row>
                                     <h5>Air Temp Average: {currentObservation.airTemperatureAverage}°F</h5>
-                                    <div onClick={() => this.toggleGraph()}>
+                                    <div onClick={() => this.toggleGraph('Air Temp Average')}>
                                         <Button text={"graph"} />
                                     </div>
                                 </Row>
-                                
+
                                 <Row>
                                     <h5>Air Temp Min: {currentObservation.airTemperatureMin}°F | Air Temp Max: {currentObservation.airTemperatureMax}°F</h5>
-                                    <div onClick={() => this.toggleGraph()}>
+                                    <div onClick={() => this.toggleGraph('Air Temp Max and Min')}>
                                         <Button text={"graph"} />
                                     </div>
                                 </Row>
                             </div>
                         </DataWrapper>
                     </DisplayRow>
-                    {/* <DisplayRow> */}
-                        {this.state.graphs.map(graph => (
-                            // <li>{'<GRAPH>'}</li>
-                        <Graph>{graph}</Graph>
+                    {this.state.graphs.map(graph => (
+                            <Graph
+                                graphType={graph}
+                                observations={this.state.observations}
+                            />  
                         ))}
-                    {/* </DisplayRow> */}
                 </div>
             }</div>
         )

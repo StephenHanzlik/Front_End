@@ -22,13 +22,14 @@ class Graph extends Component {
         this.getMonthName = this.getMonthName.bind(this);
     }
 
-    componentDidUpdate() {
-        if (this.state.observations !== this.props.observations) {
-            this.setState({
-                observations: this.props.observations
-            });
-        }
-    }
+    //I don't think we need this
+    // componentDidUpdate() {
+    //     if (this.state.observations !== this.props.observations) {
+    //         this.setState({
+    //             observations: this.props.observations
+    //         });
+    //     }
+    // }
 
     safeParseAndMap(observations, graphType){
         return observations.filter(observation => {
@@ -38,8 +39,9 @@ class Graph extends Component {
         });
     }
 
-    wrapObservations(observations) {
+    wrapObservations() {
         let graphType = this.props.graphType;
+        let observations = this.props.observations;
 
         if(graphType === "snowDepth"){
             let snowDepthData = this.safeParseAndMap(observations, graphType)
@@ -145,7 +147,7 @@ class Graph extends Component {
                     <h3>Select a Station</h3>
                     :
                     <ResponsiveLine
-                        data={this.wrapObservations(this.state.observations)}
+                        data={this.wrapObservations()}
                         margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
                         xScale={{ type: 'point' }}
                         yScale={{ type: 'linear', min: '0', max: 'auto', stacked: true, reverse: false }}

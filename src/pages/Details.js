@@ -243,7 +243,9 @@ class Details extends Component {
                             </div>
                         </DataWrapper>
                     </DisplayRow>
-                    {this.state.graphs.map(graph => (
+                    {console.log("this.state.observations!!!: ", this.state.observations)}
+                    {
+                    this.state.graphs.map(graph => (
                             <Graph
                                 graphType={graph}
                                 observations={this.state.observations}

@@ -43,38 +43,36 @@ class Graph extends Component {
     wrapObservations() {
         let graphType = this.props.graphType;
         let observations = this.props.observations;
-        //Should be a switch statement
-        if(graphType === "snowDepth"){
-            return this.safeParseAndWrap(observations, graphType, 'Snow Depth');
+        let title;
+        switch (graphType){
+            case 'snowDepth':
+                title = 'Snow Depth';
+                break;
+            case 'changeInSnowDepth':
+                title = 'Change in Snow Depth';
+                break;
+            case 'snowWaterEquivalent':
+                title = 'Snow Water Equivalent';
+                break;
+            case 'changeInSnowWaterEquivalent':
+                title = 'Change in Snow Water Equivalent';
+                break;
+            case 'airTemperatureObserved':
+                title = 'Air Temperature Observed';
+                break;
+            case 'airTemperatureAverage':
+                title = 'Air Temperature Averagre';
+                break;
+            case 'airTemperatureMax':
+                title = 'Air Temperature Max';
+                break;
+            case 'airTemperatureMin':
+                title = 'Air Temperature Min';
+                break;   
+            default:
+                title = 'Snow Depth';
         }
-        
-        if(graphType === "changeInSnowDepth"){
-            return this.safeParseAndWrap(observations, graphType, 'Change in Snow Depth');
-        }
-
-        if(graphType === "snowWaterEquivalent"){
-            return this.safeParseAndWrap(observations, graphType, 'Snow Water Equivalent');
-        }
-
-        if(graphType === "changeInSnowWaterEquivalent"){
-            return this.safeParseAndWrap(observations, graphType, 'Change in Snow Water Equivalent');
-        }
-
-        if(graphType === "airTemperatureObserved"){
-            return this.safeParseAndWrap(observations, graphType, 'Air Temperature Observed');
-        }
-
-        if(graphType === "airTemperatureAverage"){
-            return this.safeParseAndWrap(observations, graphType, 'Air Temperature Average');
-        }
-
-        if(graphType === "airTemperatureMax"){
-            return this.safeParseAndWrap(observations, graphType, 'Air Temperature Max');
-        }
-
-        if(graphType === "airTemperatureMin"){
-            return this.safeParseAndWrap(observations, graphType, 'Air Temperature Min');
-        }
+        return this.safeParseAndWrap(observations, graphType, title);
     }
 
     getMonthName(monthNumber) {

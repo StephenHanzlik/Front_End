@@ -97,6 +97,7 @@ class Console extends Component {
                 </MapWrapper>
                 <GraphWrapper>
                     <Graph
+                        graphType={'snowDepth'}
                         observations={this.state.observations}
                     />
                 </GraphWrapper>

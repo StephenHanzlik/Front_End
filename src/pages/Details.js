@@ -209,16 +209,27 @@ class Details extends Component {
 
                                 </Row>
                                 <Row>
-                                    <h5>Snow Depth: {currentObservation.snowDepth}" | Δ: {currentObservation.changeInSnowDepth}"</h5>
+                                    <h5>Snow Depth: {currentObservation.snowDepth}" 
                                     <div onClick={() => this.toggleGraph('snowDepth')}>
-                                        <Button text={"graph"} />
+                                        <Button text={""} />
                                     </div>
+                                    | Δ: {currentObservation.changeInSnowDepth}"
+                                    <div onClick={() => this.toggleGraph('changeInSnowDepth')}>
+                                        <Button text={""} />
+                                    </div>
+                                    </h5>
                                 </Row>
                                 <Row>
-                                    <h5>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}" | Δ: {currentObservation.changeInSnowWaterEquivalent}"</h5>
+                                    <h5>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}" 
                                     <div onClick={() => this.toggleGraph('snowWaterEquivalent')}>
-                                        <Button text={"graph"} />
+                                        <Button text={"x"} />
                                     </div>
+                                    | Δ: {currentObservation.changeInSnowWaterEquivalent}"
+                                    <div onClick={() => this.toggleGraph('snowWaterEquivalent')}>
+                                        <Button text={"x"} />
+                                    </div>
+                                    </h5>
+                                    
                                 </Row>
                                 <Row>
                                     <h5>Air Temp: {currentObservation.airTemperatureObserved}°F</h5>
@@ -243,14 +254,14 @@ class Details extends Component {
                             </div>
                         </DataWrapper>
                     </DisplayRow>
-                    {console.log("this.state.observations!!!: ", this.state.observations)}
                     {
                     this.state.graphs.map(graph => (
                             <Graph
                                 graphType={graph}
                                 observations={this.state.observations}
                             />  
-                        ))}
+                        ))
+                    }
                 </div>
             }</div>
         )

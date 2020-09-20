@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import { ResponsiveLine } from '@nivo/line'
 import testData from '../graphTestData';
 import styled from 'styled-components';
+import DataSetWrapper from '../classes/dataSetWrapper';
 
 const GraphWrapper = styled.div`
     width: 1200px;
     height: 30vh;
 `;
-
-//Graph Types
-//Snow
 
 class Graph extends Component {
     constructor(props) {
@@ -31,82 +29,52 @@ class Graph extends Component {
     //     }
     // }
 
-    safeParseAndMap(observations, graphType){
-        return observations.filter(observation => {
+    safeParseAndWrap(observations, graphType, title){
+        let dataSetArray = [];
+        let dataSet = observations.filter(observation => {
             return !isNaN(parseInt(observation[graphType]))
         }).map(observation => {
             return  { "x": observation.date, "y": parseInt(observation[graphType]) }
         });
+        dataSetArray.push(new DataSetWrapper(title, "hsl(216, 70%, 50%)", dataSet));
+        return dataSetArray
     }
 
     wrapObservations() {
         let graphType = this.props.graphType;
         let observations = this.props.observations;
-
+        //Should be a switch statement
         if(graphType === "snowDepth"){
-            let snowDepthData = this.safeParseAndMap(observations, graphType)
-            return [{
-                "id": "Snow Depth",
-                "color": "hsl(216, 70%, 50%)",
-                "data": snowDepthData
-            }];
+            return this.safeParseAndWrap(observations, graphType, 'Snow Depth');
+        }
+        
+        if(graphType === "changeInSnowDepth"){
+            return this.safeParseAndWrap(observations, graphType, 'Change in Snow Depth');
         }
 
         if(graphType === "snowWaterEquivalent"){
-            let snowWaterData = this.safeParseAndMap(observations, graphType)
-            return [{
-                "id": "Snow Water Equivalent",
-                "color": "hsl(216, 70%, 50%)",
-                "data": snowWaterData
-            }];
+            return this.safeParseAndWrap(observations, graphType, 'Snow Water Equivalent');
+        }
+
+        if(graphType === "changeInSnowWaterEquivalent"){
+            return this.safeParseAndWrap(observations, graphType, 'Change in Snow Water Equivalent');
         }
 
         if(graphType === "airTemperatureObserved"){
-            let snowWaterData = this.safeParseAndMap(observations, graphType)
-            return [{
-                "id": "Air Temperature Observed",
-                "color": "hsl(216, 70%, 50%)",
-                "data": snowWaterData
-            }];
-        }
-
-        if(graphType === "airTemperatureObserved"){
-            let snowWaterData = this.safeParseAndMap(observations, graphType)
-            return [{
-                "id": "Air Temperature Observed",
-                "color": "hsl(216, 70%, 50%)",
-                "data": snowWaterData
-            }];
+            return this.safeParseAndWrap(observations, graphType, 'Air Temperature Observed');
         }
 
         if(graphType === "airTemperatureAverage"){
-            let snowWaterData = this.safeParseAndMap(observations, graphType)
-            return [{
-                "id": "Air Temperature Average",
-                "color": "hsl(216, 70%, 50%)",
-                "data": snowWaterData
-            }];
+            return this.safeParseAndWrap(observations, graphType, 'Air Temperature Average');
         }
 
-        if(graphType === "airTemperatureAverage"){
-            let snowWaterData = this.safeParseAndMap(observations, graphType)
-            return [{
-                "id": "Air Temperature Average",
-                "color": "hsl(216, 70%, 50%)",
-                "data": snowWaterData
-            }];
+        if(graphType === "airTemperatureMax"){
+            return this.safeParseAndWrap(observations, graphType, 'Air Temperature Max');
         }
 
-        //TODO: We want a default way to handle this.  Right now it just passes air temp avr when it doesn't know
-        else {
-            let snowWaterData = this.safeParseAndMap(observations, graphType)
-            return [{
-                "id": "Air Temperature Average",
-                "color": "hsl(216, 70%, 50%)",
-                "data": snowWaterData
-            }];
+        if(graphType === "airTemperatureMin"){
+            return this.safeParseAndWrap(observations, graphType, 'Air Temperature Min');
         }
-
     }
 
     getMonthName(monthNumber) {
@@ -143,7 +111,8 @@ class Graph extends Component {
     render() {
         return (
             <GraphWrapper>
-                {this.props.observations === [] ?
+                {console.log("!this.props.observations!", this.props.observations)}
+                {!this.props.observations ?
                     <h3>Select a Station</h3>
                     :
                     <ResponsiveLine

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import NavBar from '../components/NavBar';
 import Graph from '../components/Graph';
 import Map from '../components/Map';
-import GeoJsonFeatureCollection from '../classes/geoJsonFeatureCollection';
-import GeoJsonFeature from '../classes/geoJsonFeature';
+import GeoJsonFeatureCollection from '../classes/GeoJsonFeatureCollection';
+import GeoJsonFeature from '../classes/GeoJsonFeature';
 import styled from 'styled-components';
 import axios from 'axios';
 

@@ -4,8 +4,8 @@ import Map from '../components/Map';
 import ArrowButton from '../components/ArrowButton';
 import Button from '../components/Button';
 import Graph from '../components/Graph';
-import GeoJsonFeatureCollection from '../classes/geoJsonFeatureCollection';
-import GeoJsonFeature from '../classes/geoJsonFeature';
+import GeoJsonFeatureCollection from '../classes/GeoJsonFeatureCollection';
+import GeoJsonFeature from '../classes/GeoJsonFeature';
 import styled from 'styled-components';
 import axios from 'axios';
 

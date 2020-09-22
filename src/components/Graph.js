@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { ResponsiveLine } from '@nivo/line'
 import testData from '../graphTestData';
 import styled from 'styled-components';
-import DataSetWrapper from '../classes/dataSetWrapper';
+import ObservationDataSet from '../classes/ObservationDataSet';
+import ObservationDataPoint from '../classes/ObservationDataPoint';
 
 const GraphWrapper = styled.div`
     width: 1200px;
@@ -32,11 +33,11 @@ class Graph extends Component {
     safeParseAndWrap(observations, graphType, title){
         let dataSetArray = [];
         let dataSet = observations.filter(observation => {
-            return !isNaN(parseInt(observation[graphType]))
-        }).map(observation => {
-            return  { "x": observation.date, "y": parseInt(observation[graphType]) }
-        });
-        dataSetArray.push(new DataSetWrapper(title, "hsl(216, 70%, 50%)", dataSet));
+                            return !isNaN(parseInt(observation[graphType]))
+                        }).map(observation => {
+                            return new ObservationDataPoint(observation.date, parseInt(observation[graphType]));
+                        });
+        dataSetArray.push(new ObservationDataSet(title, "hsl(216, 70%, 50%)", dataSet));
         return dataSetArray
     }
 

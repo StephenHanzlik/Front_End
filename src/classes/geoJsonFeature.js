@@ -1,4 +1,3 @@
-
 export default class GeoJsonFeature {
     constructor(lng, lat, name, elevation, triplet, timezone, wind) {
         this.type = 'Feature';
@@ -15,6 +14,5 @@ export default class GeoJsonFeature {
             'icon': 'marker'
         }
     };
-
 }
 

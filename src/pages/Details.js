@@ -14,20 +14,32 @@ const MapWrapper = styled.div`
 `;
 
 const DataWrapper = styled.div`
-    padding-left: 10px;
+    // padding-left: 10px;
     height: 10px;
+    display: flex;
+    flex-direction: column;
 `;
 
 const DisplayRow = styled.div`
-    margin-top: 30px;
+    margin-top: 10px;
     display: flex;
     justify-content: center;
+    // overflow: scroll;
 `;
+
 
 const Row = styled.div`
     display: flex;
+    flex-direction: row;
     justify-content: center;
 `;
+
+const GraphRow = styled.div`
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
 
 
 
@@ -168,6 +180,10 @@ class Details extends Component {
     }
 
     render() {
+        const textStyle = {
+            margin: '0 0 0 0'
+        }
+
         let currentObservation;
         let observations = this.state.observations;
 
@@ -176,6 +192,7 @@ class Details extends Component {
         }
 
         return (
+
 
             <div>{
                 this.state && this.state.geoJson && this.state.observations &&
@@ -195,73 +212,75 @@ class Details extends Component {
                         </MapWrapper>
                         <DataWrapper>
                             {/* TODO: This could probably be its own component */}
-                            <div>
-                                <h3>{this.state.stationName}</h3>
-                                <h3>{this.state.stationElevation}ft</h3>
+                            {/* <div> */}
+                                <p style={textStyle}>{this.state.stationName}</p>
+                                <p style={textStyle}>{this.state.stationElevation}ft</p>
                                 <Row>
                                     <div onClick={() => this.previousObservation("test value 1")}>
                                         <ArrowButton leftArrow={true} />
                                     </div>
-                                    <h5>{currentObservation.date}</h5>
+                                    <p style={textStyle}>{currentObservation.date}</p>
                                     <div onClick={() => this.nextObservation("test value 2")}>
                                         <ArrowButton rightArrow={true} />
                                     </div>
 
                                 </Row>
                                 <Row>
-                                    <h5>Snow Depth: {currentObservation.snowDepth}" 
-                                    <div onClick={() => this.toggleGraph('snowDepth')}>
-                                        <Button size={"small"} />
-                                    </div>
-                                    | Δ: {currentObservation.changeInSnowDepth}"
-                                    <div onClick={() => this.toggleGraph('changeInSnowDepth')}>
-                                        <Button size={"small"} />
-                                    </div>
-                                    </h5>
+                                    <p style={textStyle}>Snow Depth: {currentObservation.snowDepth}" 
+                                        <div onClick={() => this.toggleGraph('snowDepth')}>
+                                            <Button size={"small"} />
+                                        </div>
+                                        | Δ: {currentObservation.changeInSnowDepth}"
+                                        <div onClick={() => this.toggleGraph('changeInSnowDepth')}>
+                                            <Button size={"small"} />
+                                        </div>
+                                    </p>
                                 </Row>
-                                <Row>
-                                    <h5>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}" 
-                                    <div onClick={() => this.toggleGraph('snowWaterEquivalent')}>
-                                        <Button size={"small"} />
-                                    </div>
-                                    | Δ: {currentObservation.changeInSnowWaterEquivalent}"
-                                    <div onClick={() => this.toggleGraph('snowWaterEquivalent')}>
-                                        <Button size={"small"} />
-                                    </div>
-                                    </h5>
-                                    
-                                </Row>
-                                <Row>
-                                    <h5>Air Temp: {currentObservation.airTemperatureObserved}°F</h5>
+                                {/* <Row> */}
+                                    <p style={textStyle}>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}" 
+                                        <div onClick={() => this.toggleGraph('snowWaterEquivalent')}>
+                                            <Button size={"small"} />
+                                        </div>
+                                        | Δ: {currentObservation.changeInSnowWaterEquivalent}"
+                                        <div onClick={() => this.toggleGraph('snowWaterEquivalent')}>
+                                            <Button size={"small"} />
+                                        </div>
+                                    </p>
+                                {/* </Row> */}
+                                {/* <Row> */}
+                                    <p style={textStyle}>Air Temp: {currentObservation.airTemperatureObserved}°F</p>
                                     <div onClick={() => this.toggleGraph('airTemperatureObserved')}>
                                         <Button size={"small"} />
                                     </div>
-                                </Row>
+                                {/* </Row> */}
 
-                                <Row>
-                                    <h5>Air Temp Average: {currentObservation.airTemperatureAverage}°F</h5>
+                                {/* <Row> */}
+                                    <p style={textStyle}>Air Temp Average: {currentObservation.airTemperatureAverage}°F</p>
                                     <div onClick={() => this.toggleGraph('airTemperatureAverage')}>
                                         <Button size={"small"}s />
                                     </div>
-                                </Row>
+                                {/* </Row> */}
 
-                                <Row>
-                                    <h5>Air Temp Min: {currentObservation.airTemperatureMin}°F | Air Temp Max: {currentObservation.airTemperatureMax}°F</h5>
+                                {/* <Row> */}
+                                    <p style={textStyle}>Air Temp Min: {currentObservation.airTemperatureMin}°F | Air Temp Max: {currentObservation.airTemperatureMax}°F</p>
                                     <div onClick={() => this.toggleGraph('Air Temp Max and Min')}>
                                         <Button size={"small"} />
                                     </div>
-                                </Row>
-                            </div>
+                                {/* </Row> */}
+                            {/* </div> */}
                         </DataWrapper>
                     </DisplayRow>
-                    {
-                    this.state.graphs.map(graph => (
-                            <Graph
-                                graphType={graph}
-                                observations={this.state.observations}
-                            />  
-                        ))
-                    }
+                    <GraphRow>
+                        {
+                            this.state.graphs.map(graph => (
+                                    <Graph
+                                        graphType={graph}
+                                        observations={this.state.observations}
+                                    />  
+                                ))
+                        }
+                    </GraphRow>
+                    
                 </div>
             }</div>
         )

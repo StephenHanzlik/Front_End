@@ -181,7 +181,8 @@ class Details extends Component {
 
     render() {
         const textStyle = {
-            margin: '0 0 0 0'
+            'margin': '0 0 0 0',
+            'font-size': '25px'
         }
 
         let currentObservation;

@@ -30,7 +30,7 @@ const DisplayRow = styled.div`
 
 const Row = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: row !important;
     justify-content: center;
 `;
 
@@ -226,47 +226,43 @@ class Details extends Component {
 
                                 </Row>
                                 <Row>
-                                    <p style={textStyle}>Snow Depth: {currentObservation.snowDepth}" 
-                                        <div onClick={() => this.toggleGraph('snowDepth')}>
-                                            <Button size={"small"} />
-                                        </div>
-                                        | Δ: {currentObservation.changeInSnowDepth}"
-                                        <div onClick={() => this.toggleGraph('changeInSnowDepth')}>
-                                            <Button size={"small"} />
-                                        </div>
-                                    </p>
+                                    <p style={textStyle}>Snow Depth: {currentObservation.snowDepth}"</p>
+                                    <div onClick={() => this.toggleGraph('snowDepth')}>
+                                        <Button size={"small"} />
+                                    </div>
+                                    <p style={textStyle}>| Δ: {currentObservation.changeInSnowDepth}"</p>
+                                    <div onClick={() => this.toggleGraph('changeInSnowDepth')}>
+                                        <Button size={"small"} />
+                                    </div>
                                 </Row>
-                                {/* <Row> */}
-                                    <p style={textStyle}>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}" 
-                                        <div onClick={() => this.toggleGraph('snowWaterEquivalent')}>
-                                            <Button size={"small"} />
-                                        </div>
-                                        | Δ: {currentObservation.changeInSnowWaterEquivalent}"
-                                        <div onClick={() => this.toggleGraph('snowWaterEquivalent')}>
-                                            <Button size={"small"} />
-                                        </div>
-                                    </p>
-                                {/* </Row> */}
-                                {/* <Row> */}
+                                <Row>
+                                    <p style={textStyle}>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}"</p>
+                                    <div onClick={() => this.toggleGraph('snowWaterEquivalent')}>
+                                        <Button size={"small"} />
+                                    </div>
+                                    <p style={textStyle}>| Δ: {currentObservation.changeInSnowWaterEquivalent}"</p>
+                                    <div onClick={() => this.toggleGraph('snowWaterEquivalent')}>
+                                        <Button size={"small"} />
+                                    </div>
+                                </Row>
+                                <Row>
                                     <p style={textStyle}>Air Temp: {currentObservation.airTemperatureObserved}°F</p>
                                     <div onClick={() => this.toggleGraph('airTemperatureObserved')}>
                                         <Button size={"small"} />
                                     </div>
-                                {/* </Row> */}
-
-                                {/* <Row> */}
+                                </Row>
+                                <Row>
                                     <p style={textStyle}>Air Temp Average: {currentObservation.airTemperatureAverage}°F</p>
                                     <div onClick={() => this.toggleGraph('airTemperatureAverage')}>
                                         <Button size={"small"}s />
                                     </div>
-                                {/* </Row> */}
-
-                                {/* <Row> */}
+                                </Row>
+                                <Row>
                                     <p style={textStyle}>Air Temp Min: {currentObservation.airTemperatureMin}°F | Air Temp Max: {currentObservation.airTemperatureMax}°F</p>
                                     <div onClick={() => this.toggleGraph('Air Temp Max and Min')}>
                                         <Button size={"small"} />
                                     </div>
-                                {/* </Row> */}
+                                </Row>
                             {/* </div> */}
                         </DataWrapper>
                     </DisplayRow>

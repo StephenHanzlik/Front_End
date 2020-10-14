@@ -174,6 +174,7 @@ class Details extends Component {
         } else {
             tempGraphs.push(graphType)
         }
+        console.log("tempGraphs", tempGraphs);
         this.setState({
             graphs: tempGraphs
         })
@@ -249,7 +250,12 @@ class Details extends Component {
                                 <Row>
                                     <p style={textStyle}>Air Temp: {currentObservation.airTemperatureObserved}°F</p>
                                     <div onClick={() => this.toggleGraph('airTemperatureObserved')}>
-                                        <Button size={"small"} />
+                                        {this.state.graphs.indexOf('airTemperatureObserved') &&
+                                            <Button size={"small"} selected={false}/>
+                                        }
+                                        {!this.state.graphs.indexOf('airTemperatureObserved') &&
+                                            <Button size={"small"} selected={true}/>
+                                        }   
                                     </div>
                                 </Row>
                                 <Row>

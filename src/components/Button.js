@@ -19,20 +19,19 @@ const SmallButton = styled.button`
   padding: 0.2em 0.2em;
   border: 2px solid #ffb74d;
   border-radius: 3px;
-  background: none;
 `
 
 class Button extends Component {
-
     render(){
+      let selected;
+      this.props.selected ? selected  = {"background": "#4db6ac"} : selected = {"background": "none"};
         return (
               <Link to={this.props.link}>
                 {this.props.size === 'small' ? 
-                  <SmallButton></SmallButton>
+                  <SmallButton style={selected}></SmallButton>
                 :
                   <LargeButton>{this.props.text}</LargeButton>
                 }
-
               </Link>
         )
     }

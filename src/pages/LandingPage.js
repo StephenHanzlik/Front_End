@@ -33,6 +33,19 @@ const ButtonWrapper = styled.div`
     flex-direction: column;
 `;
 
+const PolaroidContainer = styled.div`
+    width: 40%;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 25px;
+    margin-left: auto;
+    margin-right: auto;
+`
+const PolaroidDiscription = styled.div`
+    text-align: center;
+    padding: 10px 20px;
+`
+
 class LandingPage extends Component {
 
     // scrollToAbout(){
@@ -60,7 +73,12 @@ class LandingPage extends Component {
             </LandingHeaderContainer>
             <AboutContentContainer>
                 <h2>About SNOTEL</h2>
-                <img src={snotelStation} alt='snotelStation'/>
+                <PolaroidContainer>
+                    <img src={snotelStation} alt='snotelStation' style={{'width':'100%'}}/>
+                    <PolaroidDiscription>
+                        <p>A typical SNOTEL station</p>
+                    </PolaroidDiscription>
+                </PolaroidContainer>
                 <p>SNOTEL stations are automated snow and weather observation stations run by the Natrual Resources Conservation Service (NRCS).  They are located in remote
                     mountain areas and are primarily powered by solar panels.  They are designed to operate unattended and without mantaince for a year.  The NRCS recieves data
                     from the stations via meteor burst communications technology to collect data in near real time.  Meteor burst technology effectivly bounces VHF radio signals

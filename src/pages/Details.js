@@ -57,7 +57,7 @@ class Details extends Component {
             observations: '',
             currentObservationIndex: '',
             mountGraph: false,
-            graphs: ['snowDepth', 'airTemperatureAverage']
+            graphs: ['snowDepth', 'airTemperatureMax', 'airTemperatureMin']
         };
     }
 
@@ -283,9 +283,23 @@ class Details extends Component {
                                     </div>
                                 </Row>
                                 <Row>
-                                    <p style={textStyle}>Air Temp Min: {currentObservation.airTemperatureMin}°F | Air Temp Max: {currentObservation.airTemperatureMax}°F</p>
-                                    <div onClick={() => this.toggleGraph('Air Temp Max and Min')}>
-                                        <Button size={"small"} />
+                                    <p style={textStyle}>Air Temp Min: {currentObservation.airTemperatureMin}°F</p>
+                                    <div onClick={() => this.toggleGraph('airTemperatureMin')}>
+                                        {this.state.graphs.indexOf('airTemperatureMin') > -1 &&
+                                            <Button size={"small"} selected={true}/>
+                                        }
+                                        {this.state.graphs.indexOf('airTemperatureMin') <= -1 &&
+                                            <Button size={"small"} selected={false}/>
+                                        }
+                                    </div>
+                                    <p style={textStyle}>| Air Temp Max: {currentObservation.airTemperatureMax}°F</p>
+                                    <div onClick={() => this.toggleGraph('airTemperatureMax')}>
+                                        {this.state.graphs.indexOf('airTemperatureMax') > -1 &&
+                                            <Button size={"small"} selected={true}/>
+                                        }
+                                        {this.state.graphs.indexOf('airTemperatureMax') <= -1 &&
+                                            <Button size={"small"} selected={false}/>
+                                        }
                                     </div>
                                 </Row>
                             {/* </div> */}

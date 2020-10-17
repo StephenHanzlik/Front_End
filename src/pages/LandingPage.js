@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import '../App.css';
 import backGroundImg from '../images/landing-page-img.jpg';
 import snotelStation from '../images/snotelStation.jpg';
-import meteorBurst from '../images/meteorBurst2.png';
+import meteorBurst from '../images/meteorBurst.png';
 import LandingHeader from '../components/LandingHeader';
 import Button from '../components/Button';
 import styled from 'styled-components';
 import {withRouter} from 'react-router-dom';
 import { Link, animateScroll as scroll } from "react-scroll";
-
-
 
 const Background = styled.div`
     background-image: url(${backGroundImg});

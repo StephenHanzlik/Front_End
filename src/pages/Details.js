@@ -41,8 +41,6 @@ const GraphRow = styled.div`
     align-items: center;
 `
 
-
-
 class Details extends Component {
 
     constructor(props) {

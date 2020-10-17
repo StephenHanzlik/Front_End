@@ -8,7 +8,7 @@ class LandingHeader extends Component {
         <div> 
             <h1 className="Header center orange-text text-lighten-2">MOUNTAIN <img src={skisImage} alt="skis" id="subHead"></img> SNOWPACK</h1>
             <div className="row center">
-                <h5 className="header col s12 orange-text text-lighten-2">a backcountry snow and weather app powered by SNOTEL</h5>
+                <h5 className="header col s12 orange-text text-lighten-2">a backcountry snow app powered by SNOTEL</h5>
              </div>
         </div> 
         )

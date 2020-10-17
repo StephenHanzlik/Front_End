@@ -24,6 +24,12 @@ const AboutContentContainer = styled.div`
     height: 1200px;
 `;
 
+const ButtonWrapper = styled.div`
+    // height: 10px;
+    display: flex;
+    flex-direction: column;
+`;
+
 class LandingPage extends Component {
     render(){
         return(
@@ -31,10 +37,10 @@ class LandingPage extends Component {
             <Background/>
             <LandingHeaderContainer>
               <LandingHeader/>
-                <Button
-                    text="SNOTEL Console"
-                    link="/console"
-                />
+                <ButtonWrapper>
+                    <Button text="Explore Stations →" link="/console" />
+                    <Button text="About ↓"/>
+                </ButtonWrapper>
             </LandingHeaderContainer>
             <AboutContentContainer/>
         </div> 

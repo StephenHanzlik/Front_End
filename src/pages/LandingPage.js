@@ -23,7 +23,8 @@ const LandingHeaderContainer = styled.div`
 `;
 
 const AboutContentContainer = styled.div`
-    width: 100%
+    margin-top: -10%;
+    width: 100%;
     height: 1200px;
 `;
 
@@ -103,8 +104,8 @@ class LandingPage extends Component {
                 </PolaroidContainer>
                 <ParagraphContainer>
                     <p style={paragraphStyle}>The Mountain Snowpack application uses APIs provided by the NRCS meant to deliver CSV files used in academic and government reports.  We convert these CSVs for on the fly graphing and station exlporation.
-                    Because of the nature of meteor burst technology, this app is not always real time and will appear as if current data is missing.  Check back in for the most up to date information or explore past data points to extrapolate current 
-                    conditions.  This application primarly focuses on Snow Depth, Snow Water Equivalent, Air temperuature, and the 24 hours changes in these values.  This data is of importance to backcountry skiers, climbers, hikers, and other 
+                    Because of the nature of meteor burst technology, this app is not always real time and it will sometimes appear as if current data is missing.  Check back in for the most up to date information or explore nearby stations and reference past data points to extrapolate current 
+                    conditions.  This application primarly focuses on Snow Depth, Snow Water Equivalent, Air temperuature, and the 24 hours change in these values notaded as Δ.  This data is of importance to backcountry skiers, climbers, hikers, and other 
                     recreationalists who are interested in the current status of the snowpack.
                     </p>
                 </ParagraphContainer>

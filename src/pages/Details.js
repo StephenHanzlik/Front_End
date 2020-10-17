@@ -57,7 +57,7 @@ class Details extends Component {
             observations: '',
             currentObservationIndex: '',
             mountGraph: false,
-            graphs: []
+            graphs: ['snowDepth', 'airTemperatureAverage']
         };
     }
 
@@ -167,13 +167,8 @@ class Details extends Component {
 
     toggleGraph(graphType) {
         let tempGraphs = this.state.graphs;
-
         let index = tempGraphs.indexOf(graphType);
-        if (index > -1) {
-            tempGraphs.splice(index, 1)
-        } else {
-            tempGraphs.push(graphType)
-        }
+        index > -1 ? tempGraphs.splice(index, 1) : tempGraphs.push(graphType)
         console.log("tempGraphs", tempGraphs);
         this.setState({
             graphs: tempGraphs
@@ -194,8 +189,6 @@ class Details extends Component {
         }
 
         return (
-
-
             <div>{
                 this.state && this.state.geoJson && this.state.observations &&
                 <div>
@@ -250,18 +243,23 @@ class Details extends Component {
                                 <Row>
                                     <p style={textStyle}>Air Temp: {currentObservation.airTemperatureObserved}°F</p>
                                     <div onClick={() => this.toggleGraph('airTemperatureObserved')}>
-                                        {this.state.graphs.indexOf('airTemperatureObserved') &&
-                                            <Button size={"small"} selected={false}/>
-                                        }
-                                        {!this.state.graphs.indexOf('airTemperatureObserved') &&
+                                        {this.state.graphs.indexOf('airTemperatureObserved') > -1 &&
                                             <Button size={"small"} selected={true}/>
+                                        }
+                                        {this.state.graphs.indexOf('airTemperatureObserved') <= -1 &&
+                                            <Button size={"small"} selected={false}/>
                                         }   
                                     </div>
                                 </Row>
                                 <Row>
                                     <p style={textStyle}>Air Temp Average: {currentObservation.airTemperatureAverage}°F</p>
                                     <div onClick={() => this.toggleGraph('airTemperatureAverage')}>
-                                        <Button size={"small"}s />
+                                    {this.state.graphs.indexOf('airTemperatureAverage') > -1 &&
+                                            <Button size={"small"} selected={true}/>
+                                        }
+                                        {this.state.graphs.indexOf('airTemperatureAverage') <= -1 &&
+                                            <Button size={"small"} selected={false}/>
+                                        }   
                                     </div>
                                 </Row>
                                 <Row>

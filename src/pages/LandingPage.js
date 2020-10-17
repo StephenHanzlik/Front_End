@@ -23,7 +23,7 @@ const LandingHeaderContainer = styled.div`
 `;
 
 const AboutContentContainer = styled.div`
-    margin-top: -10%;
+    margin-top: -5%;
     width: 100%;
     height: 1200px;
 `;
@@ -55,9 +55,17 @@ const PolaroidDiscription = styled.div`
 
 class LandingPage extends Component {
 
-    // scrollToAbout(){
-        // scroll
-    // }
+    scrollToAboutSection(){
+        scroll.scrollTo('900');
+        // scroll.scrollTo('aboutSection',
+        //     {
+        //     duration: 1500,
+        //     delay: 100,
+        //     smooth: true,
+        //     containerId: 'aboutSection',
+        //     offset: 50
+        //   });
+    }
 
     render(){
         const imgStyle = {
@@ -77,18 +85,12 @@ class LandingPage extends Component {
               <LandingHeader/>
                 <ButtonWrapper>
                     <Button text="Explore Stations →" link="/console" />
-                    <Button text="About ↓"/>
-                    {/* <Link
-                        activeClass="active"
-                        to="section1"
-                        spy={true}
-                        smooth={true}
-                        offset={-70}
-                        duration={500}
-                    ></Link> */}
+                    <div onClick={() => this.scrollToAboutSection()}>
+                        <Button text="About ↓" />
+                    </div>
                 </ButtonWrapper>
             </LandingHeaderContainer>
-            <AboutContentContainer>
+            <AboutContentContainer name='aboutSection'>
                 <h3>SNOTEL and Mountain Snowpack</h3>
                 <ParagraphContainer>
                     <p style={paragraphStyle}>SNOTEL stations are automated snow and weather observation stations run by the Natural Resources Conservation Service (NRCS).  They are located in remote

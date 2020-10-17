@@ -223,21 +223,41 @@ class Details extends Component {
                                 <Row>
                                     <p style={textStyle}>Snow Depth: {currentObservation.snowDepth}"</p>
                                     <div onClick={() => this.toggleGraph('snowDepth')}>
-                                        <Button size={"small"} />
+                                        {this.state.graphs.indexOf('snowDepth') > -1 &&
+                                            <Button size={"small"} selected={true}/>
+                                        }
+                                        {this.state.graphs.indexOf('snowDepth') <= -1 &&
+                                            <Button size={"small"} selected={false}/>
+                                        }   
                                     </div>
                                     <p style={textStyle}>| Δ: {currentObservation.changeInSnowDepth}"</p>
                                     <div onClick={() => this.toggleGraph('changeInSnowDepth')}>
-                                        <Button size={"small"} />
+                                        {this.state.graphs.indexOf('changeInSnowDepth') > -1 &&
+                                            <Button size={"small"} selected={true}/>
+                                        }
+                                        {this.state.graphs.indexOf('changeInSnowDepth') <= -1 &&
+                                            <Button size={"small"} selected={false}/>
+                                        }  
                                     </div>
                                 </Row>
                                 <Row>
                                     <p style={textStyle}>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}"</p>
                                     <div onClick={() => this.toggleGraph('snowWaterEquivalent')}>
-                                        <Button size={"small"} />
+                                        {this.state.graphs.indexOf('snowWaterEquivalent') > -1 &&
+                                            <Button size={"small"} selected={true}/>
+                                        }
+                                        {this.state.graphs.indexOf('snowWaterEquivalent') <= -1 &&
+                                            <Button size={"small"} selected={false}/>
+                                        } 
                                     </div>
                                     <p style={textStyle}>| Δ: {currentObservation.changeInSnowWaterEquivalent}"</p>
-                                    <div onClick={() => this.toggleGraph('snowWaterEquivalent')}>
-                                        <Button size={"small"} />
+                                    <div onClick={() => this.toggleGraph('changeInSnowWaterEquivalent')}>
+                                        {this.state.graphs.indexOf('changeInSnowWaterEquivalent') > -1 &&
+                                            <Button size={"small"} selected={true}/>
+                                        }
+                                        {this.state.graphs.indexOf('changeInSnowWaterEquivalent') <= -1 &&
+                                            <Button size={"small"} selected={false}/>
+                                        } 
                                     </div>
                                 </Row>
                                 <Row>
@@ -254,7 +274,7 @@ class Details extends Component {
                                 <Row>
                                     <p style={textStyle}>Air Temp Average: {currentObservation.airTemperatureAverage}°F</p>
                                     <div onClick={() => this.toggleGraph('airTemperatureAverage')}>
-                                    {this.state.graphs.indexOf('airTemperatureAverage') > -1 &&
+                                        {this.state.graphs.indexOf('airTemperatureAverage') > -1 &&
                                             <Button size={"small"} selected={true}/>
                                         }
                                         {this.state.graphs.indexOf('airTemperatureAverage') <= -1 &&

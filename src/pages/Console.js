@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NavBar from '../components/NavBar';
 import Graph from '../components/Graph';
 import Map from '../components/Map';
+import snowFlake from '../images/snowflake.jpg';
 import GeoJsonFeatureCollection from '../classes/GeoJsonFeatureCollection';
 import GeoJsonFeature from '../classes/GeoJsonFeature';
 import styled from 'styled-components';
@@ -79,6 +80,18 @@ class Console extends Component {
     };
 
     render() {
+
+        const textStyle = {
+            'width': '60%',
+            'margin-top': '30px'
+        }
+        const snowFlakeStyle = {
+            'width': '45px',
+            'height': '40px',
+            'border-radius': '20px',
+            'margin-bottom': '-10px'
+        }
+
         return (
             <div>
                 <NavBar />
@@ -96,10 +109,17 @@ class Console extends Component {
                     }
                 </MapWrapper>
                 <GraphWrapper>
-                    <Graph
+                    {this.state.observations.length >= 1 &&
+                        <Graph
                         graphType={'snowDepth'}
                         observations={this.state.observations}
-                    />
+                        />
+                    }
+                    {this.state.observations.length < 1 &&
+                        <h5 style={textStyle}>Select a station icon (<img src={snowFlake} style={snowFlakeStyle} alt='snowFlake'/>)to see an overview of the stations 
+                        snow pack depth.  Click "Details" to see all available data for the station and access more graphing.</h5>
+                    }
+                    
                 </GraphWrapper>
 
             </div>

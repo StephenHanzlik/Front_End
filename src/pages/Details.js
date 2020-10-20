@@ -27,7 +27,6 @@ const DisplayRow = styled.div`
     // overflow: scroll;
 `;
 
-
 const Row = styled.div`
     display: flex;
     flex-direction: row !important;
@@ -190,7 +189,7 @@ class Details extends Component {
             <div>{
                 this.state && this.state.geoJson && this.state.observations &&
                 <div>
-                    <NavBar />
+                    <NavBar link={"explore"}/>
                     <DisplayRow>
                         <MapWrapper>
                             <Map

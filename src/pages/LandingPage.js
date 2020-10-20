@@ -7,7 +7,7 @@ import LandingHeader from '../components/LandingHeader';
 import Button from '../components/Button';
 import styled from 'styled-components';
 import {withRouter} from 'react-router-dom';
-import { Link, animateScroll as scroll } from "react-scroll";
+import {animateScroll as scroll } from "react-scroll";
 
 const Background = styled.div`
     background-image: url(${backGroundImg});
@@ -56,15 +56,7 @@ const PolaroidDiscription = styled.div`
 class LandingPage extends Component {
 
     scrollToAboutSection(){
-        scroll.scrollTo('900');
-        // scroll.scrollTo('aboutSection',
-        //     {
-        //     duration: 1500,
-        //     delay: 100,
-        //     smooth: true,
-        //     containerId: 'aboutSection',
-        //     offset: 50
-        //   });
+        scroll.scrollTo('1000');
     }
 
     render(){

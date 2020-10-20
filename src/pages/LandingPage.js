@@ -78,6 +78,10 @@ class LandingPage extends Component {
             'margin-bottom': '30px'
         }
 
+        const aboutButtonStyle = {
+            'margin-top': '-18px'
+        }
+
         return(
         <div>
             <Background/>
@@ -85,7 +89,7 @@ class LandingPage extends Component {
               <LandingHeader/>
                 <ButtonWrapper>
                     <Button text="Explore Stations →" link="/console" />
-                    <div onClick={() => this.scrollToAboutSection()}>
+                    <div style={aboutButtonStyle} onClick={() => this.scrollToAboutSection()}>
                         <Button text="About ↓" />
                     </div>
                 </ButtonWrapper>

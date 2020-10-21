@@ -1,4 +1,6 @@
 ## About
-This is the React front end for the Mountain Snowpack app.  The corresponding back end can be found here - https://github.com/StephenHanzlik/EnosJava
+This is the React front end for the Mountain Snowpack app.  
 
 For the deployed version visit www.mountainsnowpack.com
+
+For the Java back end see: https://github.com/StephenHanzlik/EnosJava

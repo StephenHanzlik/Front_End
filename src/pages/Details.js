@@ -234,6 +234,7 @@ class Details extends Component {
                                     </div>
 
                                 </Row>
+                                {/*TODO: These should be nested in another component and looped over*/}
                                 <Row>
                                     <p style={paragraphStyle}>Snow Depth: {currentObservation.snowDepth}"</p>
                                     <div onClick={() => this.toggleGraph('snowDepth')}>
@@ -244,7 +245,9 @@ class Details extends Component {
                                             <Button size={"small"} selected={false}/>
                                         }   
                                     </div>
-                                    <p style={paragraphStyle}>| Δ: {currentObservation.changeInSnowDepth}"</p>
+                                </Row>
+                                <Row>
+                                    <p style={paragraphStyle}>Snow Depth Δ: {currentObservation.changeInSnowDepth}"</p>
                                     <div onClick={() => this.toggleGraph('changeInSnowDepth')}>
                                         {this.state.graphs.indexOf('changeInSnowDepth') > -1 &&
                                             <Button size={"small"} selected={true}/>
@@ -264,7 +267,9 @@ class Details extends Component {
                                             <Button size={"small"} selected={false}/>
                                         } 
                                     </div>
-                                    <p style={paragraphStyle}>| Δ: {currentObservation.changeInSnowWaterEquivalent}"</p>
+                                </Row>
+                                <Row>
+                                    <p style={paragraphStyle}>Snow Water Equivalent Δ: {currentObservation.changeInSnowWaterEquivalent}"</p>
                                     <div onClick={() => this.toggleGraph('changeInSnowWaterEquivalent')}>
                                         {this.state.graphs.indexOf('changeInSnowWaterEquivalent') > -1 &&
                                             <Button size={"small"} selected={true}/>
@@ -275,7 +280,7 @@ class Details extends Component {
                                     </div>
                                 </Row>
                                 <Row>
-                                    <p style={paragraphStyle}>Air Temp: {currentObservation.airTemperatureObserved}°F</p>
+                                    <p style={paragraphStyle}>Air Temp Observed: {currentObservation.airTemperatureObserved}°F</p>
                                     <div onClick={() => this.toggleGraph('airTemperatureObserved')}>
                                         {this.state.graphs.indexOf('airTemperatureObserved') > -1 &&
                                             <Button size={"small"} selected={true}/>
@@ -306,7 +311,9 @@ class Details extends Component {
                                             <Button size={"small"} selected={false}/>
                                         }
                                     </div>
-                                    <p style={paragraphStyle}>| Air Temp Max: {currentObservation.airTemperatureMax}°F</p>
+                                </Row>
+                                <Row>
+                                    <p style={paragraphStyle}>Air Temp Max: {currentObservation.airTemperatureMax}°F</p>
                                     <div onClick={() => this.toggleGraph('airTemperatureMax')}>
                                         {this.state.graphs.indexOf('airTemperatureMax') > -1 &&
                                             <Button size={"small"} selected={true}/>

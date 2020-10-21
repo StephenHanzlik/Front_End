@@ -173,9 +173,26 @@ class Details extends Component {
     }
 
     render() {
-        const textStyle = {
+
+        const stationNameStyle = {
             'margin': '0 0 0 0',
+            'font-size': '30px'
+        }
+
+        const stationElevationStyle = {
+            'margin-bottom': '-14px',
+            'margin-top': '-6px',
             'font-size': '25px'
+        }
+
+        const dateStyle = {
+            'margin-top': '10px',
+            'font-size': '20px'
+        }
+
+        const paragraphStyle = {
+            'margin': '0 0 0 0',
+            'font-size': '23px'
         }
 
         let currentObservation;
@@ -205,20 +222,20 @@ class Details extends Component {
                         <DataWrapper>
                             {/* TODO: This could probably be its own component */}
                             {/* <div> */}
-                                <p style={textStyle}>{this.state.stationName}</p>
-                                <p style={textStyle}>{this.state.stationElevation}ft</p>
+                                <p style={stationNameStyle}>{this.state.stationName}</p>
+                                <p style={stationElevationStyle}>{this.state.stationElevation}ft</p>
                                 <Row>
                                     <div onClick={() => this.previousObservation("test value 1")}>
                                         <ArrowButton leftArrow={true} />
                                     </div>
-                                    <p style={textStyle}>{currentObservation.date}</p>
+                                    <p style={dateStyle}>{currentObservation.date}</p>
                                     <div onClick={() => this.nextObservation("test value 2")}>
                                         <ArrowButton rightArrow={true} />
                                     </div>
 
                                 </Row>
                                 <Row>
-                                    <p style={textStyle}>Snow Depth: {currentObservation.snowDepth}"</p>
+                                    <p style={paragraphStyle}>Snow Depth: {currentObservation.snowDepth}"</p>
                                     <div onClick={() => this.toggleGraph('snowDepth')}>
                                         {this.state.graphs.indexOf('snowDepth') > -1 &&
                                             <Button size={"small"} selected={true}/>
@@ -227,7 +244,7 @@ class Details extends Component {
                                             <Button size={"small"} selected={false}/>
                                         }   
                                     </div>
-                                    <p style={textStyle}>| Δ: {currentObservation.changeInSnowDepth}"</p>
+                                    <p style={paragraphStyle}>| Δ: {currentObservation.changeInSnowDepth}"</p>
                                     <div onClick={() => this.toggleGraph('changeInSnowDepth')}>
                                         {this.state.graphs.indexOf('changeInSnowDepth') > -1 &&
                                             <Button size={"small"} selected={true}/>
@@ -238,7 +255,7 @@ class Details extends Component {
                                     </div>
                                 </Row>
                                 <Row>
-                                    <p style={textStyle}>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}"</p>
+                                    <p style={paragraphStyle}>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}"</p>
                                     <div onClick={() => this.toggleGraph('snowWaterEquivalent')}>
                                         {this.state.graphs.indexOf('snowWaterEquivalent') > -1 &&
                                             <Button size={"small"} selected={true}/>
@@ -247,7 +264,7 @@ class Details extends Component {
                                             <Button size={"small"} selected={false}/>
                                         } 
                                     </div>
-                                    <p style={textStyle}>| Δ: {currentObservation.changeInSnowWaterEquivalent}"</p>
+                                    <p style={paragraphStyle}>| Δ: {currentObservation.changeInSnowWaterEquivalent}"</p>
                                     <div onClick={() => this.toggleGraph('changeInSnowWaterEquivalent')}>
                                         {this.state.graphs.indexOf('changeInSnowWaterEquivalent') > -1 &&
                                             <Button size={"small"} selected={true}/>
@@ -258,7 +275,7 @@ class Details extends Component {
                                     </div>
                                 </Row>
                                 <Row>
-                                    <p style={textStyle}>Air Temp: {currentObservation.airTemperatureObserved}°F</p>
+                                    <p style={paragraphStyle}>Air Temp: {currentObservation.airTemperatureObserved}°F</p>
                                     <div onClick={() => this.toggleGraph('airTemperatureObserved')}>
                                         {this.state.graphs.indexOf('airTemperatureObserved') > -1 &&
                                             <Button size={"small"} selected={true}/>
@@ -269,7 +286,7 @@ class Details extends Component {
                                     </div>
                                 </Row>
                                 <Row>
-                                    <p style={textStyle}>Air Temp Average: {currentObservation.airTemperatureAverage}°F</p>
+                                    <p style={paragraphStyle}>Air Temp Average: {currentObservation.airTemperatureAverage}°F</p>
                                     <div onClick={() => this.toggleGraph('airTemperatureAverage')}>
                                         {this.state.graphs.indexOf('airTemperatureAverage') > -1 &&
                                             <Button size={"small"} selected={true}/>
@@ -280,7 +297,7 @@ class Details extends Component {
                                     </div>
                                 </Row>
                                 <Row>
-                                    <p style={textStyle}>Air Temp Min: {currentObservation.airTemperatureMin}°F</p>
+                                    <p style={paragraphStyle}>Air Temp Min: {currentObservation.airTemperatureMin}°F</p>
                                     <div onClick={() => this.toggleGraph('airTemperatureMin')}>
                                         {this.state.graphs.indexOf('airTemperatureMin') > -1 &&
                                             <Button size={"small"} selected={true}/>
@@ -289,7 +306,7 @@ class Details extends Component {
                                             <Button size={"small"} selected={false}/>
                                         }
                                     </div>
-                                    <p style={textStyle}>| Air Temp Max: {currentObservation.airTemperatureMax}°F</p>
+                                    <p style={paragraphStyle}>| Air Temp Max: {currentObservation.airTemperatureMax}°F</p>
                                     <div onClick={() => this.toggleGraph('airTemperatureMax')}>
                                         {this.state.graphs.indexOf('airTemperatureMax') > -1 &&
                                             <Button size={"small"} selected={true}/>

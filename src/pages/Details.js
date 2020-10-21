@@ -192,11 +192,6 @@ class Details extends Component {
             'font-size': '20px'
         }
 
-        const paragraphStyle = {
-            'margin': '0 0 0 0',
-            'font-size': '23px'
-        }
-
         const graphTypes = ['snowDepth', 'changeInSnowDepth', 'snowWaterEquivalent', 'changeInSnowWaterEquivalent', 
             'airTemperatureObserved', 'airTemperatureAverage', 'airTemperatureMin', 'airTemperatureMax'];
 
@@ -236,10 +231,6 @@ class Details extends Component {
                                         <ArrowButton rightArrow={true} />
                                     </div>
                                 </Row>
-                                {/*
-                                TODO: These should be nested in another component and looped over
-                                Refactor in progres...
-                                */}
                                 {graphTypes.map(graphType => (
                                     <GraphableObservation
                                         currentObservation={currentObservation}
@@ -248,94 +239,6 @@ class Details extends Component {
                                         graphs={this.state.graphs}
                                     />
                                 ))}
-                                {/* <Row>
-                                    <p style={paragraphStyle}>Snow Depth: {currentObservation.snowDepth}"</p>
-                                    <div onClick={() => this.toggleGraph('snowDepth')}>
-                                        {this.state.graphs.indexOf('snowDepth') > -1 &&
-                                            <Button size={"small"} selected={true}/>
-                                        }
-                                        {this.state.graphs.indexOf('snowDepth') <= -1 &&
-                                            <Button size={"small"} selected={false}/>
-                                        }   
-                                    </div>
-                                </Row>
-                                <Row>
-                                    <p style={paragraphStyle}>Snow Depth Δ: {currentObservation.changeInSnowDepth}"</p>
-                                    <div onClick={() => this.toggleGraph('changeInSnowDepth')}>
-                                        {this.state.graphs.indexOf('changeInSnowDepth') > -1 &&
-                                            <Button size={"small"} selected={true}/>
-                                        }
-                                        {this.state.graphs.indexOf('changeInSnowDepth') <= -1 &&
-                                            <Button size={"small"} selected={false}/>
-                                        }  
-                                    </div>
-                                </Row>
-                                <Row>
-                                    <p style={paragraphStyle}>Snow Water Equivalent: {currentObservation.snowWaterEquivalent}"</p>
-                                    <div onClick={() => this.toggleGraph('snowWaterEquivalent')}>
-                                        {this.state.graphs.indexOf('snowWaterEquivalent') > -1 &&
-                                            <Button size={"small"} selected={true}/>
-                                        }
-                                        {this.state.graphs.indexOf('snowWaterEquivalent') <= -1 &&
-                                            <Button size={"small"} selected={false}/>
-                                        } 
-                                    </div>
-                                </Row>
-                                <Row>
-                                    <p style={paragraphStyle}>Snow Water Equivalent Δ: {currentObservation.changeInSnowWaterEquivalent}"</p>
-                                    <div onClick={() => this.toggleGraph('changeInSnowWaterEquivalent')}>
-                                        {this.state.graphs.indexOf('changeInSnowWaterEquivalent') > -1 &&
-                                            <Button size={"small"} selected={true}/>
-                                        }
-                                        {this.state.graphs.indexOf('changeInSnowWaterEquivalent') <= -1 &&
-                                            <Button size={"small"} selected={false}/>
-                                        } 
-                                    </div>
-                                </Row>
-                                <Row>
-                                    <p style={paragraphStyle}>Air Temp Observed: {currentObservation.airTemperatureObserved}°F</p>
-                                    <div onClick={() => this.toggleGraph('airTemperatureObserved')}>
-                                        {this.state.graphs.indexOf('airTemperatureObserved') > -1 &&
-                                            <Button size={"small"} selected={true}/>
-                                        }
-                                        {this.state.graphs.indexOf('airTemperatureObserved') <= -1 &&
-                                            <Button size={"small"} selected={false}/>
-                                        }   
-                                    </div>
-                                </Row>
-                                <Row>
-                                    <p style={paragraphStyle}>Air Temp Average: {currentObservation.airTemperatureAverage}°F</p>
-                                    <div onClick={() => this.toggleGraph('airTemperatureAverage')}>
-                                        {this.state.graphs.indexOf('airTemperatureAverage') > -1 &&
-                                            <Button size={"small"} selected={true}/>
-                                        }
-                                        {this.state.graphs.indexOf('airTemperatureAverage') <= -1 &&
-                                            <Button size={"small"} selected={false}/>
-                                        }   
-                                    </div>
-                                </Row>
-                                <Row>
-                                    <p style={paragraphStyle}>Air Temp Min: {currentObservation.airTemperatureMin}°F</p>
-                                    <div onClick={() => this.toggleGraph('airTemperatureMin')}>
-                                        {this.state.graphs.indexOf('airTemperatureMin') > -1 &&
-                                            <Button size={"small"} selected={true}/>
-                                        }
-                                        {this.state.graphs.indexOf('airTemperatureMin') <= -1 &&
-                                            <Button size={"small"} selected={false}/>
-                                        }
-                                    </div>
-                                </Row>
-                                <Row>
-                                    <p style={paragraphStyle}>Air Temp Max: {currentObservation.airTemperatureMax}°F</p>
-                                    <div onClick={() => this.toggleGraph('airTemperatureMax')}>
-                                        {this.state.graphs.indexOf('airTemperatureMax') > -1 &&
-                                            <Button size={"small"} selected={true}/>
-                                        }
-                                        {this.state.graphs.indexOf('airTemperatureMax') <= -1 &&
-                                            <Button size={"small"} selected={false}/>
-                                        }
-                                    </div>
-                                </Row> */}
                         </DataWrapper>
                     </DisplayRow>
                     <GraphRow>

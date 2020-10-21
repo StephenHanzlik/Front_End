@@ -57,7 +57,7 @@ class GraphableObservation extends Component {
                     {this.props.graphs.indexOf(graphType) > -1 &&
                         <Button size={"small"} selected={true}/>
                     }
-                    {this.state.graphs.indexOf(graphType) <= -1 &&
+                    {this.props.graphs.indexOf(graphType) <= -1 &&
                         <Button size={"small"} selected={false}/>
                     }   
                 </div>

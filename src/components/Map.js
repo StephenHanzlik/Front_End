@@ -43,8 +43,6 @@ class Map extends Component {
                 el.style.width = '40px';
                 el.style.height = '40px';
                 el.style.cursor = 'pointer';
-                //Materialize teal
-                // el.style.backgroundColor = '#26a69a'
                 el.style.borderRadius = '50%'
                 el.addEventListener('click', (e) => {
                     this.setState({
@@ -57,7 +55,8 @@ class Map extends Component {
                         stationWind: marker.properties.wind.toString()
                     }, this.props.getObservations(marker.properties.triplet))
                 })
-
+                //TODO: might need to attach a click event and use History.pushState() to mock what Link is doing
+                //so that we can maintain state and/or use redux and reduce API calls
                 let aMarker = new mapboxgl.Marker(el)
                     .setLngLat(marker.geometry.coordinates)
                     .setPopup(new mapboxgl.Popup({ offset: 25 })

@@ -8,6 +8,7 @@ import GeoJsonFeatureCollection from '../classes/GeoJsonFeatureCollection';
 import GeoJsonFeature from '../classes/GeoJsonFeature';
 import styled from 'styled-components';
 import axios from 'axios';
+// import GraphableObservation from '../components/GraphableObservation';
 
 const MapWrapper = styled.div`
     padding-right: 10px;
@@ -220,8 +221,6 @@ class Details extends Component {
                             />
                         </MapWrapper>
                         <DataWrapper>
-                            {/* TODO: This could probably be its own component */}
-                            {/* <div> */}
                                 <p style={stationNameStyle}>{this.state.stationName}</p>
                                 <p style={stationElevationStyle}>{this.state.stationElevation}ft</p>
                                 <Row>
@@ -232,9 +231,17 @@ class Details extends Component {
                                     <div onClick={() => this.nextObservation("test value 2")}>
                                         <ArrowButton rightArrow={true} />
                                     </div>
-
                                 </Row>
-                                {/*TODO: These should be nested in another component and looped over*/}
+                                {/*
+                                TODO: These should be nested in another component and looped over
+                                Refactor in progres...
+                                */}
+                                {/* {graphTypes.map(graphType => (
+                                    <GraphableObservation
+                                        currentObservation={currentObservation}
+                                        graphType={graphType}
+                                    />
+                                ))} */}
                                 <Row>
                                     <p style={paragraphStyle}>Snow Depth: {currentObservation.snowDepth}"</p>
                                     <div onClick={() => this.toggleGraph('snowDepth')}>
@@ -323,7 +330,6 @@ class Details extends Component {
                                         }
                                     </div>
                                 </Row>
-                            {/* </div> */}
                         </DataWrapper>
                     </DisplayRow>
                     <GraphRow>

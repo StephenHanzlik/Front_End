@@ -9,28 +9,52 @@ const Row = styled.div`
 `;
 
 class GraphableObservation extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            graphs: ['snowDepth', 'airTemperatureMax', 'airTemperatureMin']
+        };
+    }
+
+    buildDisplayStringForType(graphType){
+        switch(graphType){
+            case 'snowDepth':
+                return 'Snow Depth:';
+            case 'changeInSnowDepth':
+                return 'Snow Depth Δ:';
+            case 'snowWaterEquivalent':
+                return 'Snow Water Equivalent:';
+            case 'changeInSnowWaterEquivalent':
+                return 'Snow Water Equivalent Δ:';
+            case 'airTemperatureObserved':
+                return 'Air Temp Observed:';
+            case 'airTemperatureAverage':
+                return 'Air Temp Average:';
+            case 'airTemperatureMin':
+                return 'airTemperatureMin';
+            case 'airTemperatureMax':
+                return 'airTemperatureMax';
+            default:
+                return;
+        }   
+    }
+
     render(){
 
         const paragraphStyle = {
             'margin': '0 0 0 0',
             'font-size': '23px'
         }
-      //props:
 
-      //style
-      //currentObservation
-      //graphType
-      //
-        // const {snowDepth, changeInSnowDepth, snowWaterEquivalent, changeInSnowWaterEquivalent, 
-        // airTemperatureObserved, airTemperatureAverage, airTemperatureMin, airTemperatureMax} = this.props.currentObservation;
         const currentObservation = this.props.currentObservation;
         const graphType = this.props.graphType;
 
         return (
             <Row>
-                <p style={paragraphStyle}>Snow Depth: {currentObservation[graphType]}"</p>
-                <div onClick={() => this.toggleGraph(graphType)}>
-                    {this.state.graphs.indexOf(graphType) > -1 &&
+                <p style={paragraphStyle}>{this.buildDisplayStringForType(graphType)} {currentObservation[graphType]}"</p>
+                <div onClick={() => this.props.toggleGraph(graphType)}>
+                    {this.props.graphs.indexOf(graphType) > -1 &&
                         <Button size={"small"} selected={true}/>
                     }
                     {this.state.graphs.indexOf(graphType) <= -1 &&

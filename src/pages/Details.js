@@ -8,7 +8,7 @@ import GeoJsonFeatureCollection from '../classes/GeoJsonFeatureCollection';
 import GeoJsonFeature from '../classes/GeoJsonFeature';
 import styled from 'styled-components';
 import axios from 'axios';
-// import GraphableObservation from '../components/GraphableObservation';
+import GraphableObservation from '../components/GraphableObservation';
 
 const MapWrapper = styled.div`
     padding-right: 10px;
@@ -57,6 +57,7 @@ class Details extends Component {
             mountGraph: false,
             graphs: ['snowDepth', 'airTemperatureMax', 'airTemperatureMin']
         };
+        this.toggleGraph = this.toggleGraph.bind(this);
     }
 
     componentDidMount() {
@@ -196,6 +197,9 @@ class Details extends Component {
             'font-size': '23px'
         }
 
+        const graphTypes = ['snowDepth', 'changeInSnowDepth', 'snowWaterEquivalent', 'changeInSnowWaterEquivalent', 
+            'airTemperatureObserved', 'airTemperatureAverage', 'airTemperatureMin', 'airTemperatureMax'];
+
         let currentObservation;
         let observations = this.state.observations;
 
@@ -236,13 +240,15 @@ class Details extends Component {
                                 TODO: These should be nested in another component and looped over
                                 Refactor in progres...
                                 */}
-                                {/* {graphTypes.map(graphType => (
+                                {graphTypes.map(graphType => (
                                     <GraphableObservation
                                         currentObservation={currentObservation}
                                         graphType={graphType}
+                                        toggleGraph={this.toggleGraph}
+                                        graphs={this.state.graphs}
                                     />
-                                ))} */}
-                                <Row>
+                                ))}
+                                {/* <Row>
                                     <p style={paragraphStyle}>Snow Depth: {currentObservation.snowDepth}"</p>
                                     <div onClick={() => this.toggleGraph('snowDepth')}>
                                         {this.state.graphs.indexOf('snowDepth') > -1 &&
@@ -329,7 +335,7 @@ class Details extends Component {
                                             <Button size={"small"} selected={false}/>
                                         }
                                     </div>
-                                </Row>
+                                </Row> */}
                         </DataWrapper>
                     </DisplayRow>
                     <GraphRow>

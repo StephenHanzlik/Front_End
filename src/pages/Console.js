@@ -3,6 +3,7 @@ import NavBar from '../components/NavBar';
 import Graph from '../components/Graph';
 import Map from '../components/Map';
 import snowFlake from '../images/snowflake.jpg';
+import goggles from '../images/goggles.png';
 import GeoJsonFeatureCollection from '../classes/GeoJsonFeatureCollection';
 import GeoJsonFeature from '../classes/GeoJsonFeature';
 import styled from 'styled-components';
@@ -80,7 +81,7 @@ class Console extends Component {
     };
 
     render() {
-
+        //these will be used when commenting back in after testing
         const textStyle = {
             'width': '60%',
             'margin-top': '30px'
@@ -91,6 +92,12 @@ class Console extends Component {
             'border-radius': '20px',
             'margin-bottom': '-10px'
         }
+
+        // const columnStyle = {
+        //     'display': 'flex',
+        //     'flex-direction': 'column',
+        //     'max-width': '65px'
+        // }
 
         return (
             <div>
@@ -109,16 +116,36 @@ class Console extends Component {
                     }
                 </MapWrapper>
                 <GraphWrapper>
+                    {
+                        // console.log("this.state.stationTriplet", this.state.stationTriplet)
+                        console.log("this.state.stationTriplet.length > 1", this.state.stationTriplet.length > 1)
+                    }
                     {this.state.observations.length >= 1 &&
                         <Graph
                         graphType={'snowDepth'}
                         observations={this.state.observations}
                         />
                     }
-                    {this.state.observations.length < 1 &&
-                        <h5 style={textStyle}>Select a station icon (<img src={snowFlake} style={snowFlakeStyle} alt='snowFlake'/>)to see an overview of the stations 
+                    {this.state.observations.length < 1 && this.state.stationTriplet === '' &&
+                        <h5 style={textStyle}>Select a station icon <img src={snowFlake} style={snowFlakeStyle} alt='snowFlake'/> to see an overview of the stations 
                         snow pack depth.  Click "Details" to see all available data for the station and access more graphing.</h5>
+                        // <div>
+                        //     <p>Fetching snow pack data...</p>
+                        //     <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                        //     <p>We are experiecing high latency from the NRCS. This happens sometimes.  We will keep waiting if you will.</p>
+                        //     <p>If this continues please consider checking back in later.</p>
+                        // </div>
                     }
+                    {this.state.observations.length < 1 && this.state.stationTriplet.length > 1 &&
+                    <div>
+                        <p>Fetching snow pack data...</p>
+                        {/* <img src={goggles} alt='goggles'></img> */}
+                        <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                        <p>We are experiecing high latency from the NRCS. This happens sometimes.  We will keep waiting if you will.</p>
+                        <p>If this continues please consider checking back in later.</p>
+                    </div>
+                    }
+
                     
                 </GraphWrapper>
 

@@ -3,7 +3,6 @@ import NavBar from '../components/NavBar';
 import Graph from '../components/Graph';
 import Map from '../components/Map';
 import snowFlake from '../images/snowflake.jpg';
-import goggles from '../images/goggles.png';
 import GeoJsonFeatureCollection from '../classes/GeoJsonFeatureCollection';
 import GeoJsonFeature from '../classes/GeoJsonFeature';
 import styled from 'styled-components';
@@ -27,7 +26,9 @@ class Console extends Component {
         this.state = {
             observations: [],
             stationTriplet: '',
-            geoJson: ''
+            geoJson: '',
+            callMade: false,
+            callReturned: false
         };
         this.getObservations = this.getObservations.bind(this);
         this.getStations = this.getStations.bind(this);
@@ -57,11 +58,18 @@ class Console extends Component {
         currentDate = new Date(currentDate).toJSON().slice(0, 10)
         startDate = new Date(startDate).toJSON().slice(0, 10)
 
+        this.setState({
+            callMade: true,
+            callReturned: false
+        });
+
         axios.get(`/api/snotel/observations/${triplet}?from=${startDate}&to=${currentDate}`)
             .then(response => {
                 this.setState({
                     stationTriplet: triplet,
-                    observations: response.data
+                    observations: response.data,
+                    callReturned: true,
+                    callMade: false
                 })
             })
             .catch(error => console.log(error))
@@ -82,9 +90,10 @@ class Console extends Component {
 
     render() {
         //these will be used when commenting back in after testing
-        const textStyle = {
-            'width': '60%',
-            'margin-top': '30px'
+        const paragraphCenteredStyle = {
+            'width': '45%',
+            'margin-top': '30px',
+            'font-size': '20px'
         }
         const snowFlakeStyle = {
             'width': '45px',
@@ -93,11 +102,9 @@ class Console extends Component {
             'margin-bottom': '-10px'
         }
 
-        // const columnStyle = {
-        //     'display': 'flex',
-        //     'flex-direction': 'column',
-        //     'max-width': '65px'
-        // }
+        const paragraphStyle = {
+            'font-size': '20px'
+        }
 
         return (
             <div>
@@ -116,37 +123,26 @@ class Console extends Component {
                     }
                 </MapWrapper>
                 <GraphWrapper>
-                    {
-                        // console.log("this.state.stationTriplet", this.state.stationTriplet)
-                        console.log("this.state.stationTriplet.length > 1", this.state.stationTriplet.length > 1)
-                    }
-                    {this.state.observations.length >= 1 &&
+                    {/* TODO: better logic here.  Perhaps checking state with specific flags for what to show
+                    or having the login in other components. */}
+                    {this.state.observations.length >= 1 && this.state.callReturned &&
                         <Graph
                         graphType={'snowDepth'}
                         observations={this.state.observations}
                         />
                     }
-                    {this.state.observations.length < 1 && this.state.stationTriplet === '' &&
-                        <h5 style={textStyle}>Select a station icon <img src={snowFlake} style={snowFlakeStyle} alt='snowFlake'/> to see an overview of the stations 
-                        snow pack depth.  Click "Details" to see all available data for the station and access more graphing.</h5>
-                        // <div>
-                        //     <p>Fetching snow pack data...</p>
-                        //     <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-                        //     <p>We are experiecing high latency from the NRCS. This happens sometimes.  We will keep waiting if you will.</p>
-                        //     <p>If this continues please consider checking back in later.</p>
-                        // </div>
+                    {this.state.observations.length < 1 && this.state.stationTriplet === '' && !this.state.callMade && 
+                        <p style={paragraphCenteredStyle}>Select a station icon <img src={snowFlake} style={snowFlakeStyle} alt='snowFlake'/> to see an overview of the stations 
+                        snow pack depth.  Click "Details" to see all available data for the station and access more graphing.</p>
                     }
-                    {this.state.observations.length < 1 && this.state.stationTriplet.length > 1 &&
-                    <div>
-                        <p>Fetching snow pack data...</p>
-                        {/* <img src={goggles} alt='goggles'></img> */}
-                        <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-                        <p>We are experiecing high latency from the NRCS. This happens sometimes.  We will keep waiting if you will.</p>
-                        <p>If this continues please consider checking back in later.</p>
-                    </div>
+                    {this.state.callMade && !this.state.callReturned &&
+                        <div>
+                            <p style={paragraphStyle}>Fetching snow pack data...</p>
+                            <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                            <p style={paragraphStyle}>We are experiecing high latency from the NRCS. This happens sometimes.  We will keep waiting if you will.</p>
+                            <p style={paragraphStyle}>If this continues please consider checking back in later.</p>
+                        </div>
                     }
-
-                    
                 </GraphWrapper>
 
             </div>

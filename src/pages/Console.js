@@ -61,7 +61,8 @@ class Console extends Component {
 
         this.setState({
             callMade: true,
-            callReturned: false
+            callReturned: false,
+            latanceyTimeout: false
         });
 
         setTimeout(()=>{ 

@@ -65,10 +65,10 @@ class Graph extends Component {
                 title = 'Air Temperature Averagre';
                 break;
             case 'airTemperatureMax':
-                title = 'Air Temperature Max °F';
+                title = 'Air Temperature Max';
                 break;
             case 'airTemperatureMin':
-                title = 'Air Temperature Min °F';
+                title = 'Air Temperature Min';
                 break;   
             default:
                 title = 'Snow Depth';
@@ -143,7 +143,7 @@ class Graph extends Component {
                             tickSize: 5,
                             tickPadding: 5,
                             tickRotation: 0,
-                            legend: this.props.xAxis,
+                            legend: '',
                             legendOffset: -40,
                             legendPosition: 'middle'
                         }}
@@ -164,7 +164,7 @@ class Graph extends Component {
                                 direction: 'column',
                                 justify: false,
                                 translateX: 0,
-                                translateY: -22,
+                                translateY: -24,
                                 itemsSpacing: 0,
                                 itemDirection: 'left-to-right',
                                 itemWidth: 80,

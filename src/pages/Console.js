@@ -131,12 +131,11 @@ class Console extends Component {
                 </MapWrapper>
                 <GraphWrapper>
                     {/* TODO: better logic here.  Perhaps checking state with specific flags for what to show
-                    or having the login in other components. */}
+                    or having the logic in other components. */}
                     {this.state.observations.length >= 1 && this.state.callReturned &&
                         <Graph
                             graphType={'snowDepth'}
                             observations={this.state.observations}
-                            xAxis={'°F'}
                         />
                     }
                     {this.state.observations.length < 1 && this.state.stationTriplet === '' && !this.state.callMade && 

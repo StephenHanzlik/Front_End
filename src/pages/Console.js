@@ -59,7 +59,7 @@ class Console extends Component {
         currentDate = new Date(currentDate).toJSON().slice(0, 10)
         startDate = new Date(startDate).toJSON().slice(0, 10)
 
-        // TODO:  This is nasty and can be bug prone.  We whould use call backs in easch setState if possible to ensure things get 
+        // TODO:  This is nasty and has the potential to be bug prone.  We should use call backs in each setState if possible to ensure things get 
         // updated in proper order
         this.setState({
             callMade: true,

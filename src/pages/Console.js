@@ -28,8 +28,7 @@ class Console extends Component {
             stationTriplet: '',
             geoJson: '',
             callMade: false,
-            callReturned: false,
-            latanceyTimeout: false
+            callReturned: false
         };
         this.getObservations = this.getObservations.bind(this);
         this.getStations = this.getStations.bind(this);
@@ -59,19 +58,10 @@ class Console extends Component {
         currentDate = new Date(currentDate).toJSON().slice(0, 10)
         startDate = new Date(startDate).toJSON().slice(0, 10)
 
-        // TODO:  This is nasty and has the potential to be bug prone.  We should use call backs in each setState if possible to ensure things get 
-        // updated in proper order
         this.setState({
             callMade: true,
-            callReturned: false,
-            latanceyTimeout: false
+            callReturned: false
         });
-
-        setTimeout(()=>{ 
-            this.setState({
-                latanceyTimeout: true
-            });
-        }, 20000); 
 
         axios.get(`/api/snotel/observations/${triplet}?from=${startDate}&to=${currentDate}`)
             .then(response => {
@@ -79,8 +69,7 @@ class Console extends Component {
                     stationTriplet: triplet,
                     observations: response.data,
                     callReturned: true,
-                    callMade: false,
-                    latanceyTimeout: false
+                    callMade: false
                 })
             })
             .catch(error => console.log(error))
@@ -100,6 +89,7 @@ class Console extends Component {
     };
 
     render() {
+        //these will be used when commenting back in after testing
         const paragraphCenteredStyle = {
             'width': '45%',
             'margin-top': '30px',
@@ -134,31 +124,25 @@ class Console extends Component {
                 </MapWrapper>
                 <GraphWrapper>
                     {/* TODO: better logic here.  Perhaps checking state with specific flags for what to show
-                    or having the logic in other components. */}
+                    or having the login in other components. */}
                     {this.state.observations.length >= 1 && this.state.callReturned &&
                         <Graph
-                            graphType={'snowDepth'}
-                            observations={this.state.observations}
+                        graphType={'snowDepth'}
+                        observations={this.state.observations}
                         />
                     }
                     {this.state.observations.length < 1 && this.state.stationTriplet === '' && !this.state.callMade && 
                         <p style={paragraphCenteredStyle}>Select a station icon <img src={snowFlake} style={snowFlakeStyle} alt='snowFlake'/> to see an overview of the stations 
                         snow pack depth.  Click "Details" to see all available data for the station and access more graphing.</p>
                     }
-                    <div>
                     {this.state.callMade && !this.state.callReturned &&
                         <div>
                             <p style={paragraphStyle}>Fetching snow pack data...</p>
                             <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                            <p style={paragraphStyle}>We are experiecing high latency from the NRCS. This happens sometimes.  We will keep waiting if you will.</p>
+                            <p style={paragraphStyle}>If this continues please consider checking back in later.</p>
                         </div>
                     }
-                    {this.state.callMade && !this.state.callReturned && this.state.latanceyTimeout &&
-                        <div>
-                            <p style={paragraphStyle}>We are experiencing high latency from the NRCS. This happens sometimes.  We will keep waiting if you will.</p>
-                            <p style={paragraphStyle}>If this continues please consider checking back in later.</p>
-                        </div>  
-                    }
-                    </div>
                 </GraphWrapper>
 
             </div>

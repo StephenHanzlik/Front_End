@@ -32,35 +32,12 @@ class GraphableObservation extends Component {
             case 'airTemperatureAverage':
                 return 'Air Temp Average:';
             case 'airTemperatureMin':
-                return 'Air Temperature Min:';
+                return 'airTemperatureMin';
             case 'airTemperatureMax':
-                return 'Air Temperature Max:';
+                return 'airTemperatureMax';
             default:
                 return;
         }   
-    }
-
-    buildUnitStringForType(graphType){
-        switch(graphType){
-            case 'snowDepth':
-                return '"';
-            case 'changeInSnowDepth':
-                return '"';
-            case 'snowWaterEquivalent':
-                return '"';
-            case 'changeInSnowWaterEquivalent':
-                return '"';
-            case 'airTemperatureObserved':
-                return '°F';
-            case 'airTemperatureAverage':
-                return '°F';
-            case 'airTemperatureMin':
-                return '°F';
-            case 'airTemperatureMax':
-                return '°F';
-            default:
-                return;
-        }
     }
 
     render(){
@@ -75,7 +52,7 @@ class GraphableObservation extends Component {
 
         return (
             <Row>
-                <p style={paragraphStyle}>{this.buildDisplayStringForType(graphType)} {currentObservation[graphType]}{this.buildUnitStringForType(graphType)}</p>
+                <p style={paragraphStyle}>{this.buildDisplayStringForType(graphType)} {currentObservation[graphType]}"</p>
                 <div onClick={() => this.props.toggleGraph(graphType)}>
                     {this.props.graphs.indexOf(graphType) > -1 &&
                         <Button size={"small"} selected={true}/>

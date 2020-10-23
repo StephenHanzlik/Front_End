@@ -127,13 +127,13 @@ class Graph extends Component {
                             tickSize: 5,
                             tickPadding: 5,
                             tickRotation: 0,
-                            legend: '',
+                            legend: 'Month',
                             legendOffset: 36,
                             legendPosition: 'middle',
                             format: values => {
                                 const month = values.toString().slice(5, 7);
                                 const day = values.toString().slice(8, 10);
-                                if(day === '01'){
+                                if (day === '01'){
                                     return this.getMonthName(month);
                                 }else return "";
                             },
@@ -143,7 +143,7 @@ class Graph extends Component {
                             tickSize: 5,
                             tickPadding: 5,
                             tickRotation: 0,
-                            legend: '',
+                            legend: 'inches',
                             legendOffset: -40,
                             legendPosition: 'middle'
                         }}
@@ -156,21 +156,21 @@ class Graph extends Component {
                         // pointLabelYOffset={-12}
                         enableArea={true}
                         enablePoints={false}
-                        enableGridX={true}
+                        enableGridX={false}
                         useMesh={true}
                         legends={[
                             {
-                                anchor: 'top',
+                                anchor: 'bottom-right',
                                 direction: 'column',
                                 justify: false,
-                                translateX: 0,
-                                translateY: -24,
+                                translateX: 100,
+                                translateY: 0,
                                 itemsSpacing: 0,
                                 itemDirection: 'left-to-right',
                                 itemWidth: 80,
                                 itemHeight: 20,
                                 itemOpacity: 0.75,
-                                symbolSize: 0,
+                                symbolSize: 12,
                                 symbolShape: 'circle',
                                 symbolBorderColor: 'rgba(0, 0, 0, .5)',
                                 effects: [

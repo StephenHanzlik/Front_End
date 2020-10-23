@@ -75,8 +75,6 @@ class GraphableObservation extends Component {
 
         return (
             <Row>
-                {console.log('graphType', graphType)}
-                {console.log('this.buildUnitStringForType(graphType)', this.buildUnitStringForType(graphType))}
                 <p style={paragraphStyle}>{this.buildDisplayStringForType(graphType)} {currentObservation[graphType]}{this.buildUnitStringForType(graphType)}</p>
                 <div onClick={() => this.props.toggleGraph(graphType)}>
                     {this.props.graphs.indexOf(graphType) > -1 &&

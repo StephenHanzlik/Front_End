@@ -133,7 +133,7 @@ class Graph extends Component {
                             format: values => {
                                 const month = values.toString().slice(5, 7);
                                 const day = values.toString().slice(8, 10);
-                                if (day === '01'){
+                                if(day === '01'){
                                     return this.getMonthName(month);
                                 }else return "";
                             },

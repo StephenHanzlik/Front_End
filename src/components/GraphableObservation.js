@@ -35,6 +35,7 @@ class GraphableObservation extends Component {
                 return 'Air Temperature Min:';
             case 'airTemperatureMax':
                 return 'Air Temperature Max:';
+                
             default:
                 return;
         }   

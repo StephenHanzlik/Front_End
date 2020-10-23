@@ -65,10 +65,10 @@ class Graph extends Component {
                 title = 'Air Temperature Averagre';
                 break;
             case 'airTemperatureMax':
-                title = 'Air Temperature Max';
+                title = 'Air Temperature Max °F';
                 break;
             case 'airTemperatureMin':
-                title = 'Air Temperature Min';
+                title = 'Air Temperature Min °F';
                 break;   
             default:
                 title = 'Snow Depth';
@@ -127,7 +127,7 @@ class Graph extends Component {
                             tickSize: 5,
                             tickPadding: 5,
                             tickRotation: 0,
-                            legend: 'Month',
+                            legend: '',
                             legendOffset: 36,
                             legendPosition: 'middle',
                             format: values => {
@@ -143,7 +143,7 @@ class Graph extends Component {
                             tickSize: 5,
                             tickPadding: 5,
                             tickRotation: 0,
-                            legend: 'inches',
+                            legend: this.props.xAxis,
                             legendOffset: -40,
                             legendPosition: 'middle'
                         }}
@@ -156,21 +156,21 @@ class Graph extends Component {
                         // pointLabelYOffset={-12}
                         enableArea={true}
                         enablePoints={false}
-                        enableGridX={false}
+                        enableGridX={true}
                         useMesh={true}
                         legends={[
                             {
-                                anchor: 'bottom-right',
+                                anchor: 'top',
                                 direction: 'column',
                                 justify: false,
-                                translateX: 100,
-                                translateY: 0,
+                                translateX: 0,
+                                translateY: -22,
                                 itemsSpacing: 0,
                                 itemDirection: 'left-to-right',
                                 itemWidth: 80,
                                 itemHeight: 20,
                                 itemOpacity: 0.75,
-                                symbolSize: 12,
+                                symbolSize: 0,
                                 symbolShape: 'circle',
                                 symbolBorderColor: 'rgba(0, 0, 0, .5)',
                                 effects: [

@@ -30,7 +30,7 @@ const DisplayRow = styled.div`
 
 const Row = styled.div`
     display: flex;
-    flex-direction: row !important;
+    flex-direction: row;
     justify-content: center;
 `;
 
@@ -55,9 +55,15 @@ class Details extends Component {
             observations: '',
             currentObservationIndex: '',
             mountGraph: false,
-            graphs: ['snowDepth', 'airTemperatureMax', 'airTemperatureMin']
+            graphs: ['snowDepth', 'airTemperatureMax', 'airTemperatureMin'],
+            startDate: "",
+            endDate: "",
+            relativeTime: 5184000000
         };
         this.toggleGraph = this.toggleGraph.bind(this);
+        this.handleRelativeTimeSubmit = this.handleRelativeTimeSubmit.bind(this);
+        this.handleRelativeTimeChange = this.handleRelativeTimeChange.bind(this);
+        this.handleAbsoluteTimeSubmit = this.handleAbsoluteTimeSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -67,6 +73,20 @@ class Details extends Component {
         this.getStation(stationTriplet);
         this.getStations();
         this.getObservations(stationTriplet);
+        this.getRelativeDate();
+    }
+
+    getRelativeDate() {
+        let currentDate = Date.now();
+        let startDate = currentDate - this.state.relativeTime;
+
+        currentDate = new Date(currentDate).toJSON().slice(0, 10)
+        startDate = new Date(startDate).toJSON().slice(0, 10)
+
+        this.setState({
+            startDate: startDate,
+            endDate: currentDate
+        })
     }
 
     //TODO:  Impliment redux to reduce API calls
@@ -103,19 +123,18 @@ class Details extends Component {
             .catch(error => console.log(error))
     }
 
-    getObservations(triplet, startDate) {
+    getObservations(triplet, currentDate = Date.now()) {
         //console component is hard coded for 90 days of snow data.  This will be configurable.
-        if (!startDate) {
-            let currentDate = Date.now();
-            startDate = currentDate - 7776000000 //90 days
+        // if (!startDate) {
+            // let currentDate = Date.now();
+            let startDate = currentDate - this.state.relativeTime
 
             currentDate = new Date(currentDate).toJSON().slice(0, 10)
             startDate = new Date(startDate).toJSON().slice(0, 10)
-        }
+        // }
 
-        axios.get(`/api/snotel/observations/${triplet}?from=2020-6-01&to=${new Date().toJSON().slice(0, 10)}`)
+        axios.get(`/api/snotel/observations/${triplet}?from=${startDate}&to=${new Date().toJSON().slice(0, 10)}`)
             .then(response => {
-                console.log("OBSERVATIONS: ", response.data)
                 this.setState({
                     observations: response.data,
                     currentObservationIndex: response.data.length - 1
@@ -174,6 +193,37 @@ class Details extends Component {
         })
     }
 
+    handleRelativeTimeChange(event) { 
+        this.setState({
+            relativeTime: event.target.value
+        })
+    }
+    
+    handleRelativeTimeSubmit(event) {
+        event.preventDefault();
+        this.getObservations(this.state.stationTriplet);
+    }
+
+    handleAbsoluteTimeSubmit(event) {
+        event.preventDefault();
+        console.log("event.target.value", event.target.value);  
+        this.getObservations(this.state.stationTriplet);
+    }
+
+    handleAbsoluteStartChange(event) {
+        event.preventDefault(); 
+        this.setState({
+            startDate: event.target.value
+        })
+    }
+
+    handleAbsoluteEndChange(event) {
+        event.preventDefault();
+        this.setState({
+            endDate: event.target.value
+        })
+    }
+
     render() {
 
         const stationNameStyle = {
@@ -190,6 +240,15 @@ class Details extends Component {
         const dateStyle = {
             'margin-top': '10px',
             'font-size': '20px'
+        }
+
+        const timeSelectStyle = {
+            'display': 'initial',
+            'max-width': '80px'
+        }
+
+        const searchFieldStyle = {
+            'display': 'flex'
         }
 
         const graphTypes = ['snowDepth', 'changeInSnowDepth', 'snowWaterEquivalent', 'changeInSnowWaterEquivalent', 
@@ -241,6 +300,27 @@ class Details extends Component {
                                 ))}
                         </DataWrapper>
                     </DisplayRow>
+                    {/* <Row>
+                        <form onSubmit={this.handleRelativeTimeSubmit}>
+                            <select style={timeSelectStyle} name={'selectRelativeTimeInterval'} value={this.state.relativeTime} onChange={this.handleRelativeTimeChange}>
+                                <option value="604800000">7 days</option>
+                                <option value="2592000000">30 days</option>
+                                <option value="5184000000">60 days</option>
+                                <option value="7776000000">90 days</option>
+                                <option value="31536000000">365 days</option>
+                            </select>
+                            <input type="submit" value="Submit" />
+                        </form>
+                        <form onSubmit={this.handleAbsoluteTimeSubmit} style={searchFieldStyle}>
+                            <label>
+                                Start Date: <input type="text" onChange={this.handleAbsoluteStartChange} value={this.state.startDate} name="startDate"/>
+                            </label>
+                            <label>
+                                End Date: <input type="text" onChange={this.handleAbsoluteEndChange} value={this.state.endDate} name="endDate"/>
+                            </label>
+                            <input type="submit" value="Submit" />
+                        </form>
+                    </Row> */}
                     <GraphRow>
                         {
                             this.state.graphs.map(graph => (

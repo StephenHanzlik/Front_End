@@ -28,7 +28,7 @@ class Button extends Component {
         return (
               <Link to={this.props.link}>
                 {this.props.size === 'small' ? 
-                  <SmallButton style={selected}></SmallButton>
+                  <SmallButton style={selected}>{this.props.text}</SmallButton>
                 :
                   <LargeButton>{this.props.text}</LargeButton>
                 }

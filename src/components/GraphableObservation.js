@@ -78,12 +78,13 @@ class GraphableObservation extends Component {
             <Row>
                 <p style={paragraphStyle}>{this.buildDisplayStringForType(graphType)} {currentObservation[graphType]}{this.buildUnitStringForType(graphType)}</p>
                 <div onClick={() => this.props.toggleGraph(graphType)}>
-                    {this.props.graphs.indexOf(graphType) > -1 &&
-                        <Button size={"small"} selected={true}/>
-                    }
-                    {this.props.graphs.indexOf(graphType) <= -1 &&
-                        <Button size={"small"} selected={false}/>
-                    }   
+                    {/* {this.props.graphs.indexOf(graphType) > -1 &&                        
+                        <Button size={"small"} selected={true} text={"+"}/>
+                    } */}
+                    {/* {this.props.graphs.indexOf(graphType) <= -1 && */}
+                        <Button size={"small"} selected={true} text={"+"}/>
+                        <Button size={"small"} selected={false} text={"-"}/>
+                    {/* }    */}
                 </div>
             </Row>    
         )

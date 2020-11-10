@@ -20,21 +20,21 @@ class GraphableObservation extends Component {
     buildDisplayStringForType(graphType){
         switch(graphType){
             case 'snowDepth':
-                return 'Snow Depth:';
+                return 'Snow Depth';
             case 'changeInSnowDepth':
-                return 'Snow Depth Δ:';
+                return 'Snow Depth Δ';
             case 'snowWaterEquivalent':
-                return 'Snow Water Equivalent:';
+                return 'Snow Water Equivalent';
             case 'changeInSnowWaterEquivalent':
-                return 'Snow Water Equivalent Δ:';
+                return 'Snow Water Equivalent Δ';
             case 'airTemperatureObserved':
-                return 'Air Temp Observed:';
+                return 'Air Temp Observed';
             case 'airTemperatureAverage':
-                return 'Air Temp Average:';
+                return 'Air Temp Average';
             case 'airTemperatureMin':
-                return 'Air Temperature Min:';
+                return 'Air Temperature Min';
             case 'airTemperatureMax':
-                return 'Air Temperature Max:';
+                return 'Air Temperature Max';
                 
             default:
                 return;
@@ -76,8 +76,8 @@ class GraphableObservation extends Component {
 
         return (
             <Row>
-                <p style={paragraphStyle}>{this.buildDisplayStringForType(graphType)} {currentObservation[graphType]}{this.buildUnitStringForType(graphType)}</p>
-                <div onClick={() => this.props.addGraph(graphType)}>
+                <p style={paragraphStyle}>{this.buildDisplayStringForType(graphType)}: {currentObservation[graphType]}{this.buildUnitStringForType(graphType)}</p>
+                <div onClick={() => this.props.addGraph(this.buildDisplayStringForType(graphType))}>
                     {/* {this.props.graphs.indexOf(graphType) > -1 &&                        
                         <Button size={"small"} selected={true} text={"+"}/>
                     } */}

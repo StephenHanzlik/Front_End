@@ -36,13 +36,19 @@ class Modal extends Component {
             'max-width': '95px',
             'margin-top': '-10px'
         }
+
+        const absoluteTimeStyle = {
+            'display': 'inline'
+        }
         
         // const showHideStyle = this.props.show ? {display: "block"} : {display: "none"};
         const showHideClassName = this.props.show ? "modal display-block" : "modal display-none";
 
         return (
             <div className={showHideClassName}>
+                <p>You are mounting a graph for {this.props.graphType}.  Select the time interval to graph your chosen data set.</p>
                 <section className="modal-main">
+                    <p>Relative</p>
                     <form onSubmit={this.handleRelativeTimeSubmit}>
                         <select style={timeSelectStyle} name={'selectRelativeTimeInterval'} value={this.state.relativeTime} onChange={this.handleRelativeTimeChange}>
                             <option value="604800000">7 days</option>
@@ -53,7 +59,8 @@ class Modal extends Component {
                         </select>
                         <input type="submit" value="Submit" />
                     </form>
-                    <form onSubmit={this.handleAbsoluteTimeSubmit}>
+                    <p>Absolute</p>
+                    <form style={absoluteTimeStyle} onSubmit={this.handleAbsoluteTimeSubmit}>
                         <label>
                              Start Date: <input type="text" onChange={this.handleAbsoluteStartChange} value={this.state.startDate} name="startDate"/>
                         </label>
@@ -62,8 +69,8 @@ class Modal extends Component {
                         </label>
                         <input type="submit" value="Submit" />
                     </form>
-                    <button >close</button>
                 </section>
+                <button onClick={() => this.props.closeModal()}>Cancel</button>
           </div>
         )
     }

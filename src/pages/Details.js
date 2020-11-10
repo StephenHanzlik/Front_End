@@ -60,11 +60,13 @@ class Details extends Component {
             startDate: "",
             endDate: "",
             relativeTime: 5184000000,
-            showModal: false
+            showModal: false,
+            modalGraphType: ''
         };
         this.toggleGraph = this.toggleGraph.bind(this);
         this.addGraph = this.addGraph.bind(this);
         this.removeGraph = this.removeGraph.bind(this);
+        this.closeModal = this.closeModal.bind(this);
         this.handleRelativeTimeSubmit = this.handleRelativeTimeSubmit.bind(this);
         this.handleRelativeTimeChange = this.handleRelativeTimeChange.bind(this);
         this.handleAbsoluteTimeSubmit = this.handleAbsoluteTimeSubmit.bind(this);
@@ -197,12 +199,21 @@ class Details extends Component {
         })
     }
 
-    addGraph(startDate, endDate, graphType){
-        this.setState({ showModal: true });
+    addGraph(graphType){
+        //startDate, endDate, 
+        console.log("GRAPH TYPE", graphType)
+        this.setState({ 
+            showModal: true,
+            modalGraphType: graphType 
+        });
     }
 
     removeGraph(graphId){
         this.setState({ showModal: false });
+    }
+
+    closeModal(){
+        this.setState({showModal: false});
     }
 
     handleRelativeTimeChange(event) { 
@@ -254,14 +265,7 @@ class Details extends Component {
             'font-size': '20px'
         }
 
-        const timeSelectStyle = {
-            'display': 'initial',
-            'max-width': '80px'
-        }
-
-        const searchFieldStyle = {
-            'display': 'flex'
-        }
+        const showGrayedBackground = this.state.showModal ? {display: "block"} : {display: "none"};
 
         const graphTypes = ['snowDepth', 'changeInSnowDepth', 'snowWaterEquivalent', 'changeInSnowWaterEquivalent', 
             'airTemperatureObserved', 'airTemperatureAverage', 'airTemperatureMin', 'airTemperatureMax'];
@@ -272,8 +276,6 @@ class Details extends Component {
         if (observations) {
             currentObservation = observations[this.state.currentObservationIndex];
         }
-
-        const showGrayedBackground = this.state.showModal ? {display: "block"} : {display: "none"};;
 
         return (
             <div>{
@@ -318,29 +320,10 @@ class Details extends Component {
                     </DisplayRow>
                     <Modal 
                         show={this.state.showModal}
+                        graphType={this.state.modalGraphType}
+                        closeModal={this.closeModal}
                     />
                     <div id="grayout" style={showGrayedBackground}></div>
-                    {/* <Row>
-                        <form onSubmit={this.handleRelativeTimeSubmit}>
-                            <select style={timeSelectStyle} name={'selectRelativeTimeInterval'} value={this.state.relativeTime} onChange={this.handleRelativeTimeChange}>
-                                <option value="604800000">7 days</option>
-                                <option value="2592000000">30 days</option>
-                                <option value="5184000000">60 days</option>
-                                <option value="7776000000">90 days</option>
-                                <option value="31536000000">365 days</option>
-                            </select>
-                            <input type="submit" value="Submit" />
-                        </form>
-                        <form onSubmit={this.handleAbsoluteTimeSubmit} style={searchFieldStyle}>
-                            <label>
-                                Start Date: <input type="text" onChange={this.handleAbsoluteStartChange} value={this.state.startDate} name="startDate"/>
-                            </label>
-                            <label>
-                                End Date: <input type="text" onChange={this.handleAbsoluteEndChange} value={this.state.endDate} name="endDate"/>
-                            </label>
-                            <input type="submit" value="Submit" />
-                        </form>
-                    </Row> */}
                     <GraphRow>
                         {
                             this.state.graphs.map(graph => (

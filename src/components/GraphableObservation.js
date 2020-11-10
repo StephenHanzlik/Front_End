@@ -85,9 +85,9 @@ class GraphableObservation extends Component {
                         <Button size={"small"} selected={true} text={"+"}/>
                     {/* }    */}
                 </div>
-                <div onClick={() => this.props.removeGraph(graphType)}>
+                {/* <div onClick={() => this.props.removeGraph(graphType)}>
                     <Button size={"small"} selected={false} text={"-"}/>
-                </div>
+                </div> */}
             </Row>    
         )
     }

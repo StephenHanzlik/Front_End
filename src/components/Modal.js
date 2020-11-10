@@ -31,11 +31,11 @@ class Modal extends Component {
     }
 
     render(){
-        const timeSelectStyle = {
-            'display': 'initial',
-            'max-width': '95px',
-            'margin-top': '-10px'
-        }
+        // const timeSelectStyle = {
+        //     'display': 'initial',
+        //     'max-width': '95px',
+        //     'margin-top': '-10px'
+        // }
 
         const absoluteTimeStyle = {
             'display': 'inline'
@@ -50,7 +50,7 @@ class Modal extends Component {
                 <section className="modal-main">
                     <p>Relative</p>
                     <form onSubmit={this.handleRelativeTimeSubmit}>
-                        <select style={timeSelectStyle} name={'selectRelativeTimeInterval'} value={this.state.relativeTime} onChange={this.handleRelativeTimeChange}>
+                        <select name={'selectRelativeTimeInterval'} value={this.state.relativeTime} onChange={this.handleRelativeTimeChange}>
                             <option value="604800000">7 days</option>
                             <option value="2592000000">30 days</option>
                             <option value="5184000000">60 days</option>
@@ -60,7 +60,7 @@ class Modal extends Component {
                         <input type="submit" value="Submit" />
                     </form>
                     <p>Absolute</p>
-                    <form style={absoluteTimeStyle} onSubmit={this.handleAbsoluteTimeSubmit}>
+                    <form onSubmit={this.handleAbsoluteTimeSubmit}>
                         <label>
                              Start Date: <input type="text" onChange={this.handleAbsoluteStartChange} value={this.state.startDate} name="startDate"/>
                         </label>

@@ -11,14 +11,15 @@ const LargeButton = styled.button`
   border: 2px solid #ffb74d;
   border-radius: 3px;
   background: none;
+  cursor: pointer;
 `;
 
 const SmallButton = styled.button`
   color: #ffb74d;
   font-size: 1em;
-  padding: 0.3em 0.3em;
   border: 2px solid #ffb74d;
   border-radius: 3px;
+  cursor: pointer;
 `
 
 class Button extends Component {

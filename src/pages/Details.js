@@ -3,6 +3,7 @@ import NavBar from '../components/NavBar';
 import Map from '../components/Map';
 import ArrowButton from '../components/ArrowButton';
 import Button from '../components/Button';
+import Modal from '../components/Modal';
 import Graph from '../components/Graph';
 import GeoJsonFeatureCollection from '../classes/GeoJsonFeatureCollection';
 import GeoJsonFeature from '../classes/GeoJsonFeature';
@@ -58,9 +59,12 @@ class Details extends Component {
             graphs: ['snowDepth', 'airTemperatureMax', 'airTemperatureMin'],
             startDate: "",
             endDate: "",
-            relativeTime: 5184000000
+            relativeTime: 5184000000,
+            showModal: false
         };
         this.toggleGraph = this.toggleGraph.bind(this);
+        this.addGraph = this.addGraph.bind(this);
+        this.removeGraph = this.removeGraph.bind(this);
         this.handleRelativeTimeSubmit = this.handleRelativeTimeSubmit.bind(this);
         this.handleRelativeTimeChange = this.handleRelativeTimeChange.bind(this);
         this.handleAbsoluteTimeSubmit = this.handleAbsoluteTimeSubmit.bind(this);
@@ -194,11 +198,11 @@ class Details extends Component {
     }
 
     addGraph(startDate, endDate, graphType){
-        alert("adding graph!");
+        this.setState({ showModal: true });
     }
 
     removeGraph(graphId){
-        alert("removing graph!");
+        this.setState({ showModal: false });
     }
 
     handleRelativeTimeChange(event) { 
@@ -269,6 +273,8 @@ class Details extends Component {
             currentObservation = observations[this.state.currentObservationIndex];
         }
 
+        const showGrayedBackground = this.state.showModal ? {display: "block"} : {display: "none"};;
+
         return (
             <div>{
                 this.state && this.state.geoJson && this.state.observations &&
@@ -310,6 +316,10 @@ class Details extends Component {
                                 ))}
                         </DataWrapper>
                     </DisplayRow>
+                    <Modal 
+                        show={this.state.showModal}
+                    />
+                    <div id="grayout" style={showGrayedBackground}></div>
                     {/* <Row>
                         <form onSubmit={this.handleRelativeTimeSubmit}>
                             <select style={timeSelectStyle} name={'selectRelativeTimeInterval'} value={this.state.relativeTime} onChange={this.handleRelativeTimeChange}>

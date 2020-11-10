@@ -193,6 +193,14 @@ class Details extends Component {
         })
     }
 
+    addGraph(startDate, endDate, graphType){
+        alert("adding graph!");
+    }
+
+    removeGraph(graphId){
+        alert("removing graph!");
+    }
+
     handleRelativeTimeChange(event) { 
         this.setState({
             relativeTime: event.target.value
@@ -295,6 +303,8 @@ class Details extends Component {
                                         currentObservation={currentObservation}
                                         graphType={graphType}
                                         toggleGraph={this.toggleGraph}
+                                        addGraph={this.addGraph}
+                                        removeGraph={this.removeGraph}
                                         graphs={this.state.graphs}
                                     />
                                 ))}

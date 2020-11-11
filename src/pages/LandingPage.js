@@ -32,6 +32,7 @@ const ButtonWrapper = styled.div`
     // height: 10px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 `;
 
 const ParagraphContainer = styled.div`
@@ -56,10 +57,41 @@ const PolaroidDiscription = styled.div`
     padding: 10px 20px;
 `
 
+const Input = styled.input`
+    padding: 0.5em;
+    margin: 0.5em;
+    height: 10%;
+    width: 10%;
+    background: ${ props => props.textEntered ? "papayawhip" : "none" }; 
+    border: 2px solid #ffb74d !important;
+    outline: none;
+    border-radius: 3px;
+`;
+
 class LandingPage extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = { 
+            searchPlaceHolder: false, 
+            searchText: ''
+        }
+        this.handleSearchChange = this.handleSearchChange.bind(this);
+      }
 
     scrollToAboutSection(){
         scroll.scrollTo('1000');
+    }
+
+    handleSearchChange(ev){
+        this.setState({ 
+            searchPlaceHolder: true,
+            // ev.target.value.length !== 0,
+            searchText: ev.target.value 
+        },
+        console.log("this.state.searchPlaceHolder", this.state.searchPlaceHolder),
+        console.log("this.state.searchText", this.state.searchText)
+        ); 
     }
 
     render(){
@@ -91,6 +123,9 @@ class LandingPage extends Component {
               <LandingHeader/>
                 <ButtonWrapper>
                     <Button text="Explore Stations →" link="/console" />
+                    <Input onChange={this.handleSearchChange} onSelect={this.handleSearchChange} value={this.state.textEntered} type="text"
+                     textEntered={this.state.searchPlaceHolder}
+                    />
                     <div style={aboutButtonStyle} onClick={() => this.scrollToAboutSection()}>
                         <Button text="About ↓" />
                     </div>

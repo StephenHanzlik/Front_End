@@ -7,20 +7,21 @@ class LandingHeader extends Component {
     render(){
         
         const headerStyle = {
-            'font-size': '3.3rem',
+            'font-size': '4.0rem',
             'color': '#ffb74d',
-            'font-weight': '380'
+            'font-weight': '360'
         }
 
         const paragraphStyle = {
             'color': '#ffb74d',
-            'font-size': '1.0rem',
-            'font-weight': '400'
+            'font-size': '1.5rem',
+            'font-weight': '380',
+            'margin-top': '-44px'
         }
 
         const imageStyle = {
             'height': '100%',
-            'margin-top': '33px'
+            'margin-top': '3%'
         }
         
         //TODO: defined at least twice. refactor as a component.

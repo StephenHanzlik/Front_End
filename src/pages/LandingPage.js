@@ -13,12 +13,13 @@ const Background = styled.div`
     background-image: url(${backGroundImg});
     background-size: 100%;
     width: 100%;
-    height: 100vh;
+    height: 80vh;
+    margin-top: -20vh
 `;
 
 // currently handled in CSS.  Should impliment with styled components
 const LandingHeaderContainer = styled.div`
-    margin-top: -44%;
+    margin-top: -60vh;
     height: 100vh;
 `;
 

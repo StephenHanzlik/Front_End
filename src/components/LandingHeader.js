@@ -6,14 +6,21 @@ class LandingHeader extends Component {
     render(){
         
         const headerStyle = {
-            'margin-bottom': '-14px'
+            'font-size': '3.3rem',
+            'color': '#ffb74d',
+            'font-weight': '350'
+        }
+
+        const textStyle = {
+            'color': '#ffb74d'
+            // 'font-weight': '400'
         }
 
         return (
         <div> 
-            <h1  style={headerStyle} className="Header center orange-text text-lighten-2">MOUNTAIN <img src={skisImage} alt="skis" id="subHead"></img> SNOWPACK</h1>
+            <h1  style={headerStyle} >MOUNTAIN <img src={skisImage} alt="skis" id="subHead"></img> SNOWPACK</h1>
             <div className="row center">
-                <h5 className="header col s12 orange-text text-lighten-2">a backcountry snow app powered by SNOTEL</h5>
+                <h5 style={textStyle}>a backcountry snow app powered by SNOTEL</h5>
              </div>
         </div> 
         )

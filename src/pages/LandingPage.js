@@ -62,7 +62,7 @@ const Input = styled.input`
     margin: 0.5em;
     height: 10%;
     width: 10%;
-    background: ${ props => props.textEntered ? "papayawhip" : "none" }; 
+    background: ${ props => props.textEntered ? "rgba(255,239,213,0.4)" : "none" }; 
     border: 2px solid #ffb74d !important;
     outline: none;
     border-radius: 3px;

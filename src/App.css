@@ -193,3 +193,7 @@
   opacity: 0.6;
   z-index: 9998;
 }
+
+input::placeholder{
+  text-align: right;
+}

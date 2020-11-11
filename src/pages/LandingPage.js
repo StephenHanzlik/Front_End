@@ -8,6 +8,7 @@ import Button from '../components/Button';
 import styled from 'styled-components';
 import {withRouter} from 'react-router-dom';
 import {animateScroll as scroll } from "react-scroll";
+import axios from 'axios';
 
 const Background = styled.div`
     background-image: url(${backGroundImg});
@@ -61,12 +62,32 @@ const Input = styled.input`
     padding: 0.5em;
     margin: 0.5em;
     height: 10%;
-    width: 10%;
-    background: ${ props => props.textEntered ? "rgba(255,239,213,0.4)" : "none" }; 
+    width: 8%;
+    background: ${ props => props.textEntered ? "rgba(255,239,213,0.6)" : "none" }; 
     border: 2px solid #ffb74d !important;
     outline: none;
     border-radius: 3px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -3px;
+    text-align: center;
 `;
+
+const Ul = styled.ul`
+    list-style-type: none;
+    display: ${ props => props.textEntered ? "block" : "none" }; 
+    background: ${ props => props.textEntered ? "rgba(255,239,213,0.6)" : "none" }; 
+    height: 8%;
+    width: 8%;
+    margin-top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding-left: 2%;
+    padding-right: 2%;
+    overflow: scroll;
+    max-height: 26vh;
+`
 
 class LandingPage extends Component {
 
@@ -74,19 +95,34 @@ class LandingPage extends Component {
         super(props);
         this.state = { 
             searchPlaceHolder: false, 
-            searchText: ''
+            searchText: '',
+            stations: []
         }
         this.handleSearchChange = this.handleSearchChange.bind(this);
-      }
+    }
+
+    componentDidMount() {
+        this.getStations();
+    }
 
     scrollToAboutSection(){
         scroll.scrollTo('1000');
     }
 
+    getStations() {
+        axios.get('/api/snotel/stations')
+            .then(response => {
+                let tempStations = response.data;
+                this.setState({
+                    stations: tempStations
+                })
+            })
+            .catch(error => console.log(error))
+    }
+
     handleSearchChange(ev){
         this.setState({ 
             searchPlaceHolder: true,
-            // ev.target.value.length !== 0,
             searchText: ev.target.value 
         },
         console.log("this.state.searchPlaceHolder", this.state.searchPlaceHolder),
@@ -116,6 +152,10 @@ class LandingPage extends Component {
             'margin-bottom': '0px'
         }
 
+        const stationsList = this.state.stations
+        .filter(station => station.name.includes(this.state.searchText.toUpperCase()))
+        .map((station, index) => <li key={index}>{station.name}</li>);
+
         return(
         <div>
             <Background/>
@@ -123,11 +163,14 @@ class LandingPage extends Component {
               <LandingHeader/>
                 <ButtonWrapper>
                     <Button text="Explore Stations →" link="/console" />
-                    <Input onChange={this.handleSearchChange} onSelect={this.handleSearchChange} value={this.state.textEntered} type="text"
-                     textEntered={this.state.searchPlaceHolder}
-                    />
                     <div style={aboutButtonStyle} onClick={() => this.scrollToAboutSection()}>
                         <Button text="About ↓" />
+                    </div>
+                    <div>
+                        <Input onChange={this.handleSearchChange} onSelect={this.handleSearchChange} value={this.state.textEntered} type="text"
+                        textEntered={this.state.searchPlaceHolder} placeholder="&#128269;" className='input::placeholder'
+                        />
+                        <Ul textEntered={this.state.searchPlaceHolder}>{stationsList}</Ul>
                     </div>
                 </ButtonWrapper>
             </LandingHeaderContainer>

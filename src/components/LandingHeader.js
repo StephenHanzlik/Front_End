@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
-headeimport styled from 'styled-components';
+import styled from 'styled-components';
 import skisImage from '../images/skis-and-sticks.png';
 
 class LandingHeader extends Component {

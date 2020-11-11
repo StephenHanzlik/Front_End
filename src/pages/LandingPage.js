@@ -7,8 +7,15 @@ import LandingHeader from '../components/LandingHeader';
 import Button from '../components/Button';
 import styled from 'styled-components';
 import {withRouter} from 'react-router-dom';
-import {animateScroll as scroll } from "react-scroll";
 import axios from 'axios';
+
+//default static scroll
+import {animateScroll as scroll } from "react-scroll";
+
+//scroll to element attempt
+// import Scroll from 'react-scroll';
+// var Element  = Scroll.Element;
+// var scroller = Scroll.scroller;
 
 const Background = styled.div`
     background-image: url(${backGroundImg});
@@ -40,7 +47,7 @@ const ParagraphContainer = styled.div`
     width: 44%;
     margin-left: auto;
     margin-right: auto;
-    text-align: left;
+    text-align: justify;
 `
 
 const PolaroidContainer = styled.div`
@@ -85,7 +92,8 @@ const Ul = styled.ul`
     text-align: center;
     padding-left: 2%;
     padding-right: 2%;
-    overflow: scroll;
+    overflow-y: auto;
+    overflow-x: hidden;
     max-height: 26vh;
 `
 
@@ -106,7 +114,14 @@ class LandingPage extends Component {
     }
 
     scrollToAboutSection(){
-        scroll.scrollTo('1000');
+        scroll.scrollTo('550');
+        // scroller.scrollTo('myScrollToElement', {
+        //     duration: 1500,
+        //     delay: 100,
+        //     smooth: true,
+        //     containerId: 'ContainerElementID',  
+        //     offset: 50
+        // })
     }
 
     getStations() {
@@ -163,19 +178,21 @@ class LandingPage extends Component {
               <LandingHeader/>
                 <ButtonWrapper>
                     <Button text="Explore Stations →" link="/console" />
-                    <div style={aboutButtonStyle} onClick={() => this.scrollToAboutSection()}>
+                    {/* <div style={aboutButtonStyle} onClick={() => this.scrollToAboutSection()}>
                         <Button text="About ↓" />
-                    </div>
+                    </div> */}
                     <div>
                         <Input onChange={this.handleSearchChange} onSelect={this.handleSearchChange} value={this.state.textEntered} type="text"
-                        textEntered={this.state.searchPlaceHolder} placeholder="&#128269;" className='input::placeholder'
+                        textEntered={this.state.searchPlaceHolder} placeholder="&#128269;  " className='input::placeholder'
                         />
                         <Ul textEntered={this.state.searchPlaceHolder}>{stationsList}</Ul>
                     </div>
                 </ButtonWrapper>
             </LandingHeaderContainer>
             <AboutContentContainer name='aboutSection'>
-                <h3 style={aboutHeaderStyle}>SNOTEL and Mountain Snowpack</h3>
+                {/* id='ContainerElementID' */}
+                {/* <Element name="myScrollToElement"></Element> */}
+                <h3 style={aboutHeaderStyle}>SNOTEL Stations</h3>
                 <ParagraphContainer>
                     <p style={paragraphStyle}>SNOTEL stations are automated snow and weather observation stations run by the Natural Resources Conservation Service (NRCS).  They are located in remote
                     mountain areas and are powered by solar panels.  They are designed to operate unattended and without maintenance for a year.  The NRCS receives data
@@ -188,11 +205,12 @@ class LandingPage extends Component {
                         <p>Meteor burst technology</p>
                     </PolaroidDiscription>
                 </PolaroidContainer>
+                <h3 style={aboutHeaderStyle}>Mountain Snowpack</h3>
                 <ParagraphContainer>
                     <p style={paragraphStyle}>The Mountain Snowpack application uses APIs provided by the NRCS meant to deliver CSV files used in academic and government reports.  We convert these CSVs for on the fly graphing and station exlporation.
                     Because of the nature of meteor burst technology, this app is not always real time and it will sometimes appear as if current data is missing.  Check back in for the most up to date information or explore nearby stations and reference past data points to extrapolate current 
                     conditions.  This application primarly focuses on Snow Depth, Snow Water Equivalent, Air temperuature, and the 24 hours change in these values notaded as Δ.  This data is of importance to backcountry skiers, climbers, hikers, and other 
-                    recreationalists who are interested in the current status of the snowpack.
+                    recreationalists who are interested in the current status of the snowpack.  The station data is manually built and does not come from SNOTEl.  If you see a missing station you would like me to add please reach out at mountainsnowpack@gmail.com.
                     </p>
                 </ParagraphContainer>
                 <PolaroidContainer>
@@ -201,6 +219,13 @@ class LandingPage extends Component {
                         <p>A typical SNOTEL station</p>
                     </PolaroidDiscription>
                 </PolaroidContainer>
+                <h3 style={aboutHeaderStyle}>Support</h3>
+                <ParagraphContainer>
+                    <p style={paragraphStyle}>Link to github that contains links to attributions for images, and the powderlines.es inspiration.  Also option to enable browser mining. if current data is missing.  Check back in for the most up to date information or explore nearby stations and reference past data points to extrapolate current 
+                    conditions.Equivalent, Air temperuature, and the 24 hours change in these values notaded as Δ.  This data is of importance to backcountry skiers, climbers, hikers, and other 
+                    recreationalists who are interested in the current status of the snowpack.
+                    </p>
+                </ParagraphContainer>
             </AboutContentContainer>
         </div> 
         )

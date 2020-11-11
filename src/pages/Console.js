@@ -22,7 +22,7 @@ const GraphWrapper = styled.div`
 `;
 
 const PolaroidContainer = styled.div`
-    width: 45%;
+    width: 25%;
     // background-color: white;
     background-color: rgba(169,169,169,0.8);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -33,8 +33,8 @@ const PolaroidContainer = styled.div`
     overflow: hidden;
 `
 const PolaroidDiscription = styled.div`
-    text-align: center;
-    padding: 10px 20px;
+    text-align: justify;
+    padding: 20px 20px;
 `
 
 class Console extends Component {
@@ -133,16 +133,17 @@ class Console extends Component {
     }
 
     render() {
-        const paragraphCenteredStyle = {
+        const paragraphCardStyle = {
             'width': '100%',
-            // 'margin-top': '30px',
+            'margin-top': '0px',
+            'margin-bottom': '0px',
             'font-size': '20px'
         }
         const snowFlakeStyle = {
-            'width': '36px',
-            'height': '32px',
-            'border-radius': '20px',
-            'margin-bottom': '-10px'
+            'width': '34px',
+            'height': '30px',
+            'border-radius': '18px',
+            'margin-bottom': '-5px'
         }
 
         const paragraphStyle = {
@@ -198,12 +199,10 @@ class Console extends Component {
                     </div>
                     }
                     {this.state.observations.length < 1 && this.state.stationTriplet === '' && !this.state.callMade && 
-                        // <p style={paragraphCenteredStyle}>Select a station icon <img src={snowFlake} style={snowFlakeStyle} alt='snowFlake'/> to see an overview of the stations 
-                        // snow pack depth.  Click "Details" to see all available data for the station and access more graphing.</p>
                         <PolaroidContainer>
                             <PolaroidDiscription>
-                            <p style={paragraphCenteredStyle}>Select a station icon <img src={snowFlake} style={snowFlakeStyle} alt='snowFlake'/> to see an overview of the stations 
-                            snow pack depth.  Click "Details" to see all available data for the station and access more graphing.</p>
+                            <p style={paragraphCardStyle}>To get started, click on a station <img src={snowFlake} style={snowFlakeStyle} alt='snowFlake'/> to see an overview of the 
+                            snow pack depth.  Click "Details" to see all available data for the station and access advanced graphing.</p>
                             </PolaroidDiscription>
                         </PolaroidContainer>
                     }

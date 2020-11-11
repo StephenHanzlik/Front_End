@@ -22,8 +22,16 @@ const SmallButton = styled.button`
   cursor: pointer;
 `
 
+
+
 class Button extends Component {
     render(){
+      // const linkStyle = {
+      //   'max-width': '300px'
+      // }
+      //style={linkStyle}
+
+
       let selected;
       this.props.selected ? selected  = {"background": "#3076AA"} : selected = {"background": "none"};
         return (

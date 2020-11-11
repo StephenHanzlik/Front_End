@@ -17,14 +17,13 @@ const Background = styled.div`
     margin-top: -20vh
 `;
 
-// currently handled in CSS.  Should impliment with styled components
 const LandingHeaderContainer = styled.div`
-    margin-top: -60vh;
-    height: 100vh;
+    margin-top: -60vh
+    height: 80vh;
 `;
 
 const AboutContentContainer = styled.div`
-    margin-top: -5%;
+    margin-top: -8%;
     width: 100%;
     height: 1200px;
 `;
@@ -36,9 +35,10 @@ const ButtonWrapper = styled.div`
 `;
 
 const ParagraphContainer = styled.div`
-    width: 65%;
+    width: 44%;
     margin-left: auto;
     margin-right: auto;
+    text-align: left;
 `
 
 const PolaroidContainer = styled.div`
@@ -48,6 +48,8 @@ const PolaroidContainer = styled.div`
     margin-bottom: 25px;
     margin-left: auto;
     margin-right: auto;
+    border-radius: 5px;
+    overflow: hidden;
 `
 const PolaroidDiscription = styled.div`
     text-align: center;
@@ -62,17 +64,24 @@ class LandingPage extends Component {
 
     render(){
         const imgStyle = {
-            'width': '100%'
+            'width': '100%',
+            'height': '100%',
         }
 
         const paragraphStyle = {
-            'font-size': '22px',
-            'margin-top': '30px',
+            'font-size': '18px',
+            // 'margin-top': '0px',
             'margin-bottom': '30px'
         }
 
         const aboutButtonStyle = {
             'margin-top': '-18px'
+        }
+
+        const aboutHeaderStyle = {
+            'font-size': '1.3rem',
+            'font-weight': '600',
+            'margin-bottom': '0px'
         }
 
         return(
@@ -88,7 +97,7 @@ class LandingPage extends Component {
                 </ButtonWrapper>
             </LandingHeaderContainer>
             <AboutContentContainer name='aboutSection'>
-                <h3>SNOTEL and Mountain Snowpack</h3>
+                <h3 style={aboutHeaderStyle}>SNOTEL and Mountain Snowpack</h3>
                 <ParagraphContainer>
                     <p style={paragraphStyle}>SNOTEL stations are automated snow and weather observation stations run by the Natural Resources Conservation Service (NRCS).  They are located in remote
                     mountain areas and are powered by solar panels.  They are designed to operate unattended and without maintenance for a year.  The NRCS receives data

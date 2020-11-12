@@ -71,12 +71,16 @@ class GraphableObservation extends Component {
             'font-size': '23px'
         }
 
+        const noDataStyle = {
+            'color': 'grey'
+        }
+
         const currentObservation = this.props.currentObservation;
         const graphType = this.props.graphType;
 
         return (
             <Row>
-                <p style={paragraphStyle}>{this.buildDisplayStringForType(graphType)}: {currentObservation[graphType]}{currentObservation[graphType] ? this.buildUnitStringForType(graphType) : "no data"}</p>
+                <p style={paragraphStyle}>{this.buildDisplayStringForType(graphType)}: {currentObservation[graphType]}{currentObservation[graphType] ? this.buildUnitStringForType(graphType) : <span style={noDataStyle}>no data</span>}</p>
             </Row>    
         )
     }

@@ -28,13 +28,13 @@ class GraphableObservation extends Component {
             case 'changeInSnowWaterEquivalent':
                 return 'Snow Water Equivalent Δ';
             case 'airTemperatureObserved':
-                return 'Air Temp Observed';
+                return 'Air Temperature Observed';
             case 'airTemperatureAverage':
-                return 'Air Temp Average';
+                return 'Air Temperature Average';
             case 'airTemperatureMin':
-                return 'Air Temperature Min';
+                return 'Air Temperature Minimum';
             case 'airTemperatureMax':
-                return 'Air Temperature Max';
+                return 'Air Temperature Maximum';
                 
             default:
                 return;
@@ -76,18 +76,7 @@ class GraphableObservation extends Component {
 
         return (
             <Row>
-                <p style={paragraphStyle}>{this.buildDisplayStringForType(graphType)}: {currentObservation[graphType]}{this.buildUnitStringForType(graphType)}</p>
-                {/* <div onClick={() => this.props.addGraph(this.buildDisplayStringForType(graphType))}> */}
-                    {/* {this.props.graphs.indexOf(graphType) > -1 &&                        
-                        <Button size={"small"} selected={true} text={"+"}/>
-                    } */}
-                    {/* {this.props.graphs.indexOf(graphType) <= -1 && */}
-                        {/* <Button size={"small"} selected={true} text={"+"}/> */}
-                    {/* }    */}
-                {/* </div> */}
-                {/* <div onClick={() => this.props.removeGraph(graphType)}>
-                    <Button size={"small"} selected={false} text={"-"}/>
-                </div> */}
+                <p style={paragraphStyle}>{this.buildDisplayStringForType(graphType)}: {currentObservation[graphType]}{currentObservation[graphType] ? this.buildUnitStringForType(graphType) : "no data"}</p>
             </Row>    
         )
     }

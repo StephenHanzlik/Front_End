@@ -66,7 +66,7 @@ class Modal extends Component {
     handleSubmit(event) {
         event.preventDefault();
         this.props.closeModal();
-        this.props.getObservations();
+        this.props.getObservations(this.state.observationType, this.state.startDate, this.state.endDate, this.state.relativeTime, );
     }
 
     render(){

@@ -60,11 +60,10 @@ class Details extends Component {
             startDate: "",
             endDate: "",
             relativeTime: 5184000000,
-            showModal: false,
-            modalGraphType: ''
+            showModal: false
         };
         this.toggleGraph = this.toggleGraph.bind(this);
-        this.addGraph = this.addGraph.bind(this);
+        this.openModal = this.openModal.bind(this);
         this.removeGraph = this.removeGraph.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.getObservations = this.getObservations.bind(this);
@@ -78,21 +77,21 @@ class Details extends Component {
         this.getStation(stationTriplet);
         this.getStations();
         this.getObservations(stationTriplet);
-        this.getRelativeDate();
+        // this.getRelativeDate();  
     }
 
-    getRelativeDate() {
-        let currentDate = Date.now();
-        let startDate = currentDate - this.state.relativeTime;
+    // getRelativeDate() {
+    //     let currentDate = Date.now();
+    //     let startDate = currentDate - this.state.relativeTime;
 
-        currentDate = new Date(currentDate).toJSON().slice(0, 10)
-        startDate = new Date(startDate).toJSON().slice(0, 10)
+    //     currentDate = new Date(currentDate).toJSON().slice(0, 10)
+    //     startDate = new Date(startDate).toJSON().slice(0, 10)
 
-        this.setState({
-            startDate: startDate,
-            endDate: currentDate
-        })
-    }
+    //     this.setState({
+    //         startDate: startDate,
+    //         endDate: currentDate
+    //     })
+    // }
 
     //TODO:  Impliment redux to reduce API calls
     getStationTriplet() {
@@ -104,14 +103,12 @@ class Details extends Component {
         axios.get(`/api/snotel/stations/${triplet}`)
             .then(response => {
                 let observation = response.data[0];
-                //  let stationGeoJson = this.convertToGeoJson(response.data);
                 this.setState({
                     stationTriplet: observation.triplet,
                     stationName: observation.name,
                     stationElevation: observation.elevation,
                     lat: JSON.parse(observation.location).lat,
                     lng: JSON.parse(observation.location).lng,
-                    // geoJson: stationGeoJson
                 })
             })
             .catch(error => console.log(error))
@@ -200,10 +197,9 @@ class Details extends Component {
         })
     }
 
-    addGraph(graphType){
+    openModal(){
         this.setState({ 
             showModal: true,
-            modalGraphType: graphType 
         });
     }
 
@@ -284,6 +280,9 @@ class Details extends Component {
                                         graphs={this.state.graphs}
                                     />
                                 ))}
+                                <div onClick={()=>this.openModal()}>
+                                    <Button size={"large"}  selected={true} text={"Add a graph +"}/>
+                                </div>
                         </DataWrapper>
                     </DisplayRow>
                     <Modal 
@@ -295,12 +294,12 @@ class Details extends Component {
                     <div id="grayout" style={showGrayedBackground}></div>
                     <GraphRow>
                         {
-                            this.state.graphs.map(graph => (
-                                    <Graph
-                                        graphType={graph}
-                                        observations={this.state.observations}
-                                    />  
-                                ))
+                        this.state.graphs.map(graph =>(
+                            <Graph
+                                graphType={graph}
+                                observations={this.state.observations}
+                            />  
+                        ))
                         }
                     </GraphRow>
                     

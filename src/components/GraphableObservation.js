@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import Button from '../components/Button';
+// import Button from '../components/Button';
 
 const Row = styled.div`
     display: flex;
@@ -77,14 +77,14 @@ class GraphableObservation extends Component {
         return (
             <Row>
                 <p style={paragraphStyle}>{this.buildDisplayStringForType(graphType)}: {currentObservation[graphType]}{this.buildUnitStringForType(graphType)}</p>
-                <div onClick={() => this.props.addGraph(this.buildDisplayStringForType(graphType))}>
+                {/* <div onClick={() => this.props.addGraph(this.buildDisplayStringForType(graphType))}> */}
                     {/* {this.props.graphs.indexOf(graphType) > -1 &&                        
                         <Button size={"small"} selected={true} text={"+"}/>
                     } */}
                     {/* {this.props.graphs.indexOf(graphType) <= -1 && */}
-                        <Button size={"small"} selected={true} text={"+"}/>
+                        {/* <Button size={"small"} selected={true} text={"+"}/> */}
                     {/* }    */}
-                </div>
+                {/* </div> */}
                 {/* <div onClick={() => this.props.removeGraph(graphType)}>
                     <Button size={"small"} selected={false} text={"-"}/>
                 </div> */}

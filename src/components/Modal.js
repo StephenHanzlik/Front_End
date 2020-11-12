@@ -26,12 +26,16 @@ class Modal extends Component {
     constructor(props){
         super(props);
         this.state = {
-            relativeTime:   604800000,
-            observationType: 'snowDepth'
+            relativeTime:   604800000,            observationType: 'snowDepth',
+            startDate: Date.now() - 604800000,
+            endDate: Date.now()
         }
 
         this.handleObservationTypeChange = this.handleObservationTypeChange.bind(this);
         this.handleRelativeTimeChange = this.handleRelativeTimeChange.bind(this);
+        this.handleAbsoluteStartChange = this.handleAbsoluteStartChange.bind(this);
+        this.handleAbsoluteEndChange = this.handleAbsoluteEndChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleRelativeTimeChange(event) { 
@@ -44,6 +48,28 @@ class Modal extends Component {
         this.setState({
             observationType: event.target.value
         })
+    }
+
+    handleAbsoluteStartChange(event) { 
+        this.setState({
+            startDate: event.target.value
+        })
+    }
+
+    handleAbsoluteEndChange(event) { 
+        this.setState({
+            endDate: event.target.value
+        })
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        console.log("this.state.startDate", this.state.startDate);
+        console.log("this.state.endDate", this.state.endDate)
+        console.log("this.state.relativeTime", this.state.relativeTime)
+        console.log("this.state.observationType", this.state.observationType)
+        this.props.closeModal();
+        // this.getObservations(this.state.stationTriplet);
     }
 
     render(){
@@ -64,7 +90,7 @@ class Modal extends Component {
             <div className={showHideClassName}>
                 <p>You are mounting a graph for {this.props.graphType}.  Select the time interval to graph your chosen data set.</p>
                 {/* <section className="modal-main"> */}
-                    <form onSubmit={this.handleRelativeTimeSubmit}>
+                    <form onSubmit={this.handleSubmit}>
                         <label for="selectObservationType">Observation Type</label>
                         <select name="selectObservationType" value={this.state.observationType} onChange={this.handleObservationTypeChange}>
                             <option value="604800000">Snow Depth</option>

@@ -95,6 +95,7 @@ const Ul = styled.ul`
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 26vh;
+    cursor: pointer;
 `
 
 class LandingPage extends Component {
@@ -139,11 +140,19 @@ class LandingPage extends Component {
         this.setState({ 
             searchPlaceHolder: true,
             searchText: ev.target.value 
-        },
-        console.log("this.state.searchPlaceHolder", this.state.searchPlaceHolder),
-        console.log("this.state.searchText", this.state.searchText)
-        ); 
+        }); 
     }
+
+    // handleInputDeselect(ev){
+    //     console.log("ev.target.id", ev.target.id)
+    //     console.log(ev.target.id !== "searchInput")
+
+    //     if(ev.target.placeholder !== "searchInput"){
+    //         this.setState({
+    //             searchPlaceHolder: false
+    //         })
+    //     }
+    // }
 
     render(){
         const imgStyle = {
@@ -169,9 +178,10 @@ class LandingPage extends Component {
 
         const stationsList = this.state.stations
         .filter(station => station.name.includes(this.state.searchText.toUpperCase()))
-        .map((station, index) => <li key={index}>{station.name}</li>);
+        .map((station, index) => <li key={index} id={station.triplet}>{station.name}</li>);
 
         return(
+            // onClick={(ev)=>this.handleInputDeselect(ev)}
         <div>
             <Background/>
             <LandingHeaderContainer>
@@ -182,10 +192,21 @@ class LandingPage extends Component {
                         <Button text="About ↓" />
                     </div> */}
                     <div>
-                        <Input onChange={this.handleSearchChange} onSelect={this.handleSearchChange} value={this.state.textEntered} type="text"
-                        textEntered={this.state.searchPlaceHolder} placeholder="&#128269;  " className='input::placeholder'
+                        <Input 
+                            onChange={this.handleSearchChange} 
+                            onSelect={this.handleSearchChange} 
+                            value={this.state.textEntered} type="text"
+                            textEntered={this.state.searchPlaceHolder} 
+                            placeholder="&#128269;  " 
+                            id={"searchInput"}
+                            className='input::placeholder'
                         />
-                        <Ul textEntered={this.state.searchPlaceHolder}>{stationsList}</Ul>
+                        <Ul 
+                            textEntered={this.state.searchPlaceHolder} 
+                            onClick={(ev)=> window.location.href = `/details/${ev.target.id}`}
+                        >
+                            {stationsList}
+                        </Ul>
                     </div>
                 </ButtonWrapper>
             </LandingHeaderContainer>

@@ -67,6 +67,7 @@ class Details extends Component {
         this.addGraph = this.addGraph.bind(this);
         this.removeGraph = this.removeGraph.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.getObservations = this.getObservations.bind(this);
         this.handleRelativeTimeSubmit = this.handleRelativeTimeSubmit.bind(this);
         this.handleRelativeTimeChange = this.handleRelativeTimeChange.bind(this);
         this.handleAbsoluteTimeSubmit = this.handleAbsoluteTimeSubmit.bind(this);
@@ -129,10 +130,19 @@ class Details extends Component {
             .catch(error => console.log(error))
     }
 
-    getObservations(triplet, currentDate = Date.now()) {
+    getObservations(triplet, name, elevation, currentDate = Date.now()) {
+        if(name && elevation){
+            this.setState({
+                stationName: name,
+                stationElevation: elevation
+            })
+        }
         //console component is hard coded for 90 days of snow data.  This will be configurable.
         // if (!startDate) {
             // let currentDate = Date.now();
+            console.log("details state", this.state);
+            console.log("details triplet", triplet);
+            console.log("current date", currentDate);
             let startDate = currentDate - this.state.relativeTime
 
             currentDate = new Date(currentDate).toJSON().slice(0, 10)

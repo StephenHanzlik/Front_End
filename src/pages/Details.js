@@ -68,9 +68,7 @@ class Details extends Component {
         this.removeGraph = this.removeGraph.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.getObservations = this.getObservations.bind(this);
-        this.handleRelativeTimeSubmit = this.handleRelativeTimeSubmit.bind(this);
-        this.handleRelativeTimeChange = this.handleRelativeTimeChange.bind(this);
-        this.handleAbsoluteTimeSubmit = this.handleAbsoluteTimeSubmit.bind(this);
+        this.updateSelectedStation = this.updateSelectedStation.bind(this);
     }
 
     componentDidMount() {
@@ -130,24 +128,13 @@ class Details extends Component {
             .catch(error => console.log(error))
     }
 
-    getObservations(triplet, name, elevation, currentDate = Date.now()) {
-        if(name && elevation){
-            this.setState({
-                stationName: name,
-                stationElevation: elevation
-            })
-        }
-        //console component is hard coded for 90 days of snow data.  This will be configurable.
-        // if (!startDate) {
-            // let currentDate = Date.now();
-            console.log("details state", this.state);
-            console.log("details triplet", triplet);
-            console.log("current date", currentDate);
-            let startDate = currentDate - this.state.relativeTime
+    getObservations(triplet = this.state.stationTriplet, startDate, endDate = Date.now()) {
+        if(!startDate) startDate = endDate - this.state.relativeTime
 
-            currentDate = new Date(currentDate).toJSON().slice(0, 10)
-            startDate = new Date(startDate).toJSON().slice(0, 10)
-        // }
+        endDate = new Date(endDate).toJSON().slice(0, 10)
+        startDate = new Date(startDate).toJSON().slice(0, 10)
+        
+        console.log(`/api/snotel/observations/${triplet}?from=${startDate}&to=${new Date().toJSON().slice(0, 10)}`)
 
         axios.get(`/api/snotel/observations/${triplet}?from=${startDate}&to=${new Date().toJSON().slice(0, 10)}`)
             .then(response => {
@@ -159,17 +146,21 @@ class Details extends Component {
             .catch(error => console.log(error))
     }
 
+    updateSelectedStation(triplet, name, elevation){
+            this.setState({
+                stationName: name,
+                stationElevation: elevation,
+                stationTriplet: triplet 
+            }, this.getObservations())
+    }
 
     convertToGeoJson(stations) {
-
         let geoJsonFeatureCollection = new GeoJsonFeatureCollection();
-
         stations.forEach(station => {
             let location = JSON.parse(station.location);
             let geoJsonFeature = new GeoJsonFeature(location.lng, location.lat, station.name, station.elevation, station.triplet, station.timezone, station.wind);
             geoJsonFeatureCollection.data.features.push(geoJsonFeature);
         })
-
         return geoJsonFeatureCollection;
     };
 
@@ -210,8 +201,6 @@ class Details extends Component {
     }
 
     addGraph(graphType){
-        //startDate, endDate, 
-        console.log("GRAPH TYPE", graphType)
         this.setState({ 
             showModal: true,
             modalGraphType: graphType 
@@ -224,37 +213,6 @@ class Details extends Component {
 
     closeModal(){
         this.setState({showModal: false});
-    }
-
-    handleRelativeTimeChange(event) { 
-        this.setState({
-            relativeTime: event.target.value
-        })
-    }
-    
-    handleRelativeTimeSubmit(event) {
-        event.preventDefault();
-        this.getObservations(this.state.stationTriplet);
-    }
-
-    handleAbsoluteTimeSubmit(event) {
-        event.preventDefault();
-        console.log("event.target.value", event.target.value);  
-        this.getObservations(this.state.stationTriplet);
-    }
-
-    handleAbsoluteStartChange(event) {
-        event.preventDefault(); 
-        this.setState({
-            startDate: event.target.value
-        })
-    }
-
-    handleAbsoluteEndChange(event) {
-        event.preventDefault();
-        this.setState({
-            endDate: event.target.value
-        })
     }
 
     render() {
@@ -295,7 +253,7 @@ class Details extends Component {
                     <DisplayRow>
                         <MapWrapper>
                             <Map
-                                getObservations={this.getObservations}
+                                updateSelectedStation={this.updateSelectedStation}
                                 geoJson={this.state.geoJson}
                                 lng={this.state.lng}
                                 lat={this.state.lat}
@@ -332,6 +290,7 @@ class Details extends Component {
                         show={this.state.showModal}
                         graphType={this.state.modalGraphType}
                         closeModal={this.closeModal}
+                        getObservations={this.getObservations}
                     />
                     <div id="grayout" style={showGrayedBackground}></div>
                     <GraphRow>

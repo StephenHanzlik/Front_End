@@ -53,6 +53,7 @@ class Console extends Component {
         this.getObservations = this.getObservations.bind(this);
         this.getStations = this.getStations.bind(this);
         this.handleRelativeTimeChange = this.handleRelativeTimeChange.bind(this);
+        this.updateSelectedStation = this.updateSelectedStation.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -121,6 +122,12 @@ class Console extends Component {
         return geoJsonFeatureCollection;
     };
 
+    updateSelectedStation(triplet, name, elevation, ){
+        this.setState({
+            stationTriplet: triplet 
+        }, this.getObservations(triplet))
+    }   
+
     handleRelativeTimeChange(event) { 
         this.setState({
             relativeTime: event.target.value
@@ -162,7 +169,7 @@ class Console extends Component {
                 <MapWrapper>
                     {this.state && this.state.geoJson &&
                         <Map
-                            getObservations={this.getObservations}
+                            updateSelectedStation={this.updateSelectedStation}
                             geoJson={this.state.geoJson}
                             lng={-105.270546}
                             lat={40.014984}

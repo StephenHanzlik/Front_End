@@ -21,15 +21,6 @@ class Graph extends Component {
         this.getMonthName = this.getMonthName.bind(this);
     }
 
-    //I don't think we need this
-    // componentDidUpdate() {
-    //     if (this.state.observations !== this.props.observations) {
-    //         this.setState({
-    //             observations: this.props.observations
-    //         });
-    //     }
-    // }
-
     safeParseAndWrap(observations, graphType, title){
         let dataSetArray = [];
         let dataSet = observations.filter(observation => {
@@ -110,7 +101,6 @@ class Graph extends Component {
     render() {
         return (
             <GraphWrapper>
-                {console.log("!this.props.observations!", this.props.observations)}
                 {!this.props.observations ?
                     <h3>Select a Station</h3>
                     :

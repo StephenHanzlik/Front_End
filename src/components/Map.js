@@ -53,7 +53,7 @@ class Map extends Component {
                         stationElevation: marker.properties.elevation,
                         stationTriplet: marker.properties.triplet,
                         stationWind: marker.properties.wind.toString()
-                    }, this.props.getObservations(marker.properties.triplet, marker.properties.title, marker.properties.elevation))
+                    }, this.props.updateSelectedStation(marker.properties.triplet, marker.properties.title, marker.properties.elevation))
                 })
                 //TODO: might need to attach a click event and use History.pushState() to mock what Link is doing
                 //so that we can maintain state and/or use redux and reduce API calls

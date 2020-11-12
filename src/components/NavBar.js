@@ -30,7 +30,6 @@ class NavBar extends Component {
         'padding': '0px 13px 0px 13px',
         'font-weight': '500'
       }
-      console.log('this.props', this.props)
         return (
             <Nav>
             <NavHeader>

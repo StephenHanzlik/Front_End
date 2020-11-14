@@ -22,7 +22,9 @@ class Modal extends Component {
             observationType: 'snowDepth',
             startDate: Date.now() - 604800000,
             endDate: Date.now(),
-            stationToGraphSelect: false
+            stationToGraphSelect: 'fixedStation',
+            timeToGraphSelect: 'absoluteTime',
+            showTime: 'relative'
         }
 
         this.handleObservationTypeChange = this.handleObservationTypeChange.bind(this);
@@ -79,25 +81,32 @@ class Modal extends Component {
 
     render(){
         
-        const showHideClassName = this.props.show ? "modal display-block" : "modal display-none";
+        const showModalClassName = this.props.show ? "modal display-block" : "modal display-none";
+        const showRelativeTimeClassName = this.state.timeToGraphSelect ===  'relativeTime' ? "display-block" : "display-none";
+        const showAbsoluteTimeClassName = this.state.timeToGraphSelect ===  'absoluteTime' ? "display-block" : "display-none";
+
+        const stationSelectedStyle = {
+            'max-height': '16px'
+        }
 
         return (
-            <div className={showHideClassName}>
-                <p>You are mounting a graph.  You can select wether to tie the graph data to the selected station or a partiuclar station.  If going with a selected station clicking new stations on the map will update your graph.  
+            <div className={showModalClassName}>
+                <p>You are mounting a graph.  You can select whether to tie the graph data to the selected station or a partiuclar station.  If going with a selected station clicking new stations on the map will update your graph.  
                     Next, Select the time interval to graph your chosen data set.</p>
                     <form onSubmit={this.handleSubmit}>
                         <Row>
                             <Column>
                                 <Row>
                                     <label for="selectedStation">Selected Station</label>
-                                    <input checked={'fixedStation' === this.state.stationToGraphSelect}type="radio" value="fixedStation" id="fixedStation" onChange={this.handleStationSelectChange} name="fixedStation"/>
+                                    <input checked={'selectedStation' === this.state.stationToGraphSelect} type="radio" value="selectedStation" id="selectedStation" onChange={this.handleStationSelectChange} name="selectedStation"/>
                                 </Row>
                                 <Row>
                                     <label for="fixedStation">Fixed Station</label>
-                                    <input checked={'selectedStation' === this.state.stationToGraphSelect} type="radio" value="selectedStation" id="selectedStation" onChange={this.handleStationSelectChange} name="selectedStation"/>
+                                    <input checked={'fixedStation' === this.state.stationToGraphSelect}type="radio" value="fixedStation" id="fixedStation" onChange={this.handleStationSelectChange} name="fixedStation"/>
+
                                 </Row>
                             </Column>
-                            <input type="text" value={"Lake Eldora"} name="selectedStationtoGraph"/> 
+                            <input style={stationSelectedStyle} type="text" value={"Lake Eldora"} name="selectedStationtoGraph"/> 
                         {/* </Row>
                         <Row> */}
                             <Column>
@@ -112,18 +121,18 @@ class Modal extends Component {
                             </Column>
                             <Column>
                                 <Row>
-                                    <label for="selectStartDate">Start Date:</label>
-                                    <input type="text" onChange={this.handleAbsoluteStartChange} value={this.state.startDate} name="selectStartDate"/>
+                                    <label className={showAbsoluteTimeClassName} for="selectStartDate">Start Date:</label>
+                                    <input className={showAbsoluteTimeClassName} type="text" onChange={this.handleAbsoluteStartChange} value={this.state.startDate} name="selectStartDate"/>
                                 </Row>
                             </Column>
                             <Column>
                                 <Row>
-                                    <label for="selectEndDate">End Date:</label>
-                                    <input type="text" onChange={this.handleAbsoluteEndChange} value={this.state.endDate} name="selectEndDate"/>
+                                    <label className={showAbsoluteTimeClassName} for="selectEndDate">End Date:</label>
+                                    <input className={showAbsoluteTimeClassName} type="text" onChange={this.handleAbsoluteEndChange} value={this.state.endDate} name="selectEndDate"/>
                                 </Row>
                             </Column>
                             <Column>
-                                <select name="selectRelativeTimeInterval" value={this.state.relativeTime} onChange={this.handleRelativeTimeChange}>
+                                <select className={showRelativeTimeClassName} name="selectRelativeTimeInterval" value={this.state.relativeTime} onChange={this.handleRelativeTimeChange}>
                                     <option value="604800000">7 days</option>
                                     <option value="2592000000">30 days</option>
                                     <option value="5184000000">60 days</option>
@@ -142,10 +151,10 @@ class Modal extends Component {
                                     <option value="31536000000">Air Temperature Min</option>
                                     <option value="31536000000">Air Temperature Min</option>
                                 </select>
-                                <input type="submit" value="Build Graph" />
                         </Row>
                     </form>
                 <button onClick={() => this.props.closeModal()}>Cancel</button>
+                <input type="submit" value="Build Graph" />
           </div>
         )
     }

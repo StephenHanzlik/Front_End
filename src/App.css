@@ -156,8 +156,8 @@
 /* Modal */
 .modal {
   position: fixed;
-  top: 3%;
-  width:60%;
+  top: 10%;
+  width: 87%;
   height: 60%;
   opacity: 1;
   border-radius: 5px;

@@ -101,6 +101,7 @@ class Graph extends Component {
     render() {
         return (
             <GraphWrapper>
+                {console.log('this.props.observations', this.props.observations)}
                 {!this.props.observations ?
                     <h3>Select a Station</h3>
                     :

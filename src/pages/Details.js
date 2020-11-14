@@ -53,13 +53,12 @@ class Details extends Component {
             lat: '',
             lng: '',
             geoJson: '',
-            observations: '',
+            observations: [],
             currentObservationIndex: '',
-            mountGraph: false,
-            graphs: ['snowDepth', 'airTemperatureMax', 'airTemperatureMin'],
+            graphs: [],
             startDate: "",
             endDate: "",
-            relativeTime: 5184000000,
+            relativeTime: 5184000000,//60 days
             showModal: false
         };
         this.toggleGraph = this.toggleGraph.bind(this);
@@ -68,6 +67,8 @@ class Details extends Component {
         this.closeModal = this.closeModal.bind(this);
         this.getObservations = this.getObservations.bind(this);
         this.updateSelectedStation = this.updateSelectedStation.bind(this);
+        this.buildDefaultGraphs = this.buildDefaultGraphs.bind(this);
+        this.getDefaultObservations = this.getDefaultObservations.bind(this);
     }
 
     componentDidMount() {
@@ -76,22 +77,50 @@ class Details extends Component {
         let stationTriplet = this.getStationTriplet();
         this.getStation(stationTriplet);
         this.getStations();
-        this.getObservations(stationTriplet);
+        // this.getObservations(stationTriplet);
+        this.getDefaultObservations(stationTriplet);
+        this.buildDefaultGraphs();
         // this.getRelativeDate();  
     }
 
-    // getRelativeDate() {
-    //     let currentDate = Date.now();
-    //     let startDate = currentDate - this.state.relativeTime;
+    getDefaultObservations(triplet) {
+        let endDate = Date.now();
+        let startDate = endDate - this.state.relativeTime;//60 days
+        
+        //format the dates for the query params
+        endDate = new Date(endDate).toJSON().slice(0, 10)
+        startDate = new Date(startDate).toJSON().slice(0, 10)
+        
+        axios.get(`/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
+            .then(response => {
+                let observations = response.data;
+                console.log("getDefaultObservations - observations", observations);
+                this.setState({ 
+                    observations: observations,
+                    currentObservationIndex: observations.length - 1 
+                }, console.log("getDefaultObservations - this.state", this.state), this.buildDefaultGraphs(observations))
+            })
+            .catch(error => console.log(error))
+    }
 
-    //     currentDate = new Date(currentDate).toJSON().slice(0, 10)
-    //     startDate = new Date(startDate).toJSON().slice(0, 10)
-
-    //     this.setState({
-    //         startDate: startDate,
-    //         endDate: currentDate
-    //     })
-    // }
+    buildDefaultGraphs(observations){
+        let defaultGraphs = ['snowDepth', 'airTemperatureMin', 'airTemperatureMin'];
+        let tempGraphs = defaultGraphs.map((graphType)=>{
+            let graphItem = {
+                graphType: graphType,
+                observations: observations
+            }
+            console.log("buildDefaultGraphs - graphItem", graphItem);
+            return graphItem;
+        })
+        this.setState({graphs: tempGraphs}, console.log("buildDefaultGraphs - this.state", this.state))
+    }
+    // this.state.graphs.map(graph =>(
+    //                         <Graph
+    //                             graphType={graph}
+    //                             observations={this.state.observations}
+    //                         />  
+    //                     ))
 
     //TODO:  Impliment redux to reduce API calls
     getStationTriplet() {
@@ -130,10 +159,8 @@ class Details extends Component {
 
         endDate = new Date(endDate).toJSON().slice(0, 10)
         startDate = new Date(startDate).toJSON().slice(0, 10)
-        
-        console.log(`/api/snotel/observations/${triplet}?from=${startDate}&to=${new Date().toJSON().slice(0, 10)}`)
-
-        axios.get(`/api/snotel/observations/${triplet}?from=${startDate}&to=${new Date().toJSON().slice(0, 10)}`)
+    
+        axios.get(`/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
             .then(response => {
                 this.setState({
                     observations: response.data,
@@ -191,7 +218,6 @@ class Details extends Component {
         let tempGraphs = this.state.graphs;
         let index = tempGraphs.indexOf(graphType);
         index > -1 ? tempGraphs.splice(index, 1) : tempGraphs.push(graphType)
-        console.log("tempGraphs", tempGraphs);
         this.setState({
             graphs: tempGraphs
         })
@@ -240,10 +266,11 @@ class Details extends Component {
         if (observations) {
             currentObservation = observations[this.state.currentObservationIndex];
         }
+        console.log("render - this.state", this.state)
 
         return (
             <div>{
-                this.state && this.state.geoJson && this.state.observations &&
+                this.state && this.state.geoJson && currentObservation &&
                 <div>
                     <NavBar link={"explore"}/>
                     <DisplayRow>
@@ -293,11 +320,11 @@ class Details extends Component {
                     />
                     <div id="grayout" style={showGrayedBackground}></div>
                     <GraphRow>
-                        {
+                        {this.state.graphs &&
                         this.state.graphs.map(graph =>(
                             <Graph
-                                graphType={graph}
-                                observations={this.state.observations}
+                                graphType={graph.graphType}
+                                observations={graph.observations}
                             />  
                         ))
                         }

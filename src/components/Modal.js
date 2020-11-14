@@ -75,7 +75,8 @@ class Modal extends Component {
 
         return (
             <div className={showHideClassName}>
-                <p>You are mounting a graph for {this.props.graphType}.  Select the time interval to graph your chosen data set.</p>
+                <p>You are mounting a graph.  You can select wether to tie the graph data to the selected station or a partiuclar station.  If going with a selected station clicking new stations on the map will update your graph.  
+                    Next, Select the time interval to graph your chosen data set.</p>
                     <form onSubmit={this.handleSubmit}>
                         <label for="selectObservationType">Observation Type</label>
                         <select name="selectObservationType" value={this.state.observationType} onChange={this.handleObservationTypeChange}>

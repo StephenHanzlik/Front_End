@@ -181,6 +181,9 @@
 .display-none {
   display: none;
 }
+.display-greyed {
+  opacity: 0.4;
+}
 
 /* Grey out */
 #grayout {

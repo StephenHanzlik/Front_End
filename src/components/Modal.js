@@ -80,10 +80,11 @@ class Modal extends Component {
     }
 
     render(){
-        
+        //display-none
         const showModalClassName = this.props.show ? "modal display-block" : "modal display-none";
-        const showRelativeTimeClassName = this.state.timeToGraphSelect ===  'relativeTime' ? "display-block" : "display-none";
-        const showAbsoluteTimeClassName = this.state.timeToGraphSelect ===  'absoluteTime' ? "display-block" : "display-none";
+        const showAbsoluteTimeClassName = this.state.timeToGraphSelect ===  'absoluteTime' ? "display-block" : "display-greyed";
+        const showRelativeTimeClassName = this.state.timeToGraphSelect ===  'relativeTime' ? "display-block" : "display-greyed";
+        const showStationSelect = this.state.stationToGraphSelect ===  'fixedStation' ? "display-block" : "display-greyed";
 
         const stationSelectedStyle = {
             'max-height': '16px'
@@ -106,7 +107,7 @@ class Modal extends Component {
 
                                 </Row>
                             </Column>
-                            <input style={stationSelectedStyle} type="text" value={"Lake Eldora"} name="selectedStationtoGraph"/> 
+                            <input style={stationSelectedStyle} className={showStationSelect} type="text" value={"Lake Eldora"} name="selectedStationtoGraph"/> 
                         {/* </Row>
                         <Row> */}
                             <Column>

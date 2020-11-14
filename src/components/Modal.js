@@ -29,7 +29,8 @@ class Modal extends Component {
             relativeTime:   604800000,            
             observationType: 'snowDepth',
             startDate: Date.now() - 604800000,
-            endDate: Date.now()
+            endDate: Date.now(),
+            fixedStationSelect: false
         }
 
         this.handleObservationTypeChange = this.handleObservationTypeChange.bind(this);
@@ -69,6 +70,14 @@ class Modal extends Component {
         this.props.getObservations(this.state.observationType, this.state.startDate, this.state.endDate, this.state.relativeTime, );
     }
 
+    handleStationSelectChange=(e)=>{
+        this.setState({
+          fixedStationSelect: e.target.value
+        })
+
+        console.log('e.target.value', e.target.value);
+    }
+
     render(){
         
         const showHideClassName = this.props.show ? "modal display-block" : "modal display-none";
@@ -78,6 +87,10 @@ class Modal extends Component {
                 <p>You are mounting a graph.  You can select wether to tie the graph data to the selected station or a partiuclar station.  If going with a selected station clicking new stations on the map will update your graph.  
                     Next, Select the time interval to graph your chosen data set.</p>
                     <form onSubmit={this.handleSubmit}>
+                        <label for="fixedStation">Fixed Station</label>
+                        <input checked={'fixedStation' === this.state.fixedStationSelect}type="radio" value="fixedStation" id="fixedStation" onChange={this.handleStationSelectChange} name="fixedStation" />
+                        <label for="selectedStation">Selected Station</label>
+                        <input checked={'selectedStation' === this.state.fixedStationSelect} type="radio" value="selectedStation" id="selectedStation" onChange={this.handleStationSelectChange} name="selectedStation"/>
                         <label for="selectObservationType">Observation Type</label>
                         <select name="selectObservationType" value={this.state.observationType} onChange={this.handleObservationTypeChange}>
                             <option value="604800000">Snow Depth</option>

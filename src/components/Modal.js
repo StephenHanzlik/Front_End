@@ -10,7 +10,7 @@ const Row = styled.div`
 const Column = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: right;
 `;
 
 class Modal extends Component {
@@ -30,6 +30,7 @@ class Modal extends Component {
         this.handleAbsoluteStartChange = this.handleAbsoluteStartChange.bind(this);
         this.handleAbsoluteEndChange = this.handleAbsoluteEndChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleTimeSelectChange = this.handleTimeSelectChange.bind(this);
     }
 
     handleRelativeTimeChange(event) { 
@@ -70,6 +71,12 @@ class Modal extends Component {
         console.log('e.target.value', e.target.value);
     }
 
+    handleTimeSelectChange(e) {
+        this.setState({
+            timeToGraphSelect: e.target.value
+        })
+    }
+
     render(){
         
         const showHideClassName = this.props.show ? "modal display-block" : "modal display-none";
@@ -91,31 +98,52 @@ class Modal extends Component {
                                 </Row>
                             </Column>
                             <input type="text" value={"Lake Eldora"} name="selectedStationtoGraph"/> 
+                        {/* </Row>
+                        <Row> */}
+                            <Column>
+                                <Row>
+                                    <label for="relativeTime">Relative Time</label>
+                                    <input checked={'relativeTime' === this.state.timeToGraphSelect}type="radio" value="relativeTime" id="relativeTime" onChange={this.handleTimeSelectChange} name="relavtiveTime"/>
+                                </Row>
+                                <Row>
+                                    <label for="absoluteTime">Absolute Time</label>
+                                    <input checked={'absoluteTime' === this.state.timeToGraphSelect}type="radio" value="absoluteTime" id="absoluteTime" onChange={this.handleTimeSelectChange} name="absoluteTime"/>   
+                                </Row>
+                            </Column>
+                            <Column>
+                                <Row>
+                                    <label for="selectStartDate">Start Date:</label>
+                                    <input type="text" onChange={this.handleAbsoluteStartChange} value={this.state.startDate} name="selectStartDate"/>
+                                </Row>
+                            </Column>
+                            <Column>
+                                <Row>
+                                    <label for="selectEndDate">End Date:</label>
+                                    <input type="text" onChange={this.handleAbsoluteEndChange} value={this.state.endDate} name="selectEndDate"/>
+                                </Row>
+                            </Column>
+                            <Column>
+                                <select name="selectRelativeTimeInterval" value={this.state.relativeTime} onChange={this.handleRelativeTimeChange}>
+                                    <option value="604800000">7 days</option>
+                                    <option value="2592000000">30 days</option>
+                                    <option value="5184000000">60 days</option>
+                                    <option value="7776000000">90 days</option>
+                                    <option value="31536000000">365 days</option>
+                                </select>
+                            </Column>
+                                <label for="selectObservationType">Observation Type</label>
+                                <select name="selectObservationType" value={this.state.observationType} onChange={this.handleObservationTypeChange}>
+                                    <option value="604800000">Snow Depth</option>
+                                    <option value="2592000000">Snow Depth Δ</option>
+                                    <option value="5184000000">Snow Water Equivalent</option>
+                                    <option value="7776000000">Snow Water Equivalent Δ</option>
+                                    <option value="31536000000">Air Temperature Observed</option>
+                                    <option value="31536000000">Air Temperature Average</option>
+                                    <option value="31536000000">Air Temperature Min</option>
+                                    <option value="31536000000">Air Temperature Min</option>
+                                </select>
+                                <input type="submit" value="Build Graph" />
                         </Row>
-                        <label for="selectObservationType">Observation Type</label>
-                        <select name="selectObservationType" value={this.state.observationType} onChange={this.handleObservationTypeChange}>
-                            <option value="604800000">Snow Depth</option>
-                            <option value="2592000000">Snow Depth Δ</option>
-                            <option value="5184000000">Snow Water Equivalent</option>
-                            <option value="7776000000">Snow Water Equivalent Δ</option>
-                            <option value="31536000000">Air Temperature Observed</option>
-                            <option value="31536000000">Air Temperature Average</option>
-                            <option value="31536000000">Air Temperature Min</option>
-                            <option value="31536000000">Air Temperature Min</option>
-                        </select>
-                        <label for="selectRelativeTimeInterval">Relative</label>
-                        <select name="selectRelativeTimeInterval" value={this.state.relativeTime} onChange={this.handleRelativeTimeChange}>
-                            <option value="604800000">7 days</option>
-                            <option value="2592000000">30 days</option>
-                            <option value="5184000000">60 days</option>
-                            <option value="7776000000">90 days</option>
-                            <option value="31536000000">365 days</option>
-                        </select>
-                        <label for="selectStartDate">Start Date:</label>
-                        <input type="text" onChange={this.handleAbsoluteStartChange} value={this.state.startDate} name="selectStartDate"/>
-                        <label for="selectEndDate">End Date:</label>
-                        <input type="text" onChange={this.handleAbsoluteEndChange} value={this.state.endDate} name="selectEndDate"/>
-                        <input type="submit" value="Build Graph" />
                     </form>
                 <button onClick={() => this.props.closeModal()}>Cancel</button>
           </div>

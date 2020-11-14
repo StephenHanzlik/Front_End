@@ -1,25 +1,17 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom';
 
-
-const LargeButton = styled.button`
-  color: #ffb74d;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid #ffb74d;
-  border-radius: 3px;
-  background: none;
+const Row = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 `;
 
-const SmallButton = styled.button`
-  color: #ffb74d;
-  font-size: 1em;
-  padding: 0.3em 0.3em;
-  border: 2px solid #ffb74d;
-  border-radius: 3px;
-`
+const Column = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`;
 
 class Modal extends Component {
 
@@ -30,7 +22,7 @@ class Modal extends Component {
             observationType: 'snowDepth',
             startDate: Date.now() - 604800000,
             endDate: Date.now(),
-            fixedStationSelect: false
+            stationToGraphSelect: false
         }
 
         this.handleObservationTypeChange = this.handleObservationTypeChange.bind(this);
@@ -72,7 +64,7 @@ class Modal extends Component {
 
     handleStationSelectChange=(e)=>{
         this.setState({
-          fixedStationSelect: e.target.value
+            stationToGraphSelect: e.target.value
         })
 
         console.log('e.target.value', e.target.value);
@@ -87,10 +79,19 @@ class Modal extends Component {
                 <p>You are mounting a graph.  You can select wether to tie the graph data to the selected station or a partiuclar station.  If going with a selected station clicking new stations on the map will update your graph.  
                     Next, Select the time interval to graph your chosen data set.</p>
                     <form onSubmit={this.handleSubmit}>
-                        <label for="fixedStation">Fixed Station</label>
-                        <input checked={'fixedStation' === this.state.fixedStationSelect}type="radio" value="fixedStation" id="fixedStation" onChange={this.handleStationSelectChange} name="fixedStation" />
-                        <label for="selectedStation">Selected Station</label>
-                        <input checked={'selectedStation' === this.state.fixedStationSelect} type="radio" value="selectedStation" id="selectedStation" onChange={this.handleStationSelectChange} name="selectedStation"/>
+                        <Row>
+                            <Column>
+                                <Row>
+                                    <label for="selectedStation">Selected Station</label>
+                                    <input checked={'fixedStation' === this.state.stationToGraphSelect}type="radio" value="fixedStation" id="fixedStation" onChange={this.handleStationSelectChange} name="fixedStation"/>
+                                </Row>
+                                <Row>
+                                    <label for="fixedStation">Fixed Station</label>
+                                    <input checked={'selectedStation' === this.state.stationToGraphSelect} type="radio" value="selectedStation" id="selectedStation" onChange={this.handleStationSelectChange} name="selectedStation"/>
+                                </Row>
+                            </Column>
+                            <input type="text" value={"Lake Eldora"} name="selectedStationtoGraph"/> 
+                        </Row>
                         <label for="selectObservationType">Observation Type</label>
                         <select name="selectObservationType" value={this.state.observationType} onChange={this.handleObservationTypeChange}>
                             <option value="604800000">Snow Depth</option>
@@ -114,7 +115,7 @@ class Modal extends Component {
                         <input type="text" onChange={this.handleAbsoluteStartChange} value={this.state.startDate} name="selectStartDate"/>
                         <label for="selectEndDate">End Date:</label>
                         <input type="text" onChange={this.handleAbsoluteEndChange} value={this.state.endDate} name="selectEndDate"/>
-                        <input type="submit" value="Submit" />
+                        <input type="submit" value="Build Graph" />
                     </form>
                 <button onClick={() => this.props.closeModal()}>Cancel</button>
           </div>

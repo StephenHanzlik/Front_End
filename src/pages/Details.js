@@ -94,11 +94,10 @@ class Details extends Component {
         axios.get(`/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
             .then(response => {
                 let observations = response.data;
-                console.log("getDefaultObservations - observations", observations);
                 this.setState({ 
                     observations: observations,
                     currentObservationIndex: observations.length - 1 
-                }, console.log("getDefaultObservations - this.state", this.state), this.buildDefaultGraphs(observations))
+                }, this.buildDefaultGraphs(observations))
             })
             .catch(error => console.log(error))
     }
@@ -110,10 +109,9 @@ class Details extends Component {
                 graphType: graphType,
                 observations: observations
             }
-            console.log("buildDefaultGraphs - graphItem", graphItem);
             return graphItem;
         })
-        this.setState({graphs: tempGraphs}, console.log("buildDefaultGraphs - this.state", this.state))
+        this.setState({graphs: tempGraphs})
     }
     // this.state.graphs.map(graph =>(
     //                         <Graph
@@ -266,7 +264,6 @@ class Details extends Component {
         if (observations) {
             currentObservation = observations[this.state.currentObservationIndex];
         }
-        console.log("render - this.state", this.state)
 
         return (
             <div>{
@@ -315,6 +312,7 @@ class Details extends Component {
                     <Modal 
                         show={this.state.showModal}
                         graphType={this.state.modalGraphType}
+                        stationName={this.state.stationName}
                         closeModal={this.closeModal}
                         getObservations={this.getObservations}
                     />

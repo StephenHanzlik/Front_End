@@ -20,8 +20,8 @@ class Modal extends Component {
         this.state = {
             relativeTime:   604800000,            
             observationType: 'snowDepth',
-            startDate: Date.now() - 604800000,
-            endDate: Date.now(),
+            startDate: '10/01/2018',//Date.now() - 604800000,
+            endDate: '6/01/2019',//Date.now(),
             stationToGraphSelect: 'fixedStation',
             timeToGraphSelect: 'absoluteTime',
             showTime: 'relative'

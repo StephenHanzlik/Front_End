@@ -252,7 +252,7 @@ class Details extends Component {
 
         const stationElevationStyle = {
             'margin-bottom': '-7px',
-            'margin-top': '-7px',
+            'margin-top': '-5px',
             'font-size': '25px'
         }
 
@@ -288,6 +288,7 @@ class Details extends Component {
                                 zoom={12}
                                 mapHeight={43}
                                 mapWidth={30}
+                                mapType={'details'}
                             />
                         </MapWrapper>
                         <DataWrapper>

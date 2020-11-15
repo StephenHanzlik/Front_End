@@ -55,16 +55,21 @@ class Map extends Component {
                         stationWind: marker.properties.wind.toString()
                     }, this.props.updateSelectedStation(marker.properties.triplet, marker.properties.title, marker.properties.elevation))
                 })
+
+                let markerHtml;
+                if(this.props.mapType === 'details'){
+                    markerHtml = `<p class='details-map-pop-style'>${marker.properties.title}</p><p class='details-map-pop-style'>${marker.properties.elevation}ft</p>`;
+                } else if(this.props.mapType === 'console'){
+                    markerHtml = `<p class='console-map-pop-style'>${marker.properties.title}</p><p class='console-map-pop-style'>${marker.properties.elevation}ft</p>
+                    <button onClick="window.location.href = '/details/${marker.properties.triplet}';">Details</button>`
+                }
                 //TODO: might need to attach a click event and use History.pushState() to mock what Link is doing
                 //so that we can maintain state and/or use redux and reduce API calls
                 let aMarker = new mapboxgl.Marker(el)
                     .setLngLat(marker.geometry.coordinates)
                     .setPopup(new mapboxgl.Popup({ offset: 25 })
-                        .setHTML(
-                            `<p class='map-pop-style'>${marker.properties.title}</p><p class='map-pop-style'>${marker.properties.elevation}ft</p>
-                        <button onClick="window.location.href = '/details/${marker.properties.triplet}';">Details</button>`
-                    ))
-                    .addTo(map) 
+                    .setHTML(markerHtml))
+                    .addTo(map);
 
                 markers.push(aMarker);
             });

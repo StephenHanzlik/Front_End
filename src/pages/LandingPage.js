@@ -59,6 +59,8 @@ const Row = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: ${ props => props.flexEnd ? "flex-end" : "flex-start" }; 
+    margin-left: 13%;
+    margin-right: 13%;
 `;
 
 const Column = styled.div`
@@ -150,8 +152,8 @@ class LandingPage extends Component {
 
     render(){
         const imgStyle = {
-            'height': '400px',
-            'width': '500px',
+            'height': '350px',
+            'width': '450px',
             'overflow': 'hidden'
         }
 

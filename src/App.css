@@ -209,3 +209,10 @@
 input::placeholder{
   text-align: right;
 }
+
+.map-pop-style{
+  font-size: 1.64rem;
+  line-height: 110%;
+  margin: .82rem 0 .656rem 0;
+  font-weight: 400;
+}

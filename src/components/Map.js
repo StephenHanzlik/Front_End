@@ -61,7 +61,7 @@ class Map extends Component {
                     .setLngLat(marker.geometry.coordinates)
                     .setPopup(new mapboxgl.Popup({ offset: 25 })
                         .setHTML(
-                            `<h5>${marker.properties.title}</h5><h5>${marker.properties.elevation}ft</h5>
+                            `<p class='map-pop-style'>${marker.properties.title}</p><p class='map-pop-style'>${marker.properties.elevation}ft</p>
                         <button onClick="window.location.href = '/details/${marker.properties.triplet}';">Details</button>`
                     ))
                     .addTo(map) 

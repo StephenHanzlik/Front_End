@@ -5,6 +5,7 @@ const Row = styled.div`
     display: flex;
     flex-direction: row !important;
     justify-content: center;
+    margin: 2px;
 `;
 
 class GraphableObservation extends Component {

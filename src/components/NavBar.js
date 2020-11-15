@@ -28,7 +28,8 @@ class NavBar extends Component {
         'color': '#ffb74d',
         'font-size': '20px',
         'padding': '0px 13px 0px 13px',
-        'font-weight': '500'
+        'font-weight': '500',
+        'text-decoration': 'none'
       }
         return (
             <Nav>

@@ -245,13 +245,14 @@ class Details extends Component {
     render() {
 
         const stationNameStyle = {
-            'margin': '0 0 0 0',
+            // 'margin': '0 0 0 0',
+            'margin': '10px',
             'font-size': '30px'
         }
 
         const stationElevationStyle = {
-            'margin-bottom': '-14px',
-            'margin-top': '-6px',
+            'margin-bottom': '-7px',
+            'margin-top': '-7px',
             'font-size': '25px'
         }
 

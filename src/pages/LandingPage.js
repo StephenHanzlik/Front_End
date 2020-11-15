@@ -9,14 +9,6 @@ import styled from 'styled-components';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
 
-//default static scroll
-import {animateScroll as scroll } from "react-scroll";
-
-//scroll to element attempt
-// import Scroll from 'react-scroll';
-// var Element  = Scroll.Element;
-// var scroller = Scroll.scroller;
-
 const Background = styled.div`
     background-image: url(${backGroundImg});
     background-size: 100%;
@@ -51,7 +43,9 @@ const ParagraphContainer = styled.div`
 `
 
 const PolaroidContainer = styled.div`
-    width: 32%;
+    // width: 32%;
+    width: 20em;
+    height: 20em;
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     margin-bottom: 25px;
@@ -64,6 +58,19 @@ const PolaroidDiscription = styled.div`
     text-align: center;
     padding: 10px 20px;
 `
+
+const Row = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+`;
+
+const Column = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+`;
+
 
 const Input = styled.input`
     padding: 0.5em;
@@ -112,17 +119,6 @@ class LandingPage extends Component {
 
     componentDidMount() {
         this.getStations();
-    }
-
-    scrollToAboutSection(){
-        scroll.scrollTo('550');
-        // scroller.scrollTo('myScrollToElement', {
-        //     duration: 1500,
-        //     delay: 100,
-        //     smooth: true,
-        //     containerId: 'ContainerElementID',  
-        //     offset: 50
-        // })
     }
 
     getStations() {
@@ -188,9 +184,6 @@ class LandingPage extends Component {
               <LandingHeader/>
                 <ButtonWrapper>
                     <Button text="Explore Stations →" link="/console" />
-                    {/* <div style={aboutButtonStyle} onClick={() => this.scrollToAboutSection()}>
-                        <Button text="About ↓" />
-                    </div> */}
                     <div>
                         <Input 
                             onChange={this.handleSearchChange} 
@@ -211,8 +204,27 @@ class LandingPage extends Component {
                 </ButtonWrapper>
             </LandingHeaderContainer>
             <AboutContentContainer name='aboutSection'>
-                {/* id='ContainerElementID' */}
-                {/* <Element name="myScrollToElement"></Element> */}
+                <Row>
+                    <Column>
+                        <h3 style={aboutHeaderStyle}>SNOTEL Stations</h3>
+                        <ParagraphContainer>
+                            <p style={paragraphStyle}>SNOTEL stations are automated snow and weather observation stations run by the Natural Resources Conservation Service (NRCS).  They are located in remote
+                            mountain areas and are powered by solar panels.  They are designed to operate unattended and without maintenance for a year.  The NRCS receives data
+                            from the stations via meteor burst communications technology to collect data in near real time.  Meteor burst technology effectivly bounces VHF radio signals
+                            off an ever-present band of iononized meteors 50 to 70 miles above the earths surface.  Because of this the entire system does not use any satellites.</p>
+                        </ParagraphContainer>
+                    </Column>
+                    <Column>
+                        <PolaroidContainer>
+                            <img src={meteorBurst} alt='meteorBurst' style={imgStyle}/>
+                            <PolaroidDiscription>
+                            <p>Meteor burst technology</p>
+                            </PolaroidDiscription>
+                        </PolaroidContainer>
+                    </Column>
+
+                    
+                </Row>
                 <h3 style={aboutHeaderStyle}>SNOTEL Stations</h3>
                 <ParagraphContainer>
                     <p style={paragraphStyle}>SNOTEL stations are automated snow and weather observation stations run by the Natural Resources Conservation Service (NRCS).  They are located in remote

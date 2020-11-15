@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import Graph from '../components/Graph';
 
 const Row = styled.div`
     display: flex;
@@ -18,10 +19,10 @@ class Modal extends Component {
     constructor(props){
         super(props);
         this.state = {
-            relativeTime:   604800000,            
+            relativeTime: "", //604800000,            
             observationType: 'snowDepth',
-            startDate: '10/01/2018',//Date.now() - 604800000,
-            endDate: '6/01/2019',//Date.now(),
+            startDate: undefined,//'10/01/2018',//Date.now() - 604800000,
+            endDate: undefined,//'6/01/2019',//Date.now(),
             stationToGraphSelect: 'fixedStation',
             timeToGraphSelect: 'absoluteTime',
             showTime: 'relative'
@@ -37,11 +38,9 @@ class Modal extends Component {
     }
 
     handleRelativeTimeChange(event) { 
+        //event.target.value
+        //to timestamp date
         this.setState({relativeTime: event.target.value})
-    }
-
-    handleObservationTypeChange(event) { 
-        this.setState({observationType: event.target.value})
     }
 
     handleAbsoluteStartChange(event) { 
@@ -52,11 +51,17 @@ class Modal extends Component {
         this.setState({endDate: event.target.value})
     }
 
+    handleObservationTypeChange(event) { 
+        this.setState({observationType: event.target.value})
+    }
+
     handleSubmit(event) {
-        console.log('this.state', this.state)
+        console.log('Modal - this.state', this.state)
+        // let startDate = new Date(epochStart).toJSON().slice(0, 10);
+
         event.preventDefault();
-        this.props.closeModal();
-        this.props.getObservations(this.state.observationType, this.state.startDate, this.state.endDate, this.state.relativeTime);
+        // this.props.closeModal();//this.state.observationType, 
+        this.props.getObservations(this.state.startDate, this.state.endDate ? this.state.endDate : this.state.relativeTime);
     }
 
     handleStationSelectChange(e) {
@@ -85,8 +90,8 @@ class Modal extends Component {
 
         return (
             <div className={showModalClassName}>
-                <p>You are mounting a graph.  You can select whether to tie the graph to the selected station (dynamic) or a partiuclar station (fixed).  If going with a dynamic station clicking new stations on the map will update your graph accordingly.  
-                    Next, select the observation type you want to graph (Snow Depth, Air Temperature Min, etc).  Finally, select the time interval for your chosen data set.  Relative time is a set interval from today and absolute time is an interval between two epxlicitly chosen dates.</p>
+                <p>You are mounting a graph.  You can select whether to tie the graph to the station selected on the map (dynamic) or a partiuclar station (fixed).  If going with a dynamic station clicking new stations on the map will update your graph accordingly.  
+                    Next, select the observation type you want to graph (Snow Depth, Air Temperature Min, etc).  Finally, select the time interval for your chosen data set.  Relative time is a set interval from today and absolute time is an interval between two explicitly chosen dates.</p>
                     <form onSubmit={this.handleSubmit}>
                         <Row>
                             <Column>
@@ -138,19 +143,25 @@ class Modal extends Component {
                             <Column>
                                 <Row>
                                     <label className={showAbsoluteTimeClassName} for="selectStartDate">From:</label>
-                                    <input className={showAbsoluteTimeClassName} type="text" onChange={this.handleAbsoluteStartChange} value={this.state.startDate} name="selectStartDate"/>
+                                    <input className={showAbsoluteTimeClassName} type="text" onChange={this.handleAbsoluteStartChange} value={this.state.startDate} placeholder={"10/01/2019"} name="selectStartDate"/>
                                 </Row>
                             </Column>
                             <Column>
                                 <Row>
                                     <label className={showAbsoluteTimeClassName} for="selectEndDate">To:</label>
-                                    <input className={showAbsoluteTimeClassName} type="text" onChange={this.handleAbsoluteEndChange} value={this.state.endDate} name="selectEndDate"/>
+                                    <input className={showAbsoluteTimeClassName} type="text" onChange={this.handleAbsoluteEndChange} value={this.state.endDate} placeholder={"06/01/2020"} name="selectEndDate"/>
                                 </Row>
                             </Column>
                         </Row>
                         <input type="submit" value="Build Graph" />
                     </form>
                 <button onClick={() => this.props.closeModal()}>Cancel</button>
+                {this.props.observations &&
+                <Graph
+                    graphType={this.state.observationType}
+                    observations={this.props.observations}
+                />  
+                }
           </div>
         )
     }

@@ -58,7 +58,7 @@ class Details extends Component {
             graphs: [],
             startDate: "",
             endDate: "",
-            relativeTime: 5184000000,//60 days
+            defaultRelativeTime: 5184000000,//60 days
             showModal: false
         };
         this.toggleGraph = this.toggleGraph.bind(this);
@@ -85,7 +85,7 @@ class Details extends Component {
 
     getDefaultObservations(triplet) {
         let endDate = Date.now();
-        let startDate = endDate - this.state.relativeTime;//60 days
+        let startDate = endDate - this.state.defaultRelativeTime;//60 days
         
         //format the dates for the query params
         endDate = new Date(endDate).toJSON().slice(0, 10)
@@ -103,7 +103,7 @@ class Details extends Component {
     }
 
     buildDefaultGraphs(observations){
-        let defaultGraphs = ['snowDepth', 'airTemperatureMin', 'airTemperatureMin'];
+        let defaultGraphs = ['snowDepth'];
         let tempGraphs = defaultGraphs.map((graphType)=>{
             let graphItem = {
                 graphType: graphType,
@@ -152,14 +152,21 @@ class Details extends Component {
             .catch(error => console.log(error))
     }
 
-    getObservations(triplet = this.state.stationTriplet, startDate, endDate = Date.now()) {
-        if(!startDate) startDate = endDate - this.state.relativeTime
+    getObservations(epochStart, epochEnd = Date.now(), triplet = this.state.stationTriplet) {
+        console.log('Details - this.state', this.state);
+        console.log('Details - epochStart', epochStart);
+        console.log('Details - epochEnd', epochEnd);
+        console.log('Details - triplet', triplet);
 
-        endDate = new Date(endDate).toJSON().slice(0, 10)
-        startDate = new Date(startDate).toJSON().slice(0, 10)
-    
+        if(!epochStart) epochStart = epochEnd - this.state.defaultRelativeTime;
+
+        let startDate = new Date(epochStart).toJSON().slice(0, 10);
+        let endDate = new Date(epochEnd).toJSON().slice(0, 10);
+        
+        console.log('Details - url', `/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`);
         axios.get(`/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
             .then(response => {
+                console.log('Details - response.data', response.data);
                 this.setState({
                     observations: response.data,
                     currentObservationIndex: response.data.length - 1
@@ -309,13 +316,16 @@ class Details extends Component {
                                 </div>
                         </DataWrapper>
                     </DisplayRow>
-                    <Modal 
-                        show={this.state.showModal}
-                        graphType={this.state.modalGraphType}
-                        stationName={this.state.stationName}
-                        closeModal={this.closeModal}
-                        getObservations={this.getObservations}
-                    />
+                    <Row>
+                        <Modal 
+                            show={this.state.showModal}
+                            graphType={this.state.modalGraphType}
+                            stationName={this.state.stationName}
+                            closeModal={this.closeModal}
+                            getObservations={this.getObservations}
+                            observations={this.state.observations}
+                        />
+                    </Row>
                     <div id="grayout" style={showGrayedBackground}></div>
                     <GraphRow>
                         {this.state.graphs &&

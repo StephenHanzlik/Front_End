@@ -332,7 +332,7 @@ class Details extends Component {
                         this.state.graphs.map(graph =>(
                             <Graph
                                 graphType={graph.graphType}
-                                observations={graph.observations}
+                                observations={this.state.observations}
                             />  
                         ))
                         }

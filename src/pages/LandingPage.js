@@ -246,7 +246,7 @@ class LandingPage extends Component {
                     <Column>
                     <h3 style={aboutHeaderStyle}>Support</h3>
                     <ParagraphContainer>
-                        <p style={paragraphStyle}>To check out the code base please visit the starred repositories at github.com/StephenHanzlik.  While we serve as an API gateway to the NCIS, the sation data was manually compiled and does not come dynically from SNOTEl.  If you see a missing station you would like me to add please reach out at stephenhanzlik@gmail.com.
+                        <p style={paragraphStyle}>To check out the code base please visit the starred repositories at github.com/StephenHanzlik.  While Mountain Snowpack serves as an API gateway to the NCIS, the sation data was manually compiled is not retrieved dynamically from the NCIS.  If you see a missing station you would like me to add please reach out at stephenhanzlik@gmail.com.
                         Any and all input would be greatly appreciated.  This app was inspired by Bobby and Maura Marko's work at powderlin.es.  The mountain landscape at the top of this page is from Micah Hallan at unsplash.com/@micah_hallahan.  The ski and poles icon is created by
                         Nurtac Suleymanzade at 123rf.com/profile_nurmusa. Stay safe out there! 
                         </p>

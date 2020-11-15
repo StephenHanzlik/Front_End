@@ -34,7 +34,7 @@ const PolaroidContainer = styled.div`
 `
 const PolaroidDiscription = styled.div`
     text-align: justify;
-    padding: 7px 20px;
+    padding: 7px 20px 13px;
 `
 
 class Console extends Component {

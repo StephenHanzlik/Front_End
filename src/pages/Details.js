@@ -38,8 +38,10 @@ const Row = styled.div`
 const GraphRow = styled.div`
     margin-top: 30px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    // align-items: center;
+    justify-content: center;
+    display: ${ props => props.showGraph ? 'none' : 'inline-block' };
 `
 
 class Details extends Component {
@@ -59,7 +61,8 @@ class Details extends Component {
             startDate: "",
             endDate: "",
             defaultRelativeTime: 5184000000,//60 days
-            showModal: false
+            showModal: false,
+            callMade: false
         };
         this.toggleGraph = this.toggleGraph.bind(this);
         this.openModal = this.openModal.bind(this);
@@ -153,22 +156,21 @@ class Details extends Component {
     }
 
     getObservations(epochStart, epochEnd = Date.now(), triplet = this.state.stationTriplet) {
-        console.log('Details - this.state', this.state);
-        console.log('Details - epochStart', epochStart);
-        console.log('Details - epochEnd', epochEnd);
-        console.log('Details - triplet', triplet);
-
         if(!epochStart) epochStart = epochEnd - this.state.defaultRelativeTime;
 
         let startDate = new Date(epochStart).toJSON().slice(0, 10);
         let endDate = new Date(epochEnd).toJSON().slice(0, 10);
+
+        this.setState({
+            callMade: true
+        });
         
-        console.log('Details - url', `/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`);
         axios.get(`/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
             .then(response => {
                 console.log('Details - response.data', response.data);
                 this.setState({
                     observations: response.data,
+                    callMade: false,
                     currentObservationIndex: response.data.length - 1
                 })
             })
@@ -262,6 +264,7 @@ class Details extends Component {
         }
 
         const showGrayedBackground = this.state.showModal ? {display: "block"} : {display: "none"};
+        const showLoadingRoller = this.state.callMade ? {display: "block", width: '1200px', 'margin-top': '110px', 'margin-right': 'auto', 'margin-left': 'auto'} : {display: "none"};
 
         const graphTypes = ['snowDepth', 'changeInSnowDepth', 'snowWaterEquivalent', 'changeInSnowWaterEquivalent', 
             'airTemperatureObserved', 'airTemperatureAverage', 'airTemperatureMin', 'airTemperatureMax'];
@@ -329,7 +332,7 @@ class Details extends Component {
                         />
                     </Row>
                     <div id="grayout" style={showGrayedBackground}></div>
-                    <GraphRow>
+                    <GraphRow showGraph={this.state.callMade}>
                         {this.state.graphs &&
                         this.state.graphs.map(graph =>(
                             <Graph
@@ -339,7 +342,9 @@ class Details extends Component {
                         ))
                         }
                     </GraphRow>
-                    
+                    <div style={showLoadingRoller}>
+                        <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                    </div>
                 </div>
             }</div>
         )

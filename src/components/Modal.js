@@ -109,14 +109,14 @@ class Modal extends Component {
                             <input style={stationSelectedStyle} className={showDynamicStationSelect} type="text" value={"Graph Changes w/ Map"} name="dynamicStationtoGraph"/>  
                             <label className={"label-font-size"} for="selectObservationType">Observation Type</label>
                             <select name="selectObservationType" style={selectObservationTypeStyle} value={this.state.observationType} onChange={this.handleObservationTypeChange}>
-                                <option value="604800000">Snow Depth</option>
-                                <option value="2592000000">Snow Depth Δ</option>
-                                <option value="5184000000">Snow Water Equivalent</option>
-                                <option value="7776000000">Snow Water Equivalent Δ</option>
-                                <option value="31536000000">Air Temperature Observed</option>
-                                <option value="31536000000">Air Temperature Average</option>
-                                <option value="31536000000">Air Temperature Min</option>
-                                <option value="31536000000">Air Temperature Max</option>
+                                <option value="snowDepth">Snow Depth</option>
+                                <option value="changeInSnowDepth">Snow Depth Δ</option>
+                                <option value="snowWaterEquivalent">Snow Water Equivalent</option>
+                                <option value="changeInSnowWaterEquivalent">Snow Water Equivalent Δ</option>
+                                <option value="airTemperatureObserved">Air Temperature Observed</option>
+                                <option value="airTemperatureAverage">Air Temperature Average</option>
+                                <option value="airTemperatureMax">Air Temperature Min</option>
+                                <option value="airTemperatureMin">Air Temperature Max</option>
                             </select>
                             <Column>
                                 <Row>
@@ -156,12 +156,12 @@ class Modal extends Component {
                         <input type="submit" value="Build Graph" />
                     </form>
                 <button onClick={() => this.props.closeModal()}>Cancel</button>
-                {this.props.observations &&
-                <Graph
-                    graphType={this.state.observationType}
-                    observations={this.props.observations}
-                />  
-                }
+                    {this.props.observations &&
+                    <Graph
+                        graphType={this.state.observationType}
+                        observations={this.props.observations}
+                    />  
+                    }
           </div>
         )
     }

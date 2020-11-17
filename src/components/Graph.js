@@ -102,6 +102,7 @@ class Graph extends Component {
         return (
             <GraphWrapper>
                 {console.log("Graph - props.observations", this.props.observations)}
+                {console.log("Graph - props.graphType", this.props.graphType)}
                 {!this.props.observations ?
                     <h3>Select a Station</h3>
                     :

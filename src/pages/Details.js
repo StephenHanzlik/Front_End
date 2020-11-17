@@ -94,6 +94,8 @@ class Details extends Component {
         endDate = new Date(endDate).toJSON().slice(0, 10)
         startDate = new Date(startDate).toJSON().slice(0, 10)
         
+        console.log('Details - getDefaultObservations', `/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
+
         axios.get(`/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
             .then(response => {
                 let observations = response.data;
@@ -164,7 +166,9 @@ class Details extends Component {
         this.setState({
             callMade: true
         });
-        
+
+        console.log('Details - getObservations', `/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
+
         axios.get(`/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
             .then(response => {
                 console.log('Details - response.data', response.data);

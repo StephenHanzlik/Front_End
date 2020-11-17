@@ -19,12 +19,12 @@ class Modal extends Component {
     constructor(props){
         super(props);
         this.state = {
-            relativeTime: "", //604800000,            
+            relativeTimeInterval: undefined, //604800000,            
             observationType: 'snowDepth',
             startDate: undefined,//'10/01/2018',//Date.now() - 604800000,
             endDate: undefined,//'6/01/2019',//Date.now(),
             stationToGraphSelect: 'fixedStation',
-            timeToGraphSelect: 'absoluteTime',
+            timeToGraphSelect: 'relativeTime',
             showTime: 'relative'
         }
 
@@ -38,9 +38,10 @@ class Modal extends Component {
     }
 
     handleRelativeTimeChange(event) { 
-        //event.target.value
-        //to timestamp date
-        this.setState({relativeTime: event.target.value})
+        let relativeTimeInterval = event.target.value;
+        this.setState({
+            relativeTimeInterval: relativeTimeInterval
+        }, this.props.getObservations(Date.now() - relativeTimeInterval))
     }
 
     handleAbsoluteStartChange(event) { 
@@ -61,7 +62,7 @@ class Modal extends Component {
 
         event.preventDefault();
         // this.props.closeModal();//this.state.observationType, 
-        this.props.getObservations(this.state.startDate, this.state.endDate ? this.state.endDate : this.state.relativeTime);
+        this.props.getObservations(this.state.startDate, this.state.endDate ? this.state.endDate : this.state.relativeTimeInterval);
     }
 
     handleStationSelectChange(e) {
@@ -69,7 +70,19 @@ class Modal extends Component {
     }
 
     handleTimeSelectChange(e) {
-        this.setState({timeToGraphSelect: e.target.value})
+        let timeIntervalType = e.target.value;
+        if(timeIntervalType === 'relativeTime'){
+            this.setState({
+                timeToGraphSelect: timeIntervalType,
+                startDate: undefined,
+                endDate: undefined
+            })
+        }else{
+            this.setState({
+                timeToGraphSelect: timeIntervalType,
+                relativeTimeInterval: undefined 
+            })
+        }
     }
 
     render(){
@@ -131,7 +144,7 @@ class Modal extends Component {
                             <Column>
                                 <Row>
                                     <label className={showRelativeTimeClassName} for="selectRelativeTimeInterval">From now:</label>
-                                    <select className={showRelativeTimeClassName} name="selectRelativeTimeInterval" value={this.state.relativeTime} onChange={this.handleRelativeTimeChange}>
+                                    <select className={showRelativeTimeClassName} name="selectRelativeTimeInterval" value={this.state.relativeTimeInterval} onChange={this.handleRelativeTimeChange}>
                                         <option value="604800000">7 days</option>
                                         <option value="2592000000">30 days</option>
                                         <option value="5184000000">60 days</option>

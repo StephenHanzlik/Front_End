@@ -8,6 +8,8 @@ import ObservationDataPoint from '../classes/ObservationDataPoint';
 const GraphWrapper = styled.div`
     width: 1200px;
     height: 30vh;
+    // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    // border-radius: 5px;
 `;
 
 class Graph extends Component {
@@ -101,8 +103,7 @@ class Graph extends Component {
     render() {
         return (
             <GraphWrapper>
-                {console.log("Graph - props.observations", this.props.observations)}
-                {console.log("Graph - props.graphType", this.props.graphType)}
+                {/* {console.log("Graph - props.observations", this.props.observations)} */}
                 {!this.props.observations ?
                     <h3>Select a Station</h3>
                     :

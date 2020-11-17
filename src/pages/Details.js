@@ -186,7 +186,7 @@ class Details extends Component {
                 stationName: name,
                 stationElevation: elevation,
                 stationTriplet: triplet 
-            }, this.getObservations())
+            }, this.getObservations(Date.now() - this.state.defaultRelativeTime, Date.now(), triplet))
     }
 
     convertToGeoJson(stations) {

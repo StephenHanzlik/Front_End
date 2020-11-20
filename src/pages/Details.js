@@ -61,8 +61,9 @@ class Details extends Component {
             startDate: "",
             endDate: "",
             defaultRelativeTime: 5184000000,//60 days
-            showModal: false,
-            callMade: false
+            showModal: true,
+            callMade: false,
+            stations: undefined
         };
         this.toggleGraph = this.toggleGraph.bind(this);
         this.openModal = this.openModal.bind(this);
@@ -151,7 +152,8 @@ class Details extends Component {
             .then(response => {
                 let stationGeoJson = this.convertToGeoJson(response.data);
                 this.setState({
-                    geoJson: stationGeoJson
+                    geoJson: stationGeoJson,
+                    stations: response.data
                 })
             })
             .catch(error => console.log(error))
@@ -267,6 +269,17 @@ class Details extends Component {
             'font-size': '20px'
         }
 
+        const buttonStyle = {
+            'color': '#ffb74d',
+            'font-size': '1em',
+            'margin': '1em',
+            'padding': '0.36em 1em',
+            'border': '2px solid #ffb74d',
+            'border-radius': '3px',
+            'background': 'none',
+            'cursor': 'pointer'
+        }
+
         const showGrayedBackground = this.state.showModal ? {display: "block"} : {display: "none"};
         const showLoadingRoller = this.state.callMade ? {display: "block", width: '1200px', 'margin-top': '110px', 'margin-right': 'auto', 'margin-left': 'auto'} : {display: "none"};
 
@@ -320,12 +333,14 @@ class Details extends Component {
                                         graphs={this.state.graphs}
                                     />
                                 ))}
+                                {/* <div style={buttonStyle} onClick={()=>this.openModal()}>Add a graph +</div> */}
                                 <div onClick={()=>this.openModal()}>
                                     <Button size={"large"}  selected={true} text={"Add a graph +"}/>
                                 </div>
                         </DataWrapper>
                     </DisplayRow>
                     <Row>
+                        {this.state.stations &&
                         <Modal 
                             show={this.state.showModal}
                             graphType={this.state.modalGraphType}
@@ -333,7 +348,9 @@ class Details extends Component {
                             closeModal={this.closeModal}
                             getObservations={this.getObservations}
                             observations={this.state.observations}
+                            stations={this.state.stations}
                         />
+                        }
                     </Row>
                     <div id="grayout" style={showGrayedBackground}></div>
                     <GraphRow showGraph={this.state.callMade}>

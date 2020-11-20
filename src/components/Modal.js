@@ -14,6 +14,27 @@ const Column = styled.div`
     justify-content: right;
 `;
 
+const Ul = styled.ul`
+    // list-style-type: none;
+    // display: ${ props => props.textEntered ? "block" : "none" }; 
+    // background: ${ props => props.textEntered ? "rgba(255,239,213,0.6)" : "none" }; 
+    background: white;
+    display: none;
+    height: 100%;
+    width: 100%;
+    margin-top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding-left: 2%;
+    padding-right: 2%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 26vh;
+    cursor: pointer;
+    z-index: 999;
+`
+
 class Modal extends Component {
 
     constructor(props){
@@ -23,8 +44,10 @@ class Modal extends Component {
             observationType: 'snowDepth',
             startDate: undefined,//'10/01/2018',//Date.now() - 604800000,
             endDate: undefined,//'6/01/2019',//Date.now(),
-            stationToGraphSelect: 'fixedStation',
+            stationTypeToGraphSelect: 'fixedStation',
+            stationToGraphSelect: undefined,
             timeToGraphSelect: 'relativeTime',
+            searchText: '',
             showTime: 'relative'
         }
 
@@ -34,7 +57,8 @@ class Modal extends Component {
         this.handleAbsoluteEndChange = this.handleAbsoluteEndChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTimeSelectChange = this.handleTimeSelectChange.bind(this);
-        this.handleStationSelectChange = this.handleStationSelectChange.bind(this);
+        this.handleStationTypeToGraphChange = this.handleStationTypeToGraphChange.bind(this);
+        this.handleStationToGraphChange = this.handleStationToGraphChange.bind(this);
     }
 
     handleRelativeTimeChange(event) { 
@@ -57,7 +81,7 @@ class Modal extends Component {
     }
 
     handleSubmit(event) {
-        console.log('Modal - this.state', this.state)
+        console.log('Modal Form Submit - this.state', this.state)
         // let startDate = new Date(epochStart).toJSON().slice(0, 10);
 
         event.preventDefault();
@@ -65,7 +89,11 @@ class Modal extends Component {
         this.props.getObservations(this.state.startDate, this.state.endDate ? this.state.endDate : this.state.relativeTimeInterval);
     }
 
-    handleStationSelectChange(e) {
+    handleStationTypeToGraphChange(e) {
+        this.setState({stationTypeToGraphSelect: e.target.value})
+    }
+
+    handleStationToGraphChange(e) {
         this.setState({stationToGraphSelect: e.target.value})
     }
 
@@ -90,8 +118,8 @@ class Modal extends Component {
         const showModalClassName = this.props.show ? "modal display-block" : "modal display-none";
         const showAbsoluteTimeClassName = this.state.timeToGraphSelect ===  'absoluteTime' ? "display-block-label" : "display-greyed";
         const showRelativeTimeClassName = this.state.timeToGraphSelect ===  'relativeTime' ? "display-block-label" : "display-greyed";
-        const showFixedStationSelect = this.state.stationToGraphSelect ===  'fixedStation' ? "display-block-label" : "display-none";
-        const showDynamicStationSelect = this.state.stationToGraphSelect ===  'dynamicStation' ? "display-block-label display-greyed" : "display-none";
+        const showFixedStationSelect = this.state.stationTypeToGraphSelect ===  'fixedStation' ? "display-block-label" : "display-none";
+        const showDynamicStationSelect = this.state.stationTypeToGraphSelect ===  'dynamicStation' ? "display-block-label display-greyed" : "display-none";
 
         const stationSelectedStyle = {
             'max-height': '16px'
@@ -100,6 +128,10 @@ class Modal extends Component {
         const selectObservationTypeStyle = {
             'max-height': '22px'
         }
+
+        const stationsList = this.props.stations
+        .filter(station => station.name.includes(this.state.searchText.toUpperCase()))
+        .map((station, index) => <li key={index} id={station.triplet}>{station.name}</li>);
 
         return (
             <div className={showModalClassName}>
@@ -110,15 +142,30 @@ class Modal extends Component {
                             <Column>
                                 <Row>
                                     <label className={"label-font-size"} for="dynamicStation">Dynamic Station</label>
-                                    <input checked={'dynamicStation' === this.state.stationToGraphSelect} type="radio" value="dynamicStation" id="dynamicStation" onChange={this.handleStationSelectChange} name="dynamicStation"/>
+                                    <input checked={'dynamicStation' === this.state.stationTypeToGraphSelect} type="radio" value="dynamicStation" id="dynamicStation" onChange={this.handleStationTypeToGraphChange} name="dynamicStation"/>
                                 </Row>
                                 <Row>
                                     <label className={"label-font-size"} for="fixedStation">Fixed Station</label>
-                                    <input checked={'fixedStation' === this.state.stationToGraphSelect}type="radio" value="fixedStation" id="fixedStation" onChange={this.handleStationSelectChange} name="fixedStation"/>
+                                    <input checked={'fixedStation' === this.state.stationTypeToGraphSelect}type="radio" value="fixedStation" id="fixedStation" onChange={this.handleStationTypeToGraphChange} name="fixedStation"/>
 
                                 </Row>
                             </Column>
-                            <input style={stationSelectedStyle} className={showFixedStationSelect} type="text" value={this.props.stationName} name="dynamicStationtoGraph"/>
+                            <Column>
+                                <input 
+                                    style={stationSelectedStyle} 
+                                    className={showFixedStationSelect} 
+                                    type="text" 
+                                    placeholder={this.props.stationName} 
+                                    value={this.state.stationToGraphSelect}
+                                    onChange={this.handleStationToGraphChange} 
+                                    name="dynamicStationtoGraph"
+                                />
+                                {/* <Ul 
+                                    textEntered={this.state.searchPlaceHolder} 
+                                >
+                                    {stationsList}
+                                </Ul> */}
+                            </Column>
                             <input style={stationSelectedStyle} className={showDynamicStationSelect} type="text" value={"Graph Changes w/ Map"} name="dynamicStationtoGraph"/>  
                             <label className={"label-font-size"} for="selectObservationType">Observation Type</label>
                             <select name="selectObservationType" style={selectObservationTypeStyle} value={this.state.observationType} onChange={this.handleObservationTypeChange}>

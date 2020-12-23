@@ -61,7 +61,7 @@ class Details extends Component {
             startDate: "",
             endDate: "",
             defaultRelativeTime: 5184000000,//60 days
-            showModal: true,
+            showModal: false,
             callMade: false,
             stations: undefined
         };
@@ -160,7 +160,7 @@ class Details extends Component {
     }
 
     getObservations(epochStart, epochEnd = Date.now(), triplet = this.state.stationTriplet) {
-        if(!epochStart) epochStart = epochEnd - this.state.defaultRelativeTime;
+        // if(!epochStart) epochStart = epochEnd - this.state.defaultRelativeTime;
 
         let startDate = new Date(epochStart).toJSON().slice(0, 10);
         let endDate = new Date(epochEnd).toJSON().slice(0, 10);
@@ -237,6 +237,7 @@ class Details extends Component {
     }
 
     openModal(){
+        // alert("This feature is a work in progress.  Feel free to play around to see what is planned.  However, be aware that it isn't fully implimented and it will not behave as expected.")
         this.setState({ 
             showModal: true,
         });

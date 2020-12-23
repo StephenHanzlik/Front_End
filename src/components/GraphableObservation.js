@@ -77,6 +77,7 @@ class GraphableObservation extends Component {
 
         const currentObservation = this.props.currentObservation;
         const graphType = this.props.graphType;
+        console.log("Graph Type", graphType)
 
         return (
             <Row>

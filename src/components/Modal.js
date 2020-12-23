@@ -40,7 +40,7 @@ class Modal extends Component {
     constructor(props){
         super(props);
         this.state = {
-            relativeTimeInterval: undefined, //604800000,            
+            relativeTimeInterval: 31536000000, //604800000,            
             observationType: 'snowDepth',
             startDate: undefined,//'10/01/2018',//Date.now() - 604800000,
             endDate: undefined,//'6/01/2019',//Date.now(),
@@ -64,16 +64,24 @@ class Modal extends Component {
     handleRelativeTimeChange(event) { 
         let relativeTimeInterval = event.target.value;
         this.setState({
-            relativeTimeInterval: relativeTimeInterval
-        }, this.props.getObservations(Date.now() - relativeTimeInterval))
+            relativeTimeInterval: relativeTimeInterval,
+            startDate: undefined,
+            endDate: undefined
+        })
     }
 
     handleAbsoluteStartChange(event) { 
-        this.setState({startDate: event.target.value})
+        this.setState({
+            startDate: event.target.value,
+            relativeTimeInterval: undefined
+        })
     }
 
     handleAbsoluteEndChange(event) { 
-        this.setState({endDate: event.target.value})
+        this.setState({
+            endDate: event.target.value,
+            relativeTimeInterval: undefined
+        })
     }
 
     handleObservationTypeChange(event) { 
@@ -82,14 +90,24 @@ class Modal extends Component {
 
     handleSubmit(event) {
         console.log('Modal Form Submit - this.state', this.state)
+        //TODO: need validation to keep indivudual graphs under a year for performance reasons.
         // let startDate = new Date(epochStart).toJSON().slice(0, 10);
 
         event.preventDefault();
         // this.props.closeModal();//this.state.observationType, 
-        this.props.getObservations(this.state.startDate, this.state.endDate ? this.state.endDate : this.state.relativeTimeInterval);
+        let stationTriplet;
+        if(this.state.stationTypeToGraphSelect === 'fixedStation'){
+            stationTriplet = this.state.stationToGraphSelect;
+        }
+        if(this.state.relativeTimeInterval){
+            this.props.getObservations(Date.now() - this.state.relativeTimeInterval, Date.now(), stationTriplet)
+        }else{
+            this.props.getObservations(this.state.startDate, this.state.endDate, stationTriplet)
+        }
     }
 
     handleStationTypeToGraphChange(e) {
+        console.log("station select", e.target.value)
         this.setState({stationTypeToGraphSelect: e.target.value})
     }
 
@@ -129,9 +147,9 @@ class Modal extends Component {
             'max-height': '22px'
         }
 
-        const stationsList = this.props.stations
-        .filter(station => station.name.includes(this.state.searchText.toUpperCase()))
-        .map((station, index) => <li key={index} id={station.triplet}>{station.name}</li>);
+        // const stationsList = this.props.stations
+        // .filter(station => station.name.includes(this.state.searchText.toUpperCase()))
+        // .map((station, index) => <li key={index} id={station.triplet}>{station.name}</li>);
 
         return (
             <div className={showModalClassName}>
@@ -203,13 +221,13 @@ class Modal extends Component {
                             <Column>
                                 <Row>
                                     <label className={showAbsoluteTimeClassName} for="selectStartDate">From:</label>
-                                    <input className={showAbsoluteTimeClassName} type="text" onChange={this.handleAbsoluteStartChange} value={this.state.startDate} placeholder={"10/01/2019"} name="selectStartDate"/>
+                                    <input className={showAbsoluteTimeClassName} type="text" onChange={this.handleAbsoluteStartChange} value={this.state.startDate} placeholder={new Date(Date.now() - 31536000000).toJSON().slice(0, 10)} name="selectStartDate"/>
                                 </Row>
                             </Column>
                             <Column>
                                 <Row>
                                     <label className={showAbsoluteTimeClassName} for="selectEndDate">To:</label>
-                                    <input className={showAbsoluteTimeClassName} type="text" onChange={this.handleAbsoluteEndChange} value={this.state.endDate} placeholder={"06/01/2020"} name="selectEndDate"/>
+                                    <input className={showAbsoluteTimeClassName} type="text" onChange={this.handleAbsoluteEndChange} value={this.state.endDate} placeholder={new Date(Date.now()).toJSON().slice(0, 10)} name="selectEndDate"/>
                                 </Row>
                             </Column>
                         </Row>
@@ -217,10 +235,12 @@ class Modal extends Component {
                     </form>
                 <button onClick={() => this.props.closeModal()}>Cancel</button>
                     {this.props.observations &&
-                    <Graph
-                        graphType={this.state.observationType}
-                        observations={this.props.observations}
-                    />  
+                    <Row>
+                        <Graph
+                            graphType={this.state.observationType}
+                            observations={this.props.observations}
+                        />  
+                    </Row>  
                     }
           </div>
         )

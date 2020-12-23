@@ -206,6 +206,11 @@
   z-index: 9998;
 }
 
+#comingsoon {
+  z-index: 9999;
+  color: antiquewhite;
+}
+
 input::placeholder{
   text-align: right;
 }

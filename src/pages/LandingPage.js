@@ -125,6 +125,7 @@ class LandingPage extends Component {
         axios.get('/api/snotel/stations')
             .then(response => {
                 let tempStations = response.data;
+                console.log("Landing Page - GET Stations Response", tempStations);
                 this.setState({
                     stations: tempStations
                 })
@@ -168,13 +169,17 @@ class LandingPage extends Component {
 
         const aboutHeaderStyle = {
             'font-size': '1.3rem',
-            'font-weight': '600',
+            'font-weight': '600',  
             'margin-bottom': '0px'
         }
+
+        console.log("Landing Page - this.state.stations", this.state.stations);
 
         const stationsList = this.state.stations
         .filter(station => station.name.includes(this.state.searchText.toUpperCase()))
         .map((station, index) => <li key={index} id={station.triplet}>{station.name}</li>);
+
+        console.log("Landing Page - filtered stations", stationsList);
 
         return(
             // onClick={(ev)=>this.handleInputDeselect(ev)}
@@ -258,7 +263,7 @@ class LandingPage extends Component {
                     <PolaroidContainer>
                             <img src={dragonstailDan} alt='dragsonstailDan' style={imgStyle}/>
                             <PolaroidDiscription>
-                                <p>Danielle Faller ascends the Dragonstail Couloir</p>
+                                <p>High above the BEAR LAKE station</p>
                             </PolaroidDiscription>
                         </PolaroidContainer>
                     </Column>

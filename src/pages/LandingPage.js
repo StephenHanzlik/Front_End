@@ -193,7 +193,8 @@ class LandingPage extends Component {
                         <Input 
                             onChange={this.handleSearchChange} 
                             onSelect={this.handleSearchChange} 
-                            value={this.state.textEntered} type="text"
+                            value={this.state.textEntered} 
+                            type="text"
                             textEntered={this.state.searchPlaceHolder} 
                             placeholder="&#128269;  " 
                             id={"searchInput"}

@@ -169,7 +169,7 @@ class Details extends Component {
             callMade: true
         });
 
-        console.log('Details - getObservations', `/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
+        alert(`/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
 
         axios.get(`/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
             .then(response => {

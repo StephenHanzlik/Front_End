@@ -15,13 +15,17 @@ const Column = styled.div`
 `;
 
 const Ul = styled.ul`
-    // list-style-type: none;
+    list-style-type: none;
     // display: ${ props => props.textEntered ? "block" : "none" }; 
     // background: ${ props => props.textEntered ? "rgba(255,239,213,0.6)" : "none" }; 
+    display: "block"; 
+    background: "rgba(255,239,213,0.6)"; 
     background: white;
     display: none;
-    height: 100%;
-    width: 100%;
+    // height: 100%;
+    // width: 100%;
+    height: 100px;
+    width: 100px;
     margin-top: 0px;
     margin-left: auto;
     margin-right: auto;
@@ -32,7 +36,7 @@ const Ul = styled.ul`
     overflow-x: hidden;
     max-height: 26vh;
     cursor: pointer;
-    z-index: 999;
+    z-index: 9999;
 `
 
 class Modal extends Component {
@@ -48,7 +52,8 @@ class Modal extends Component {
             stationToGraphSelect: undefined,
             timeToGraphSelect: 'relativeTime',
             searchText: '',
-            showTime: 'relative'
+            showTime: 'relative',
+            searchPlaceHolder: false
         }
 
         this.handleObservationTypeChange = this.handleObservationTypeChange.bind(this);
@@ -112,7 +117,10 @@ class Modal extends Component {
     }
 
     handleStationToGraphChange(e) {
-        this.setState({stationToGraphSelect: e.target.value})
+        this.setState({
+            stationToGraphSelect: e.target.value,
+            searchPlaceHolder: true
+        })
     }
 
     handleTimeSelectChange(e) {
@@ -147,7 +155,9 @@ class Modal extends Component {
             'max-height': '22px'
         }
 
-        // const stationsList = this.props.stations
+        const stationsList = this.props.stations
+        .filter(station => station.name.includes(this.state.searchText.toUpperCase()))
+        .map((station, index) => <li key={index} id={station.triplet}>{station.name}</li>);
         // .filter(station => station.name.includes(this.state.searchText.toUpperCase()))
         // .map((station, index) => <li key={index} id={station.triplet}>{station.name}</li>);
 
@@ -175,16 +185,19 @@ class Modal extends Component {
                                     type="text" 
                                     placeholder={this.props.stationName} 
                                     value={this.state.stationToGraphSelect}
-                                    onChange={this.handleStationToGraphChange} 
-                                    name="dynamicStationtoGraph"
+                                    onChange={this.handleStationToGraphChange}
+                                    onSelect={this.handleStationToGraphChange} 
+                                    textEntered={this.state.searchPlaceHolder}
+                                    name="fixedStationToGraph"
                                 />
-                                {/* <Ul 
-                                    textEntered={this.state.searchPlaceHolder} 
-                                >
+                                <Ul 
+                                    textEntered={this.state.searchPlaceHolder}
+                                    onClick={(ev)=>{alert(ev.target.value)}}
+                                > {console.log("stationsList", stationsList)}
                                     {stationsList}
-                                </Ul> */}
+                                </Ul>
                             </Column>
-                            <input style={stationSelectedStyle} className={showDynamicStationSelect} type="text" value={"Graph Changes w/ Map"} name="dynamicStationtoGraph"/>  
+                            <input style={stationSelectedStyle} className={showDynamicStationSelect} type="text" value={"Graph Changes w/ Map"} name="dynamicStationToGraph"/>  
                             <label className={"label-font-size"} for="selectObservationType">Observation Type</label>
                             <select name="selectObservationType" style={selectObservationTypeStyle} value={this.state.observationType} onChange={this.handleObservationTypeChange}>
                                 <option value="snowDepth">Snow Depth</option>

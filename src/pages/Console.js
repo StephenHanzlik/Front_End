@@ -23,7 +23,7 @@ const GraphWrapper = styled.div`
 
 const PolaroidContainer = styled.div`
     width: 25%;
-    background-color: white
+    background-color: #F5F5F5 //white smoke
     // blue #3076AA;
     color: black
     // yellow #ffb74d;

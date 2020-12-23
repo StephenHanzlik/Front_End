@@ -65,14 +65,14 @@ class Details extends Component {
             callMade: false,
             stations: undefined
         };
-        this.toggleGraph = this.toggleGraph.bind(this);
+        // this.toggleGraph = this.toggleGraph.bind(this);
         this.openModal = this.openModal.bind(this);
-        this.removeGraph = this.removeGraph.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.getObservations = this.getObservations.bind(this);
         this.updateSelectedStation = this.updateSelectedStation.bind(this);
         this.buildDefaultGraphs = this.buildDefaultGraphs.bind(this);
         this.getDefaultObservations = this.getDefaultObservations.bind(this);
+        this.buildGraph = this.buildGraph.bind(this);
     }
 
     componentDidMount() {
@@ -119,12 +119,20 @@ class Details extends Component {
         })
         this.setState({graphs: tempGraphs})
     }
-    // this.state.graphs.map(graph =>(
-    //                         <Graph
-    //                             graphType={graph}
-    //                             observations={this.state.observations}
-    //                         />  
-    //                     ))
+
+
+    buildGraph(graphType){
+        let observations = this.state.observations;
+        let graph = {
+            graphType: graphType,
+            observation: observations
+        };
+        let tempGraphs = this.state.graphs;
+        tempGraphs.push(graph);
+        this.setState({
+            graphs: tempGraphs
+        })
+    }
 
     //TODO:  Impliment redux to reduce API calls
     getStationTriplet() {
@@ -159,9 +167,7 @@ class Details extends Component {
             .catch(error => console.log(error))
     }
 
-    getObservations(epochStart, epochEnd = Date.now(), triplet = this.state.stationTriplet) {
-        // if(!epochStart) epochStart = epochEnd - this.state.defaultRelativeTime;
-
+    getObservations(epochStart, epochEnd, triplet = this.state.stationTriplet) {
         let startDate = new Date(epochStart).toJSON().slice(0, 10);
         let endDate = new Date(epochEnd).toJSON().slice(0, 10);
 
@@ -227,14 +233,14 @@ class Details extends Component {
         }
     }
 
-    toggleGraph(graphType) {
-        let tempGraphs = this.state.graphs;
-        let index = tempGraphs.indexOf(graphType);
-        index > -1 ? tempGraphs.splice(index, 1) : tempGraphs.push(graphType)
-        this.setState({
-            graphs: tempGraphs
-        })
-    }
+    // toggleGraph(graphType) {
+    //     let tempGraphs = this.state.graphs;
+    //     let index = tempGraphs.indexOf(graphType);
+    //     index > -1 ? tempGraphs.splice(index, 1) : tempGraphs.push(graphType)
+    //     this.setState({
+    //         graphs: tempGraphs
+    //     })
+    // }
 
     openModal(){
         // alert("This feature is a work in progress.  Feel free to play around to see what is planned.  However, be aware that it isn't fully implimented and it will not behave as expected.")
@@ -243,12 +249,9 @@ class Details extends Component {
         });
     }
 
-    removeGraph(graphId){
-        this.setState({ showModal: false });
-    }
-
     closeModal(){
         this.setState({showModal: false});
+        //TODO: we want to make sure that we re-rewrite the modal input fields fixedStation to the selected station in this state.
     }
 
     render() {
@@ -328,9 +331,8 @@ class Details extends Component {
                                     <GraphableObservation
                                         currentObservation={currentObservation}
                                         graphType={graphType}
-                                        toggleGraph={this.toggleGraph}
+                                        // toggleGraph={this.toggleGraph}
                                         addGraph={this.addGraph}
-                                        removeGraph={this.removeGraph}
                                         graphs={this.state.graphs}
                                     />
                                 ))}
@@ -348,6 +350,7 @@ class Details extends Component {
                             stationName={this.state.stationName}
                             closeModal={this.closeModal}
                             getObservations={this.getObservations}
+                            buildGraph={this.buildGraph}
                             observations={this.state.observations}
                             stations={this.state.stations}
                         />

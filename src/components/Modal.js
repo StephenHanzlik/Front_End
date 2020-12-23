@@ -45,10 +45,10 @@ class Modal extends Component {
     constructor(props){
         super(props);
         this.state = {
-            relativeTimeInterval: 31536000000, //604800000,            
+            relativeTimeInterval: 5184000000,            
             observationType: 'snowDepth',
-            startDate: undefined,//'10/01/2018',//Date.now() - 604800000,
-            endDate: undefined,//'6/01/2019',//Date.now(),
+            startDate: undefined,
+            endDate: undefined,
             stationTypeToGraphSelect: 'fixedStation',
             stationToGraphSelect: undefined,
             stationToGraphSearchText: '',
@@ -111,6 +111,7 @@ class Modal extends Component {
         }else{
             this.props.getObservations(this.state.startDate, this.state.endDate, stationTriplet)
         }
+        this.props.buildGraph(this.state.observationType);
     }
 
     handleStationTypeToGraphChange(e) {
@@ -251,6 +252,7 @@ class Modal extends Component {
                         </Row>
                         <input type="submit" value="Build Graph" />
                     </form>
+                <button>Mount Graph</button>
                 <button onClick={() => this.props.closeModal()}>Cancel</button>
                     {this.props.observations &&
                     <Row>

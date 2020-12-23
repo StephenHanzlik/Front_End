@@ -125,9 +125,10 @@ class Modal extends Component {
     }
 
     handleStationToGraphSelect(e){
+        console.log("e.target", e.target)
         this.setState({
             stationToGraphSelect: e.target.id,
-            stationToGraphSearchText: e.target.name,
+            stationToGraphSearchText: e.target.name.toUpperCase(),
             searchPlaceHolder: false
         })
     }
@@ -197,7 +198,7 @@ class Modal extends Component {
                                 />
                                 <Ul 
                                     textEntered={this.state.searchPlaceHolder}
-                                    onClick={e=>this.handleStationToGraphSelect(e)}
+                                    onClick={e =>this.handleStationToGraphSelect(e)}
                                 >
                                     {stationsList}
                                 </Ul>

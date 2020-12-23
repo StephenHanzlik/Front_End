@@ -125,10 +125,9 @@ class Modal extends Component {
     }
 
     handleStationToGraphSelect(e){
-        console.log("e.target", e.target)
         this.setState({
             stationToGraphSelect: e.target.id,
-            stationToGraphSearchText: e.target.name.toUpperCase(),
+            stationToGraphSearchText: e.target.innerHTML,
             searchPlaceHolder: false
         })
     }

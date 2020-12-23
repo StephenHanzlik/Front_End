@@ -14,14 +14,15 @@ const Column = styled.div`
     justify-content: right;
 `;
 
-const Ul = styled.ul`
-    list-style-type: none;
     // display: ${ props => props.textEntered ? "block" : "none" }; 
     // background: ${ props => props.textEntered ? "rgba(255,239,213,0.6)" : "none" }; 
-    display: "block"; 
-    background: "rgba(255,239,213,0.6)"; 
+const Ul = styled.ul`
+    list-style-type: none;
+    // display: "block"; 
+    // background: "rgba(255,239,213,0.6)"; 
+    display: ${ props => props.textEntered ? "block" : "none" }; 
+    background: ${ props => props.textEntered ? "rgba(255,239,213,0.6)" : "none" }; 
     background: white;
-    display: none;
     // height: 100%;
     // width: 100%;
     height: 100px;
@@ -50,6 +51,7 @@ class Modal extends Component {
             endDate: undefined,//'6/01/2019',//Date.now(),
             stationTypeToGraphSelect: 'fixedStation',
             stationToGraphSelect: undefined,
+            stationToGraphSearchText: '',
             timeToGraphSelect: 'relativeTime',
             searchText: '',
             showTime: 'relative',
@@ -63,7 +65,7 @@ class Modal extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTimeSelectChange = this.handleTimeSelectChange.bind(this);
         this.handleStationTypeToGraphChange = this.handleStationTypeToGraphChange.bind(this);
-        this.handleStationToGraphChange = this.handleStationToGraphChange.bind(this);
+        this.handleStationToGraphTextInput = this.handleStationToGraphTextInput.bind(this);
     }
 
     handleRelativeTimeChange(event) { 
@@ -112,14 +114,21 @@ class Modal extends Component {
     }
 
     handleStationTypeToGraphChange(e) {
-        console.log("station select", e.target.value)
         this.setState({stationTypeToGraphSelect: e.target.value})
     }
 
-    handleStationToGraphChange(e) {
+    handleStationToGraphTextInput(e) {
         this.setState({
-            stationToGraphSelect: e.target.value,
+            stationToGraphSearchText: e.target.value,
             searchPlaceHolder: true
+        })
+    }
+
+    handleStationToGraphSelect(e){
+        this.setState({
+            stationToGraphSelect: e.target.id,
+            stationToGraphSearchText: e.target.name,
+            searchPlaceHolder: false
         })
     }
 
@@ -154,12 +163,10 @@ class Modal extends Component {
         const selectObservationTypeStyle = {
             'max-height': '22px'
         }
-
+        const searchText = this.state.stationToGraphSearchText ? this.state.stationToGraphSearchText.toUpperCase() : '';
         const stationsList = this.props.stations
-        .filter(station => station.name.includes(this.state.searchText.toUpperCase()))
+        .filter(station => station.name.includes(searchText))
         .map((station, index) => <li key={index} id={station.triplet}>{station.name}</li>);
-        // .filter(station => station.name.includes(this.state.searchText.toUpperCase()))
-        // .map((station, index) => <li key={index} id={station.triplet}>{station.name}</li>);
 
         return (
             <div className={showModalClassName}>
@@ -175,7 +182,6 @@ class Modal extends Component {
                                 <Row>
                                     <label className={"label-font-size"} for="fixedStation">Fixed Station</label>
                                     <input checked={'fixedStation' === this.state.stationTypeToGraphSelect}type="radio" value="fixedStation" id="fixedStation" onChange={this.handleStationTypeToGraphChange} name="fixedStation"/>
-
                                 </Row>
                             </Column>
                             <Column>
@@ -184,16 +190,15 @@ class Modal extends Component {
                                     className={showFixedStationSelect} 
                                     type="text" 
                                     placeholder={this.props.stationName} 
-                                    value={this.state.stationToGraphSelect}
-                                    onChange={this.handleStationToGraphChange}
-                                    onSelect={this.handleStationToGraphChange} 
-                                    textEntered={this.state.searchPlaceHolder}
+                                    value={this.state.stationToGraphSearchText}
+                                    onChange={this.handleStationToGraphTextInput}
+                                    onSelect={this.handleStationToGraphTextInput} 
                                     name="fixedStationToGraph"
                                 />
                                 <Ul 
                                     textEntered={this.state.searchPlaceHolder}
-                                    onClick={(ev)=>{alert(ev.target.value)}}
-                                > {console.log("stationsList", stationsList)}
+                                    onClick={e=>this.handleStationToGraphSelect(e)}
+                                >
                                     {stationsList}
                                 </Ul>
                             </Column>

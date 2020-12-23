@@ -23,8 +23,10 @@ const GraphWrapper = styled.div`
 
 const PolaroidContainer = styled.div`
     width: 25%;
-    background-color: rgb(74,74,74);
-    color: rgb(200,200,200);
+    background-color: white
+    // blue #3076AA;
+    color: black
+    // yellow #ffb74d;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     margin-top: 25px;
     margin-left: auto;

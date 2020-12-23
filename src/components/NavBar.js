@@ -3,13 +3,6 @@ import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 
 const Nav = styled.div`
-  //teal
-  // background: #4db6ac;
-  //gray
-  // background: rgba(0, 0, 0, .5);
-  //graph border
-  // background: #A6CEE3;
-  //splash background 
   background: #3076AA;
 `;
 const NavHeader = styled.div`

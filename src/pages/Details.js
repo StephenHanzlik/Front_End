@@ -363,6 +363,8 @@ class Details extends Component {
                             <Graph
                                 graphType={graph.graphType}
                                 observations={this.state.observations}
+                                stationName={this.state.stationName}
+                                fixedOrDynamic={'Dynamic'}
                             />  
                         ))
                         }

@@ -40,6 +40,22 @@ const Ul = styled.ul`
     z-index: 9999;
 `
 
+const PolaroidContainer = styled.div`
+    width: 25%;
+    background-color: #F5F5F5 //white smoke
+    color: black
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 7px;
+    overflow: hidden;
+`
+const PolaroidDiscription = styled.div`
+    text-align: justify;
+    padding: 7px 20px 13px;
+`
+
 class Modal extends Component {
 
     constructor(props){
@@ -256,10 +272,16 @@ class Modal extends Component {
                 <button onClick={() => this.props.closeModal()}>Cancel</button>
                     {this.props.observations &&
                     <Row>
-                        <Graph
+                        {/* <Graph
                             graphType={this.state.observationType}
                             observations={this.props.observations}
-                        />  
+                            stationName={this.state.stationToGraphSearchText}
+                        /> */}
+                        {/* <PolaroidContainer>
+                            <PolaroidDiscription>
+                            <p>Build a graph and then select "Mount Graph" to add it to the page</p>
+                            </PolaroidDiscription>
+                        </PolaroidContainer>  */}
                     </Row>  
                     }
           </div>

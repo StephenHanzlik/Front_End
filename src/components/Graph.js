@@ -37,6 +37,8 @@ class Graph extends Component {
     wrapObservations() {
         let graphType = this.props.graphType;
         let observations = this.props.observations;
+        let stationName = this.props.stationName;
+        let fixedOrDynamic = this.props.fixedOrDynamic;
         let title;
         switch (graphType){
             case 'snowDepth':
@@ -65,6 +67,9 @@ class Graph extends Component {
                 break;   
             default:
                 title = 'Snow Depth';
+        }
+        if(stationName){
+            title = `${stationName} - ${title} - ${fixedOrDynamic}`
         }
         return this.safeParseAndWrap(observations, graphType, title);
     }

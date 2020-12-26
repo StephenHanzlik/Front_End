@@ -73,6 +73,7 @@ class Details extends Component {
         this.buildDefaultGraphs = this.buildDefaultGraphs.bind(this);
         this.getDefaultObservations = this.getDefaultObservations.bind(this);
         this.buildGraph = this.buildGraph.bind(this);
+        this.updateDynamicGraphs = this.updateDynamicGraphs.bind(this);
     }
 
     componentDidMount() {
@@ -113,7 +114,9 @@ class Details extends Component {
         let tempGraphs = defaultGraphs.map((graphType)=>{
             let graphItem = {
                 graphType: graphType,
-                observations: observations
+                observations: observations,
+                stationName: this.state.stationName,
+                fixedOrDynamic: 'Dynamic'
             }
             return graphItem;
         })
@@ -121,14 +124,24 @@ class Details extends Component {
     }
 
 
-    buildGraph(graphType){
-        let observations = this.state.observations;
-        let graph = {
+    buildGraph(graphType, observations, fixedOrDynamic, stationName){
+        console.log("stationName", stationName)
+        let graphItem = {
             graphType: graphType,
-            observation: observations
-        };
+
+        }
+        if(fixedOrDynamic ==='dynamicStation'){
+            graphItem.fixedOrDynamic = "Dynamic";
+            graphItem.observations = this.state.observations;
+            graphItem.stationName = this.state.stationName;
+        }else{
+            graphItem.fixedOrDynamic = "Fixed";
+            graphItem.observations = observations;
+            graphItem.stationName = stationName;
+        }
         let tempGraphs = this.state.graphs;
-        tempGraphs.push(graph);
+        tempGraphs.push(graphItem);
+        console.log("Graphs Array", tempGraphs);
         this.setState({
             graphs: tempGraphs
         })
@@ -167,7 +180,7 @@ class Details extends Component {
             .catch(error => console.log(error))
     }
 
-    getObservations(epochStart, epochEnd, triplet = this.state.stationTriplet) {
+    getObservations(epochStart, epochEnd, triplet = this.state.stationTriplet, graphType, fixedOrDynamic, stationName) {
         let startDate = new Date(epochStart).toJSON().slice(0, 10);
         let endDate = new Date(epochEnd).toJSON().slice(0, 10);
 
@@ -175,18 +188,43 @@ class Details extends Component {
             callMade: true
         });
 
-        alert(`/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
+        console.log(`/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
 
         axios.get(`/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
             .then(response => {
                 console.log('Details - response.data', response.data);
                 this.setState({
-                    observations: response.data,
                     callMade: false,
                     currentObservationIndex: response.data.length - 1
                 })
+                //if we are mounting a new graph from the modal TODO:  this is super gross and need to refactor
+                if(graphType && fixedOrDynamic && stationName){
+                    this.buildGraph(graphType, response.data, fixedOrDynamic, stationName)
+                }
+                // if we are updating the selected station
+                else{
+                    this.setState({
+                        observations: response.data
+                    })
+                    this.updateDynamicGraphs(response.data)
+                }
             })
             .catch(error => console.log(error))
+    }
+
+    updateDynamicGraphs(newObservations){
+        let tempGraphs = this.state.graphs.map(graph => {
+            if(graph.fixedOrDynamic === "Dynamic"){
+                graph.observations = newObservations;
+                graph.stationName = this.state.stationName;
+                return graph;
+            }else{
+                return graph;
+            }
+        })
+        this.setState({
+            graphs: tempGraphs
+        })
     }
 
     updateSelectedStation(triplet, name, elevation){
@@ -362,9 +400,9 @@ class Details extends Component {
                         this.state.graphs.map(graph =>(
                             <Graph
                                 graphType={graph.graphType}
-                                observations={this.state.observations}
-                                stationName={this.state.stationName}
-                                fixedOrDynamic={'Dynamic'}
+                                observations={graph.observations}
+                                stationName={graph.stationName}
+                                fixedOrDynamic={graph.fixedOrDynamic}
                             />  
                         ))
                         }

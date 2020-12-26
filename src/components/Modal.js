@@ -123,11 +123,10 @@ class Modal extends Component {
             stationTriplet = this.state.stationToGraphSelect;
         }
         if(this.state.relativeTimeInterval){
-            this.props.getObservations(Date.now() - this.state.relativeTimeInterval, Date.now(), stationTriplet)
+            this.props.getObservations(Date.now() - this.state.relativeTimeInterval, Date.now(), stationTriplet, this.state.observationType, this.state.stationTypeToGraphSelect, this.state.stationToGraphSearchText)
         }else{
-            this.props.getObservations(this.state.startDate, this.state.endDate, stationTriplet)
+            this.props.getObservations(this.state.startDate, this.state.endDate, stationTriplet, this.state.observationType, this.state.stationTypeToGraphSelect, this.state.stationToGraphSearchText)
         }
-        this.props.buildGraph(this.state.observationType);
     }
 
     handleStationTypeToGraphChange(e) {

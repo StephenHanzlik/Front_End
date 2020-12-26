@@ -69,7 +69,7 @@ class Graph extends Component {
                 title = 'Snow Depth';
         }
         if(stationName){
-            title = `${stationName} - ${title} - ${fixedOrDynamic}`
+            title = `${stationName} - ${title}   - ${fixedOrDynamic}`
         }
         return this.safeParseAndWrap(observations, graphType, title);
     }

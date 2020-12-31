@@ -92,15 +92,13 @@ class Modal extends Component {
         this.getObservations = this.getObservations.bind(this);
     }
 
-    getObservations(epochStart, epochEnd, triplet = this.state.stationTriplet, graphType, fixedOrDynamic, stationName) {
+    getObservations(epochStart, epochEnd, triplet = this.state.stationTriplet) {
         let startDate = new Date(epochStart).toJSON().slice(0, 10);
         let endDate = new Date(epochEnd).toJSON().slice(0, 10);
 
         this.setState({
             callMade: true
         });
-        alert( `/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
-        console.log("GET /observations Modal" , `/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
 
         axios.get(`/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
             .then(response => {
@@ -157,14 +155,11 @@ class Modal extends Component {
         }else{
             stationTriplet = this.state.stationToGraphSelect;
         }
-        // if(this.state.stationTypeToGraphSelect === 'fixedStation'){
-        //     stationTriplet = this.state.stationToGraphSelect;
-        // }
 
         if(this.state.relativeTimeInterval){
-            this.getObservations(Date.now() - this.state.relativeTimeInterval, Date.now(), stationTriplet, this.state.observationType, this.state.stationTypeToGraphSelect, this.state.stationToGraphSearchText)
+            this.getObservations(Date.now() - this.state.relativeTimeInterval, Date.now(), stationTriplet)
         }else{
-            this.getObservations(this.state.startDate, this.state.endDate, stationTriplet, this.state.observationType, this.state.stationTypeToGraphSelect, this.state.stationToGraphSearchText)
+            this.getObservations(this.state.startDate, this.state.endDate, stationTriplet)
         }
     }
 

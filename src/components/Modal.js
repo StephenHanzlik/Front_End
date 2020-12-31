@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Graph from '../components/Graph';
+import axios from 'axios';
 
 const Row = styled.div`
     display: flex;
@@ -71,17 +72,45 @@ class Modal extends Component {
             timeToGraphSelect: 'relativeTime',
             searchText: '',
             showTime: 'relative',
-            searchPlaceHolder: false
+            searchPlaceHolder: false,
+            callMade: false,
+            graphBuilderObservations: undefined,
+            graphType: undefined,
+            observations: undefined,
+            stationName: undefined,
+            fixedOrDynamic: undefined
         }
 
         this.handleObservationTypeChange = this.handleObservationTypeChange.bind(this);
         this.handleRelativeTimeChange = this.handleRelativeTimeChange.bind(this);
         this.handleAbsoluteStartChange = this.handleAbsoluteStartChange.bind(this);
         this.handleAbsoluteEndChange = this.handleAbsoluteEndChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleGraphBuildSubmit = this.handleGraphBuildSubmit.bind(this);
         this.handleTimeSelectChange = this.handleTimeSelectChange.bind(this);
         this.handleStationTypeToGraphChange = this.handleStationTypeToGraphChange.bind(this);
         this.handleStationToGraphTextInput = this.handleStationToGraphTextInput.bind(this);
+        this.getObservations = this.getObservations.bind(this);
+    }
+
+    getObservations(epochStart, epochEnd, triplet = this.state.stationTriplet, graphType, fixedOrDynamic, stationName) {
+        let startDate = new Date(epochStart).toJSON().slice(0, 10);
+        let endDate = new Date(epochEnd).toJSON().slice(0, 10);
+
+        this.setState({
+            callMade: true
+        });
+
+        console.log("GET /observations Modal" , `/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
+
+        axios.get(`/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
+            .then(response => {
+                let observations = response.data;
+                this.setState({
+                    callMade: false,
+                    graphBuilderObservations: observations
+                })
+            })
+            .catch(error => console.log(error))
     }
 
     handleRelativeTimeChange(event) { 
@@ -111,22 +140,28 @@ class Modal extends Component {
         this.setState({observationType: event.target.value})
     }
 
-    handleSubmit(event) {
+    handleGraphBuildSubmit(event) {
         console.log('Modal Form Submit - this.state', this.state)
         //TODO: need validation to keep indivudual graphs under a year for performance reasons.
         // let startDate = new Date(epochStart).toJSON().slice(0, 10);
 
         event.preventDefault();
-        // this.props.closeModal();//this.state.observationType, 
+
         let stationTriplet;
         if(this.state.stationTypeToGraphSelect === 'fixedStation'){
             stationTriplet = this.state.stationToGraphSelect;
         }
+
         if(this.state.relativeTimeInterval){
-            this.props.getObservations(Date.now() - this.state.relativeTimeInterval, Date.now(), stationTriplet, this.state.observationType, this.state.stationTypeToGraphSelect, this.state.stationToGraphSearchText)
+            this.getObservations(Date.now() - this.state.relativeTimeInterval, Date.now(), stationTriplet, this.state.observationType, this.state.stationTypeToGraphSelect, this.state.stationToGraphSearchText)
         }else{
-            this.props.getObservations(this.state.startDate, this.state.endDate, stationTriplet, this.state.observationType, this.state.stationTypeToGraphSelect, this.state.stationToGraphSearchText)
+            this.getObservations(this.state.startDate, this.state.endDate, stationTriplet, this.state.observationType, this.state.stationTypeToGraphSelect, this.state.stationToGraphSearchText)
         }
+    }
+
+    handleGraphMountSubmit(){
+        // this.props.closeModal();//this.state.observationType, 
+        // Clear all state so the modal looks like a clean slate on re-open
     }
 
     handleStationTypeToGraphChange(e) {
@@ -179,6 +214,8 @@ class Modal extends Component {
         const selectObservationTypeStyle = {
             'max-height': '22px'
         }
+
+        const showLoadingRoller = this.state.callMade ? {display: "block", width: '1200px', 'margin-top': '110px', 'margin-right': 'auto', 'margin-left': 'auto'} : {display: "none"};
         const searchText = this.state.stationToGraphSearchText ? this.state.stationToGraphSearchText.toUpperCase() : '';
         const stationsList = this.props.stations
         .filter(station => station.name.includes(searchText))
@@ -186,9 +223,9 @@ class Modal extends Component {
 
         return (
             <div className={showModalClassName}>
-                <p>You are mounting a graph.  You can select whether to tie the graph to the station selected on the map (dynamic) or a partiuclar station (fixed).  If going with a dynamic station clicking new stations on the map will update your graph accordingly.  
+                <p>You are mounting a graph.  You can select whether to tie the graph to the station selected on the map (dynamic) or a particular station (fixed).  If you choose to use a dynamic station, clicking new stations on the map will update your graph accordingly.  
                     Next, select the observation type you want to graph (Snow Depth, Air Temperature Min, etc).  Finally, select the time interval for your chosen data set.  Relative time is a set interval from today and absolute time is an interval between two explicitly chosen dates.</p>
-                    <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={this.handleGraphBuildSubmit}>
                         <Row>
                             <Column>
                                 <Row>
@@ -267,15 +304,16 @@ class Modal extends Component {
                         </Row>
                         <input type="submit" value="Build Graph" />
                     </form>
-                <button>Mount Graph</button>
+                <button onClick={() => this.handleGraphMountSubmit()}>Mount Graph</button>
                 <button onClick={() => this.props.closeModal()}>Cancel</button>
-                    {this.props.observations &&
+                    {this.state.graphBuilderObservations && !this.state.callMade &&
                     <Row>
-                        {/* <Graph
+                        <Graph
                             graphType={this.state.observationType}
-                            observations={this.props.observations}
+                            observations={this.state.graphBuilderObservations}
                             stationName={this.state.stationToGraphSearchText}
-                        /> */}
+                            fixedOrDynamic={this.state.stationTypeToGraphSelect}
+                        />  
                         {/* <PolaroidContainer>
                             <PolaroidDiscription>
                             <p>Build a graph and then select "Mount Graph" to add it to the page</p>
@@ -283,6 +321,9 @@ class Modal extends Component {
                         </PolaroidContainer>  */}
                     </Row>  
                     }
+                    <div style={showLoadingRoller}>
+                        <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                    </div>
           </div>
         )
     }

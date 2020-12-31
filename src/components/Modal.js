@@ -169,8 +169,27 @@ class Modal extends Component {
     }
 
     handleGraphMountSubmit(){
-        // this.props.closeModal();//this.state.observationType, 
-        // Clear all state so the modal looks like a clean slate on re-open
+        this.setState({
+            relativeTimeInterval: 5184000000,            
+            observationType: 'snowDepth',
+            startDate: undefined,
+            endDate: undefined,
+            stationTypeToGraphSelect: 'fixedStation',
+            stationToGraphSelect: undefined,
+            stationToGraphSearchText: '',
+            timeToGraphSelect: 'relativeTime',
+            searchText: '',
+            showTime: 'relative',
+            searchPlaceHolder: false,
+            callMade: false,
+            graphBuilderObservations: undefined,
+            graphType: undefined,
+            observations: undefined,
+            stationName: undefined,
+            fixedOrDynamic: undefined
+        })
+        //TODO: push graph to details page
+        this.props.closeModal();
     }
 
     handleStationTypeToGraphChange(e) {

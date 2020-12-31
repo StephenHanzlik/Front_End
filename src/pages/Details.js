@@ -386,10 +386,11 @@ class Details extends Component {
                             show={this.state.showModal}
                             graphType={this.state.modalGraphType}
                             stationName={this.state.stationName}
+                            stationTriplet={this.state.stationTriplet}
                             closeModal={this.closeModal}
-                            getObservations={this.getObservations}
+                            // getObservations={this.getObservations}
                             buildGraph={this.buildGraph}
-                            observations={this.state.observations}
+                            // observations={this.state.observations}
                             stations={this.state.stations}
                         />
                         }

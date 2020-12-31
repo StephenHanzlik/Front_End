@@ -99,7 +99,7 @@ class Modal extends Component {
         this.setState({
             callMade: true
         });
-
+        alert( `/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
         console.log("GET /observations Modal" , `/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
 
         axios.get(`/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
@@ -148,9 +148,18 @@ class Modal extends Component {
         event.preventDefault();
 
         let stationTriplet;
-        if(this.state.stationTypeToGraphSelect === 'fixedStation'){
+        if(!this.state.stationToGraphSelect){
+            stationTriplet = this.props.stationTriplet;
+            this.setState({
+                stationToGraphSelect: this.props.stationTriplet,
+                stationToGraphSearchText: this.props.stationName
+            })
+        }else{
             stationTriplet = this.state.stationToGraphSelect;
         }
+        // if(this.state.stationTypeToGraphSelect === 'fixedStation'){
+        //     stationTriplet = this.state.stationToGraphSelect;
+        // }
 
         if(this.state.relativeTimeInterval){
             this.getObservations(Date.now() - this.state.relativeTimeInterval, Date.now(), stationTriplet, this.state.observationType, this.state.stationTypeToGraphSelect, this.state.stationToGraphSearchText)
@@ -194,7 +203,9 @@ class Modal extends Component {
         }else{
             this.setState({
                 timeToGraphSelect: timeIntervalType,
-                relativeTimeInterval: undefined 
+                relativeTimeInterval: undefined ,
+                startDate: new Date(Date.now() - 31536000000).toJSON().slice(0, 10),
+                endDate: new Date(Date.now()).toJSON().slice(0, 10)
             })
         }
     }
@@ -306,6 +317,7 @@ class Modal extends Component {
                     </form>
                 <button onClick={() => this.handleGraphMountSubmit()}>Mount Graph</button>
                 <button onClick={() => this.props.closeModal()}>Cancel</button>
+                    {console.log("this.state.graphBuilderObservations", this.state.graphBuilderObservations)}
                     {this.state.graphBuilderObservations && !this.state.callMade &&
                     <Row>
                         <Graph

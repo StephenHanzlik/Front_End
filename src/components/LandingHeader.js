@@ -19,11 +19,6 @@ class LandingHeader extends Component {
             'margin-top': '-44px'
         }
 
-        const imageStyle = {
-            'height': '100%',
-            'margin-top': '3%'
-        }
-        
         //TODO: defined at least twice. refactor as a component.
         const Row = styled.div`
             display: flex;
@@ -35,12 +30,10 @@ class LandingHeader extends Component {
         return (
         <div> 
             <Row>
-                <h1 style={headerStyle} >MOUNTAIN</h1>
-                <img style={imageStyle} src={skisImage} alt="skis" id="subHead"></img> 
-                <h1 style={headerStyle}>SNOWPACK</h1>
+                <h1 style={headerStyle}>Welcome to Mountain Snowpack!</h1>
             </Row>
             <div className="row center">
-                <p style={paragraphStyle}>a backcountry snow app powered by SNOTEL</p>
+                <p style={paragraphStyle}>Access snowpack information based on the latest backcountry data</p>
              </div>
         </div> 
         )

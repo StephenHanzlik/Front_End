@@ -221,3 +221,29 @@ input::placeholder{
   margin: .82rem 0 .656rem 0;
   font-weight: 400;
 }
+
+/* refactor for mobile */
+
+.background-isMobile {
+  background-image: url(./images/landing-page-img.jpg);
+  width: 100%;
+  height: 74vh;
+  margin-top: -17vh;
+}
+
+.background-isDesktopOrLaptop {
+  background-image: url(./images/landing-page-img.jpg);
+  background-size: 100%;
+  width: 100%;
+  height: 80vh;
+  /* height: 92vh; for the big boi */
+  margin-top: -20vh;
+}
+
+.background-isDesktopOrLaptop {
+  background-image: url(./images/landing-page-img.jpg);
+  background-size: 100%;
+  width: 100%;
+  height: 92vh;
+  margin-top: -20vh;
+}

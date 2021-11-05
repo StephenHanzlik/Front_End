@@ -234,6 +234,14 @@ input::placeholder{
   /* margin-top: -5vh; */
 }
 
+.background-isTablet {
+  background-image: url(./images/landing-page-img.jpg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 49vh;
+  /* margin-top: -5vh; */
+}
+
 .background-isDesktopOrLaptop {
   background-image: url(./images/landing-page-img.jpg);
   background-size: 100%;
@@ -261,6 +269,13 @@ input::placeholder{
   margin-top: 111px;
 }
 
+.landingHeader-isTablet {
+  font-size: 2rem;
+  color: #ffb74d;
+  font-weight: 500;
+  margin-top: 160px
+}
+
 .landingHeader-isDesktopOrLaptop {
   font-size: 4.0rem;
   color: #ffb74d;
@@ -282,16 +297,25 @@ input::placeholder{
   margin-right: 10px;
 }
 
+.landingParagraph-isTablet {
+  color: #ffb74d;
+  font-size: 1.0rem;
+  font-weight: 450;
+  margin-top: -12px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 .landingParagraph-isDesktopOrLaptop {
   color: #ffb74d;
   font-size: 1.5rem;
-  font-weight: 380;
+  font-weight: 350;
   margin-top: -44px;
 }
 
 .landingParagraph-isBigScreen {
   color: #ffb74d;
   font-size: 1.5rem;
-  font-weight: 380;
+  font-weight: 350;
   margin-top: -44px;
 }

@@ -171,15 +171,17 @@ class LandingBody extends Component {
     render(){
         console.log("Landing Page - this.state.stations", this.state.stations);
 
+        const deviceType = this.props.deviceType;
+
         const stationsList = this.state.stations
         .filter(station => station.name.includes(this.state.searchText.toUpperCase()))
         .map((station, index) => <li key={index} id={station.triplet}>{station.name}</li>);
 
         return(
         <div>
-            <div className={`background-${this.props.deviceType}`}/>
+            <div className={`background-${deviceType}`}/>
             <LandingHeaderContainer>
-              <LandingHeader/>
+              <LandingHeader deviceType={deviceType}/>
                 <ButtonWrapper>
                     <Button text="Explore Stations →" link="/console" />
                     <div>

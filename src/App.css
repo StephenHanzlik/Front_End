@@ -240,7 +240,7 @@ input::placeholder{
   margin-top: -20vh;
 }
 
-.background-isDesktopOrLaptop {
+.background-isBigScreen {
   background-image: url(./images/landing-page-img.jpg);
   background-size: 100%;
   width: 100%;

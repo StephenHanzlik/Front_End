@@ -22,6 +22,8 @@ import styled from 'styled-components';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
 import { useMediaQuery } from 'react-responsive';
+import NavBar from '../components/NavBar';
+
 
 
 const Background = styled.div`
@@ -34,7 +36,7 @@ const Background = styled.div`
 
 const LandingHeaderContainer = styled.div`
     margin-top: -60vh
-    height: 80vh;
+    height: 65vh;
 `;
 
 const AboutContentContainer = styled.div`
@@ -89,8 +91,9 @@ const Input = styled.input`
     padding: 0.5em;
     margin: 0.5em;
     height: 10%;
-    width: 8%;
-    background: ${ props => props.textEntered ? "rgba(255,239,213,0.6)" : "none" }; 
+    width: 20%;
+    // background: ${ props => props.textEntered ? "rgba(255,239,213,0.6)" : "none" }; 
+    background: #f3f2ef
     border: 2px solid #ffb74d !important;
     outline: none;
     border-radius: 3px;
@@ -182,19 +185,19 @@ class LandingBody extends Component {
 
     generateStateCards() {
         const states = [
-            {"Colorado": colorado},
-            {"California": california},
-            {"Utah": utah},
-            {"Washington": washington},
-            {"Oregon": oregon},
-            {"Montana": montana},
-            {"New Mexico": newMexico},
-            {"Wyoming": wyoming},
-            {"Alaska": alaska},
-            {"Idaho": idaho},
-            {"Arizona": arizona},
-            {"Nevada": nevada},
-            {"South Dakota": southDakota}
+            { "Colorado": colorado },
+            { "California": california },
+            { "Utah": utah },
+            { "Washington": washington },
+            { "Oregon": oregon },
+            { "Montana": montana },
+            { "New Mexico": newMexico },
+            { "Wyoming": wyoming },
+            { "Alaska": alaska },
+            { "Idaho": idaho },
+            { "Arizona": arizona },
+            { "Nevada": nevada },
+            { "South Dakota": southDakota} 
         ];
         return states;
     }
@@ -214,13 +217,14 @@ class LandingBody extends Component {
                     'background-image': `url(${state[stateKey]})`,
                     'background-size': '100%',
                     'background-repeat': 'no-repeat',
+                    'background-position': 'center center',
                     'box-shadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
                     'width': '250px',
                     'height': '167px',
                     'margin': '10px',
                     'border-radius': '5px', 
                     'overflow': 'hidden',
-                    // 'opacity': '0.9'
+                    'opacity': '0.7'
                 }
                 return(<div style={backGroundImgStyle}>
                         <h1>{stateKey}</h1>
@@ -229,11 +233,12 @@ class LandingBody extends Component {
 
         return(
         <div>
+            <NavBar map={true} about={true}/>
             <div className={`background-${deviceType}`}/>
             <LandingHeaderContainer>
               <LandingHeader deviceType={deviceType}/>
                 <ButtonWrapper>
-                    <Button text="Explore Stations →" link="/console" />
+                    {/* <Button text="Explore Stations →" link="/console" /> */}
                     <div>
                         <Input 
                             onChange={this.handleSearchChange} 
@@ -241,7 +246,8 @@ class LandingBody extends Component {
                             value={this.state.textEntered} 
                             type="text"
                             textEntered={this.state.searchPlaceHolder} 
-                            placeholder="&#128269;  " 
+                            // placeholder="&#128269;  " 
+                            placeholder="Enter a state or SNOTEL station  &#128269;  "
                             id={"searchInput"}
                             className='input::placeholder'
                         />

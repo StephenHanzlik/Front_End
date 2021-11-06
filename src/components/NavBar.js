@@ -6,11 +6,12 @@ const Nav = styled.div`
   // background: #3076AA; //blue from sky
   // background: #f3f2ef; //linked in grey
   // background: #0d090a //opensnow black
-  background: #293d52 //opensnow blue
+  background: #293d52; //opensnow blue
+  height: 44px;
 `;
 const NavHeader = styled.div`
   max-width: 95%;
-  padding: 10px 10px;
+  padding: ${ props => props.isLanding ? '10px 10px' : ''};
   width: 100%;
   display: flex;
   align-items: center;
@@ -38,7 +39,7 @@ class NavBar extends Component {
       const linkParagraphStyle = {
         'color': '#ffb74d',
         'font-size': '20px',
-        'padding': '0px 13px 0px 13px',
+        'padding': '0px 10px 0px 10px',
         'font-weight': '500',
         'text-decoration': 'none',
         // 'margin-right': 'auto'\
@@ -47,7 +48,7 @@ class NavBar extends Component {
 
         return (
             <Nav>
-            <NavHeader>
+            <NavHeader isLanding={this.props.isLanding}>
               {/* <Link style={linkParagraphStyle} to='/'>Home</Link> */}
               {/* {this.props.link === 'explore' && 
                 <Link style={linkParagraphStyle} to='/console'>Explore</Link>
@@ -68,7 +69,7 @@ class NavBar extends Component {
                 //  value={this.state.textEntered} 
                  type="text"
                 //  textEntered={this.state.searchPlaceHolder} 
-                 placeholder="&#128269;  " 
+                 placeholder="Search by station name &#128269;  " 
                  id={"searchInput"}
                  className='input::placeholder'
                 />                

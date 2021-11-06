@@ -165,7 +165,7 @@ class Console extends Component {
 
         return (
             <div>
-                <NavBar home={true} map={true} search={true}    />
+                <NavBar home={true} about={true} search={true} />
                 <MapWrapper>
                     {this.state && this.state.geoJson &&
                         <Map

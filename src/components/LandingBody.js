@@ -91,8 +91,8 @@ const Input = styled.input`
     padding: 0.5em;
     margin: 0.5em;
     height: 30%;
-    width: 30%;
-    // background: ${ props => props.textEntered ? "rgba(255,239,213,0.6)" : "none" }; 
+    width: ${props => props.deviceType === 'isBigScreen' || props.deviceType === 'isDesktopOrLaptop' ? '30%': '60%'};
+    // background: ${props => props.textEntered ? "rgba(255,239,213,0.6)" : "none" }; 
     background: #f3f2ef; //linkedIn grey
     border: 2px solid #ffb74d !important;
     outline: none;
@@ -233,7 +233,7 @@ class LandingBody extends Component {
 
         return(
         <div>
-            <NavBar map={true} about={true}/>
+            <NavBar map={true} about={true} isLanding={true}/>
             <div className={`background-${deviceType}`}/>
             <LandingHeaderContainer>
               <LandingHeader deviceType={deviceType}/>
@@ -245,7 +245,8 @@ class LandingBody extends Component {
                             // onSelect={this.handleSearchChange} 
                             value={this.state.textEntered} 
                             type="text"
-                            textEntered={this.state.searchPlaceHolder} 
+                            deviceType={deviceType}
+                            // textEntered={this.state.searchPlaceHolder} 
                             // placeholder="&#128269;  " 
                             placeholder="Enter a state or SNOTEL station  &#128269;  "
                             id={"searchInput"}

@@ -339,7 +339,7 @@ class Details extends Component {
             <div>{
                 this.state && this.state.geoJson && currentObservation &&
                 <div>
-                    <NavBar link={"explore"}/>
+                    <NavBar home={true} map={true} about={true} search={true}/>
                     <DisplayRow>
                         <MapWrapper>
                             <Map

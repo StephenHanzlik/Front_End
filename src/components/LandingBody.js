@@ -3,7 +3,7 @@ import '../App.css';
 import backGroundImg from '../images/landing-page-img.jpg';
 import snotelStation from '../images/snotelStation.jpg';
 import dragonstailDan from '../images/dragonstail_dan.jpg';
-import meteorBurst from '../images/meteorBurst.jpg';
+import colorado from '../images/colorado.gif';
 import LandingHeader from '../components/LandingHeader';
 import Button from '../components/Button';
 import styled from 'styled-components';
@@ -106,10 +106,28 @@ const Ul = styled.ul`
     cursor: pointer;
 `
 
-const StateCardContainer = styled.div`
-    margin-top: -8%;
+const Card = styled.div`
+    background-image: url(${colorado});
+    background-size: 100%;
+    background-repeat: no-repeat;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 250px;
+    height: 167px;
+    margin: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+`
+
+const CardContainer = styled.div`
     width: 100%;
     height: 1200px;
+`;
+
+const FlexWrapRow = styled.div`
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    width: 100%;
 `;
 
 class LandingBody extends Component {
@@ -156,16 +174,16 @@ class LandingBody extends Component {
             "Utah",
             "Washington",
             "Oregon",
-            "New Mexico",
-            "Alaska",
             "Montana",
+            "New Mexico",
+            "Wyoming",
+            "Alaska",
             "Idaho",
             "Arizona",
             "Nevada",
-            "Wyoming",
             "South Dakota"
         ];
-        return 
+        return states;
     }
 
     render(){
@@ -176,6 +194,12 @@ class LandingBody extends Component {
         const stationsList = this.state.stations
         .filter(station => station.name.includes(this.state.searchText.toUpperCase()))
         .map((station, index) => <li key={index} id={station.triplet}>{station.name}</li>);
+
+        const stateCards = this.generateStateCards().map((state, index) => {
+                return(<Card>
+                        <h1>{state}</h1>
+                        </Card>)
+        })
 
         return(
         <div>
@@ -204,8 +228,11 @@ class LandingBody extends Component {
                     </div>
                 </ButtonWrapper>
             </LandingHeaderContainer>
-            <StateCardContainer>
-            </StateCardContainer>
+            <CardContainer>
+                <FlexWrapRow>
+                    {stateCards}
+                </FlexWrapRow>
+            </CardContainer>
         </div> 
         )
     }

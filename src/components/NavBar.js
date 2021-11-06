@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 
 const Nav = styled.div`
-  background: #3076AA;
+  // background: #3076AA; //blue from sky
+  // background: #f3f2ef; //linked in grey
+  // background: #0d090a //opensnow black
+  background: #293d52 //opensnow blue
 `;
 const NavHeader = styled.div`
   max-width: 95%;
@@ -36,7 +39,9 @@ class NavBar extends Component {
         'font-size': '20px',
         'padding': '0px 13px 0px 13px',
         'font-weight': '500',
-        'text-decoration': 'none'
+        'text-decoration': 'none',
+        // 'margin-right': 'auto'\
+        // 'margin-left': 'auto'
       }
 
         return (

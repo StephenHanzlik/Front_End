@@ -93,7 +93,7 @@ const Input = styled.input`
     height: 10%;
     width: 20%;
     // background: ${ props => props.textEntered ? "rgba(255,239,213,0.6)" : "none" }; 
-    background: #f3f2ef
+    background: #f3f2ef //linkedIn grey
     border: 2px solid #ffb74d !important;
     outline: none;
     border-radius: 3px;

@@ -106,9 +106,10 @@ const Input = styled.input`
 const Ul = styled.ul`
     list-style-type: none;
     display: ${ props => props.textEntered ? "block" : "none" }; 
-    background: ${ props => props.textEntered ? "rgba(255,239,213,0.6)" : "none" }; 
-    height: 8%;
-    width: 8%;
+    // background: ${ props => props.textEntered ? "rgba(255,239,213,0.6)" : "none" }; 
+    background: #f3f2ef;
+    height: 27%;
+    width: 27%;
     margin-top: 0px;
     margin-left: auto;
     margin-right: auto;
@@ -119,6 +120,7 @@ const Ul = styled.ul`
     overflow-x: hidden;
     max-height: 26vh;
     cursor: pointer;
+    border-radius: 3px;
 `
 
 const Card = styled.div`
@@ -203,8 +205,6 @@ class LandingBody extends Component {
     }
 
     render(){
-        console.log("Landing Page - this.state.stations", this.state.stations);
-
         const deviceType = this.props.deviceType;
 
         const stationsList = this.state.stations
@@ -242,7 +242,7 @@ class LandingBody extends Component {
                     <div>
                         <Input 
                             onChange={this.handleSearchChange} 
-                            onSelect={this.handleSearchChange} 
+                            // onSelect={this.handleSearchChange} 
                             value={this.state.textEntered} 
                             type="text"
                             textEntered={this.state.searchPlaceHolder} 

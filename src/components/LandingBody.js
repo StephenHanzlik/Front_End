@@ -90,10 +90,10 @@ const Column = styled.div`
 const Input = styled.input`
     padding: 0.5em;
     margin: 0.5em;
-    height: 10%;
-    width: 20%;
+    height: 30%;
+    width: 30%;
     // background: ${ props => props.textEntered ? "rgba(255,239,213,0.6)" : "none" }; 
-    background: #f3f2ef //linkedIn grey
+    background: #f3f2ef; //linkedIn grey
     border: 2px solid #ffb74d !important;
     outline: none;
     border-radius: 3px;

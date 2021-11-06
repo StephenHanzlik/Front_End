@@ -22,13 +22,14 @@ const Input = styled.input`
     margin: 0.5em;
     height: 10%;
     width: 15%;
-    background: ${ props => props.textEntered ? "rgba(255,239,213,0.6)" : "none" }; 
-    border: 2px solid #ffb74d !important;
+    // background: ${ props => props.textEntered ? "rgba(255,239,213,0.6)" : "none" }; 
+    background: #f3f2ef;
     outline: none;
     border-radius: 3px;
     margin-left: auto;
     // margin-top: -3px;
     text-align: center;
+    border: 2px solid #ffb74d !important;
 `;
 
 class NavBar extends Component {

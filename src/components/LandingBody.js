@@ -3,7 +3,19 @@ import '../App.css';
 import backGroundImg from '../images/landing-page-img.jpg';
 import snotelStation from '../images/snotelStation.jpg';
 import dragonstailDan from '../images/dragonstail_dan.jpg';
-import colorado from '../images/colorado.gif';
+import colorado from '../images/colorado.png';
+import california from '../images/california.png';
+import utah from '../images/utah.png';
+import washington from '../images/washington.png';
+import oregon from '../images/oregon.png';
+import montana from '../images/montana.png';
+import newMexico from '../images/newMexico.png';
+import wyoming from '../images/wyoming.png';
+import alaska from '../images/alaska.png';
+import idaho from '../images/idaho.png';
+import arizona from '../images/arizona.png';
+import nevada from '../images/nevada.png';
+import southDakota from '../images/southDakota.png';
 import LandingHeader from '../components/LandingHeader';
 import Button from '../components/Button';
 import styled from 'styled-components';
@@ -107,7 +119,8 @@ const Ul = styled.ul`
 `
 
 const Card = styled.div`
-    background-image: url(${colorado});
+    // background-image: url(${colorado});
+    // background-image: url(${props => props.stateFlag});
     background-size: 100%;
     background-repeat: no-repeat;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -169,19 +182,19 @@ class LandingBody extends Component {
 
     generateStateCards() {
         const states = [
-            "Colorado",
-            "California",
-            "Utah",
-            "Washington",
-            "Oregon",
-            "Montana",
-            "New Mexico",
-            "Wyoming",
-            "Alaska",
-            "Idaho",
-            "Arizona",
-            "Nevada",
-            "South Dakota"
+            {"Colorado": colorado},
+            {"California": california},
+            {"Utah": utah},
+            {"Washington": washington},
+            {"Oregon": oregon},
+            {"Montana": montana},
+            {"New Mexico": newMexico},
+            {"Wyoming": wyoming},
+            {"Alaska": alaska},
+            {"Idaho": idaho},
+            {"Arizona": arizona},
+            {"Nevada": nevada},
+            {"South Dakota": southDakota}
         ];
         return states;
     }
@@ -196,9 +209,22 @@ class LandingBody extends Component {
         .map((station, index) => <li key={index} id={station.triplet}>{station.name}</li>);
 
         const stateCards = this.generateStateCards().map((state, index) => {
-                return(<Card>
-                        <h1>{state}</h1>
-                        </Card>)
+                const stateKey = Object.keys(state);
+                const backGroundImgStyle = {
+                    'background-image': `url(${state[stateKey]})`,
+                    'background-size': '100%',
+                    'background-repeat': 'no-repeat',
+                    'box-shadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+                    'width': '250px',
+                    'height': '167px',
+                    'margin': '10px',
+                    'border-radius': '5px', 
+                    'overflow': 'hidden',
+                    // 'opacity': '0.9'
+                }
+                return(<div style={backGroundImgStyle}>
+                        <h1>{stateKey}</h1>
+                        </div>)
         })
 
         return(

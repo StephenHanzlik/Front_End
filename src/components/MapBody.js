@@ -111,6 +111,7 @@ class Console extends Component {
 
         axios.get(`/api/snotel/observations/${triplet}?from=${startDate}&to=${currentDate}`)
             .then(response => {
+                console.log("observations!: ", response.data);
                 this.setState({
                     //This is called in from props and set to state after the call.  Should change this
                     stationTriplet: triplet,
@@ -204,6 +205,9 @@ class Console extends Component {
             'margin-top': '0px'
         }
 
+        const observations = Object.assign([], this.state.observations);
+        const latestObservation = observations.pop();
+
         return (
             <div>
                 <NavBar home={true} about={true} search={true} />
@@ -229,19 +233,19 @@ class Console extends Component {
                         <Row>
                             <Column>
                                 <p style={dataTypeStyle}>Depth</p> 
-                                <p style={dataStyle}>34"</p>
+                                <p style={dataStyle}>{latestObservation.snowDepth}"</p>
                             </Column>
                             <Column>
                                 <p style={dataTypeStyle}>24hr Δ</p> 
-                                <p style={dataStyle}>1"</p>
+                                <p style={dataStyle}>{latestObservation.changeInSnowDepth}"</p>
                             </Column>
                             <Column>
                                 <p style={dataTypeStyle}>SW Equiv</p>
-                                <p style={dataStyle}>2.7"</p>
+                                <p style={dataStyle}>{latestObservation.snowWaterEquivalent}"</p>
                             </Column> 
                             <Column>
                                 <p style={dataTypeStyle}>Temp</p> 
-                                <p style={dataStyle}>36°F</p>
+                                <p style={dataStyle}>{latestObservation.airTemperatureObserved}°F</p>
                             </Column> 
                         </Row>
                         <Graph

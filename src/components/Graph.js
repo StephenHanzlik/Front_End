@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ResponsiveLine } from '@nivo/line'
+// import { ResponsiveBarCanvas } from '@nivo/bar'
 import testData from '../graphTestData';
 import styled from 'styled-components';
 import ObservationDataSet from '../classes/ObservationDataSet';

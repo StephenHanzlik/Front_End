@@ -33,6 +33,17 @@ const PolaroidContainer = styled.div`
     overflow: hidden;
     width: ${props => props.deviceType === 'isBigScreen' || props.deviceType === 'isDesktopOrLaptop' ? '55%': '80%'}}
 `
+const Row = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+`;
+
+const Column = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
 const PolaroidDiscription = styled.div`
     text-align: justify;
     padding: 7px 20px 13px;
@@ -49,7 +60,9 @@ class Console extends Component {
             callMade: false,
             callReturned: false,
             latanceyTimeout: false,
-            relativeTime: 5184000000
+            relativeTime: 2592000000
+            //2592000000 // 30 days
+            //5184000000 // 60 days
         };
         this.getObservations = this.getObservations.bind(this);
         this.getStations = this.getStations.bind(this);
@@ -172,6 +185,25 @@ class Console extends Component {
             'height': '270px'
         }
 
+        const dataTypeStyle = {
+            'color': '#293d52',
+            'font-size': '1rem',
+            'font-weight': '700',
+            'padding': '10px',
+            'margin-bottom': '0px',
+            'margin-top': '5px'
+        }
+
+        const dataStyle = {
+            'color': '#293d52',
+            'opacity': '0.8',
+            'font-size': '1rem',
+            'font-weight': '600',
+            'padding': '0px 10px 0px 10px',
+            'margin-bottom': '0px',
+            'margin-top': '0px'
+        }
+
         return (
             <div>
                 <NavBar home={true} about={true} search={true} />
@@ -194,6 +226,24 @@ class Console extends Component {
                     or having the logic in other components. */}
                     {this.state.observations.length >= 1 && this.state.callReturned &&
                     <div>
+                        <Row>
+                            <Column>
+                                <p style={dataTypeStyle}>Depth</p> 
+                                <p style={dataStyle}>34"</p>
+                            </Column>
+                            <Column>
+                                <p style={dataTypeStyle}>24hr Δ</p> 
+                                <p style={dataStyle}>1"</p>
+                            </Column>
+                            <Column>
+                                <p style={dataTypeStyle}>SW Equiv</p>
+                                <p style={dataStyle}>2.7"</p>
+                            </Column> 
+                            <Column>
+                                <p style={dataTypeStyle}>Temp</p> 
+                                <p style={dataStyle}>36°F</p>
+                            </Column> 
+                        </Row>
                         <Graph
                             graphType={'snowDepth'}
                             observations={this.state.observations}

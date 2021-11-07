@@ -375,9 +375,9 @@ class Details extends Component {
                                     />
                                 ))}
                                 {/* <div style={buttonStyle} onClick={()=>this.openModal()}>Add a graph +</div> */}
-                                <div onClick={()=>this.openModal()}>
+                                {/* <div onClick={()=>this.openModal()}>
                                     <Button size={"large"}  selected={true} text={"Add a graph +"}/>
-                                </div>
+                                </div> */}
                         </DataWrapper>
                     </DisplayRow>
                     <Row>

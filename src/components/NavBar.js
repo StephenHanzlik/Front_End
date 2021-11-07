@@ -7,7 +7,7 @@ const Nav = styled.div`
   // background: #f3f2ef; //linked in grey
   // background: #0d090a //opensnow black
   background: #293d52; //opensnow blue
-  height: 44px;
+  height: 48px;
 `;
 const NavHeader = styled.div`
   max-width: 95%;
@@ -57,7 +57,7 @@ class NavBar extends Component {
                 <Link style={linkParagraphStyle} to='/'>Home</Link>
               }
               {this.props.map && 
-                <Link style={linkParagraphStyle} to='/console'>Map</Link>
+                <Link style={linkParagraphStyle} to='/map'>Map</Link>
               }
               {this.props.about && 
                 <Link style={linkParagraphStyle} to='/about'>About</Link>

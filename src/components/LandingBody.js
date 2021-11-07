@@ -23,6 +23,7 @@ import {withRouter} from 'react-router-dom';
 import axios from 'axios';
 import { useMediaQuery } from 'react-responsive';
 import NavBar from '../components/NavBar';
+import Footer from './Footer';
 
 
 
@@ -138,7 +139,7 @@ const Card = styled.div`
 
 const CardContainer = styled.div`
     width: 100%;
-    height: 1200px;
+    margin-bottom: 35px;
 `;
 
 const FlexWrapRow = styled.div`
@@ -266,6 +267,7 @@ class LandingBody extends Component {
                     {stateCards}
                 </FlexWrapRow>
             </CardContainer>
+            <Footer/>
         </div> 
         )
     }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import NavBar from '../components/NavBar';
 import Graph from '../components/Graph';
 import Map from '../components/Map';
-import SelectRelative from '../components/SelectRelative';
+import Footer from '../components/Footer';
 import snowFlake from '../images/snowflake.jpg';
 import GeoJsonFeatureCollection from '../classes/GeoJsonFeatureCollection';
 import GeoJsonFeature from '../classes/GeoJsonFeature';
@@ -31,6 +31,7 @@ const PolaroidContainer = styled.div`
     margin-right: auto;
     border-radius: 7px;
     overflow: hidden;
+    width: ${props => props.deviceType === 'isBigScreen' || props.deviceType === 'isDesktopOrLaptop' ? '55%': '80%'}}
 `
 const PolaroidDiscription = styled.div`
     text-align: justify;
@@ -140,6 +141,8 @@ class Console extends Component {
     }
 
     render() {
+        const deviceType = this.props.deviceType;
+
         const paragraphCardStyle = {
             'width': '100%',
             'margin-top': '0px',
@@ -161,6 +164,12 @@ class Console extends Component {
             'display': 'initial',
             'max-width': '95px',
             'margin-top': '-10px'
+        }
+
+        const graphContainerStyle = {
+            // 'height': '15rem',
+            'margin-bottom': '35px',
+            'margin-top': '5px'
         }
 
         return (
@@ -206,15 +215,15 @@ class Console extends Component {
                         </form>
                     </div>
                     }
+                    <div style={graphContainerStyle}>
                     {this.state.observations.length < 1 && this.state.stationTriplet === '' && !this.state.callMade && 
-                        <PolaroidContainer>
+                        <PolaroidContainer deviceType={deviceType}>
                             <PolaroidDiscription>
                             <p style={paragraphCardStyle}>To get started, click on a station <img src={snowFlake} style={snowFlakeStyle} alt='snowFlake'/> to see an overview of the 
                             snow pack depth.  Click "Details" to see all available data for the station and access advanced graphing.</p>
                             </PolaroidDiscription>
                         </PolaroidContainer>
                     }
-                    <div>
                     {this.state.callMade && !this.state.callReturned &&
                         <div>
                             <p style={paragraphStyle}>Fetching snow pack data...</p>
@@ -229,7 +238,7 @@ class Console extends Component {
                     }
                     </div>
                 </GraphWrapper>
-
+                <Footer/>
             </div>
         )
     }

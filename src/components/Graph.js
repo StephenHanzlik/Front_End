@@ -6,7 +6,8 @@ import ObservationDataSet from '../classes/ObservationDataSet';
 import ObservationDataPoint from '../classes/ObservationDataPoint';
 
 const GraphWrapper = styled.div`
-    width: 1200px;
+    // width: 1200px;
+    width: ${props => props.deviceType === 'isBigScreen' || props.deviceType === 'isDesktopOrLaptop' ? '80rem': '35rem'};
     height: 30vh;
     // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     // border-radius: 5px;
@@ -105,9 +106,41 @@ class Graph extends Component {
         }
     }
 
+    setDeviceWidth(deviceType) {
+        let width;
+        let marginLeft;
+        if (deviceType === 'isBigScreen') {
+            width = '60rem';
+            marginLeft = '10px';
+        } else if (deviceType === 'isDesktopOrLaptop') {
+            width = '60rem';
+            marginLeft = '10px';
+        } else if (deviceType === 'isTablet') {
+            width = '40rem';
+            marginLeft = '10px';
+        } else if (deviceType === 'isMobile') {
+            width = '30rem';
+            marginLeft = '7%';
+        } else {
+            width = '30rem';
+            marginLeft = '7%';
+        }
+        return { 
+            'width': width,
+            'marginLeft': marginLeft
+        }
+    }
+
     render() {
+        const deviceSetting = this.setDeviceWidth(this.props.deviceType);
+        const graphWrapperStyle = {
+            'height': '30vh',
+            'margin-left': deviceSetting.marginLeft,
+            'width': deviceSetting.width
+        }
         return (
-            <GraphWrapper>
+            // <GraphWrapper>
+            <div style={graphWrapperStyle}>
                 {/* {console.log("Graph - props.observations", this.props.observations)} */}
                 {!this.props.observations ?
                     <h3>Select a Station</h3>
@@ -184,8 +217,8 @@ class Graph extends Component {
                         ]}
                     />
                 }
-
-            </GraphWrapper>
+            </div>
+            // </GraphWrapper>
         )
     }
 }

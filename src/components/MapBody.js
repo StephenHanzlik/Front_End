@@ -163,13 +163,13 @@ class Console extends Component {
         const timeSelectStyle = {
             'display': 'initial',
             'max-width': '95px',
-            'margin-top': '-10px'
+            // 'margin-bottom': '20px',
         }
 
         const graphContainerStyle = {
-            // 'height': '15rem',
             'margin-bottom': '35px',
-            'margin-top': '5px'
+            'margin-top': '5px',
+            'height': '270px'
         }
 
         return (

@@ -10,6 +10,8 @@ import GeoJsonFeature from '../classes/GeoJsonFeature';
 import styled from 'styled-components';
 import axios from 'axios';
 import GraphableObservation from './GraphableObservation';
+import Footer from './Footer';
+
 
 const MapWrapper = styled.div`
     padding-right: 10px;
@@ -411,6 +413,7 @@ class Details extends Component {
                     <div style={showLoadingRoller}>
                         <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
                     </div>
+                    <Footer/>
                 </div>
             }</div>
         )

@@ -57,6 +57,7 @@ class Console extends Component {
             stations: []
         };
         this.getStations = this.getStations.bind(this);
+        this.getStateName = this.getStateName.bind(this);
     }
 
     componentDidMount() {
@@ -73,6 +74,10 @@ class Console extends Component {
             .catch(error => console.log(error))
     }
 
+    getStateName() {
+        let url = window.location.href;
+        return url.slice(url.indexOf("stations/") + 30);
+    }
 
 
     render() {
@@ -81,7 +86,7 @@ class Console extends Component {
         return (
             <div>
                 <NavBar home={true} about={true} search={true} />
-                    {/* <h1>COLORADO</h1> */}
+                    <h1>{this.getStateName()}</h1>
                     {/* <div>stations cards will go here</div> */}
                 <Footer/>
             </div>

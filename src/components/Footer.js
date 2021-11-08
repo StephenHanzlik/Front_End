@@ -14,7 +14,9 @@ class Footer extends Component {
 
     render(){
         return (
-            <Foot/>
+            <Foot>
+            
+            </Foot>
         )
     }
 }

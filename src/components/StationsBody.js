@@ -336,7 +336,9 @@ class Details extends Component {
             'font-weight': '700',
             'padding': '10px',
             'margin-bottom': '0px',
-            'margin-top': '5px'
+            'margin-top': '5px',
+            'white-space': 'nowrap',
+            'overflow': 'hidden'
         }
 
         const dataStyle = {

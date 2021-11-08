@@ -37,9 +37,15 @@ const Row = styled.div`
     justify-content: center;
 `;
 
+const Column = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
 const GraphRow = styled.div`
     margin-top: 30px;
     display: flex;
+    // width: 100%;
     flex-direction: row;
     // align-items: center;
     justify-content: center;
@@ -324,6 +330,25 @@ class Details extends Component {
             'cursor': 'pointer'
         }
 
+        const dataTypeStyle = {
+            'color': '#293d52',
+            'font-size': '1rem',
+            'font-weight': '700',
+            'padding': '10px',
+            'margin-bottom': '0px',
+            'margin-top': '5px'
+        }
+
+        const dataStyle = {
+            'color': '#293d52',
+            'opacity': '0.8',
+            'font-size': '1rem',
+            'font-weight': '600',
+            'padding': '0px 10px 0px 10px',
+            'margin-bottom': '0px',
+            'margin-top': '0px'
+        }
+
         const showGrayedBackground = this.state.showModal ? {display: "block"} : {display: "none"};
         const showLoadingRoller = this.state.callMade ? {display: "block", width: '1200px', 'margin-top': '110px', 'margin-right': 'auto', 'margin-left': 'auto'} : {display: "none"};
 
@@ -337,37 +362,131 @@ class Details extends Component {
             currentObservation = observations[this.state.currentObservationIndex];
         }
 
+        // todo: duplicate of above.  Remove above code once refs to currentObservation are removed
+        let latestObservation;
+        // let observations = this.state.observations;
+        if (observations) {
+            latestObservation = observations[this.state.currentObservationIndex];
+            console.log("latestObservation", latestObservation)
+        }
+
+        const deviceType = this.props.deviceType;
+
+
+
         return (
-            <div>{
-                this.state && this.state.geoJson && currentObservation &&
+            // <div>{
+            //     this.state && this.state.geoJson && currentObservation &&
                 <div>
                     <NavBar home={true} map={true} about={true} search={true}/>
+                    <Row>
+                        <Column>
+                            <p style={stationNameStyle}>{this.state.stationName}</p>
+                            <p style={stationElevationStyle}>{this.state.stationElevation}ft</p>
+                            <Row>
+                            <div onClick={() => this.previousObservation("test value 1")}>
+                                <ArrowButton leftArrow={true} />
+                            </div>
+                            {currentObservation &&
+                                <p style={dateStyle}>{currentObservation.date}</p>
+                            }
+                            <div onClick={() => this.nextObservation("test value 2")}>
+                                <ArrowButton rightArrow={true} />
+                            </div>
+                            </Row>
+                        </Column>
+                    </Row>
+                    <Row>
+                        <Column>
+                            <p style={dataTypeStyle}>Depth</p> 
+                            {latestObservation &&
+                            <p style={dataStyle}>{latestObservation.snowDepth}"</p>
+                            }
+                           </Column>
+                         <Column>
+                            <p style={dataTypeStyle}>24hr Δ</p> 
+                            {latestObservation &&
+                            <p style={dataStyle}>{latestObservation.changeInSnowDepth}"</p>
+                            }
+                        </Column>
+                        <Column>
+                            <p style={dataTypeStyle}>SW Equiv</p>
+                            {latestObservation &&
+                            <p style={dataStyle}>{latestObservation.snowWaterEquivalent}"</p>
+                            }           
+                         </Column> 
+                         <Column>
+                            <p style={dataTypeStyle}>Temp</p> 
+                            {latestObservation &&
+                            <p style={dataStyle}>{latestObservation.airTemperatureObserved}°F</p>
+                            }
+                         </Column> 
+                         <Column>
+                            <p style={dataTypeStyle}>Temp Max</p> 
+                            {latestObservation &&
+                            <p style={dataStyle}>{latestObservation.airTemperatureMax}°F</p>
+                            }
+                         </Column>
+                         <Column>
+                            <p style={dataTypeStyle}>Temp Min</p> 
+                            {latestObservation &&
+                            <p style={dataStyle}>{latestObservation.airTemperatureMin}°F</p>
+                            }
+                         </Column>
+                         <Column>
+                            <p style={dataTypeStyle}>Temp Avg</p> 
+                            {latestObservation &&
+                            <p style={dataStyle}>{latestObservation.airTemperatureAverage}°F</p>
+                            }
+                         </Column> 
+                    </Row>
+                    <GraphRow showGraph={this.state.callMade}>
+                        {this.state.graphs && this.state.observations &&
+                        this.state.graphs.map(graph =>(
+                            <Graph
+                                graphType={graph.graphType}
+                                observations={graph.observations}
+                                stationName={graph.stationName}
+                                fixedOrDynamic={graph.fixedOrDynamic}
+                                deviceType={deviceType}
+                            />  
+                        ))
+                        }
+                    </GraphRow>
+                    <div style={showLoadingRoller}>
+                        <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                    </div>
+
                     <DisplayRow>
                         <MapWrapper>
-                            <Map
-                                updateSelectedStation={this.updateSelectedStation}
-                                geoJson={this.state.geoJson}
-                                lng={this.state.lng}
-                                lat={this.state.lat}
-                                zoom={12}
-                                mapHeight={43}
-                                mapWidth={30}
-                                mapType={'details'}
-                            />
+                            {this.state.geoJson &&
+                                <Map
+                                 updateSelectedStation={this.updateSelectedStation}
+                                 geoJson={this.state.geoJson}
+                                 lng={this.state.lng}
+                                 lat={this.state.lat}
+                                 zoom={12}
+                                 mapHeight={43}
+                                 mapWidth={30}
+                                 mapType={'details'}
+                                />
+                            }
                         </MapWrapper>
-                        <DataWrapper>
+                        {/* <DataWrapper>
                                 <p style={stationNameStyle}>{this.state.stationName}</p>
                                 <p style={stationElevationStyle}>{this.state.stationElevation}ft</p>
                                 <Row>
                                     <div onClick={() => this.previousObservation("test value 1")}>
                                         <ArrowButton leftArrow={true} />
                                     </div>
-                                    <p style={dateStyle}>{currentObservation.date}</p>
+                                    {currentObservation &&
+                                        <p style={dateStyle}>{currentObservation.date}</p>
+                                    }
                                     <div onClick={() => this.nextObservation("test value 2")}>
                                         <ArrowButton rightArrow={true} />
                                     </div>
                                 </Row>
-                                {graphTypes.map(graphType => (
+                                {currentObservation && graphTypes.map(graphType => (
                                     <GraphableObservation
                                         currentObservation={currentObservation}
                                         graphType={graphType}
@@ -380,9 +499,9 @@ class Details extends Component {
                                 {/* <div onClick={()=>this.openModal()}>
                                     <Button size={"large"}  selected={true} text={"Add a graph +"}/>
                                 </div> */}
-                        </DataWrapper>
+                        {/* </DataWrapper> */} 
                     </DisplayRow>
-                    <Row>
+                    {/* <Row>
                         {this.state.stations &&
                         <Modal 
                             show={this.state.showModal}
@@ -396,10 +515,10 @@ class Details extends Component {
                             stations={this.state.stations}
                         />
                         }
-                    </Row>
+                    </Row> */}
                     <div id="grayout" style={showGrayedBackground}></div>
-                    <GraphRow showGraph={this.state.callMade}>
-                        {this.state.graphs &&
+                    {/* <GraphRow showGraph={this.state.callMade}>
+                        {this.state.graphs && this.state.observations &&
                         this.state.graphs.map(graph =>(
                             <Graph
                                 graphType={graph.graphType}
@@ -412,10 +531,10 @@ class Details extends Component {
                     </GraphRow>
                     <div style={showLoadingRoller}>
                         <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-                    </div>
+                    </div> */}
                     <Footer/>
                 </div>
-            }</div>
+            // }</div>
         )
     }
 }

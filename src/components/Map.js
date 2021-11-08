@@ -61,7 +61,7 @@ class Map extends Component {
                     markerHtml = `<p class='details-map-pop-style'>${marker.properties.title}</p><p class='details-map-pop-style'>${marker.properties.elevation}ft</p>`;
                 } else if(this.props.mapType === 'console'){
                     markerHtml = `<p class='console-map-pop-style'>${marker.properties.title}</p><p class='console-map-pop-style'>${marker.properties.elevation}ft</p>
-                    <button onClick="window.location.href = '/details/${marker.properties.triplet}';">Details</button>`
+                    <button onClick="window.location.href = '/stations/${marker.properties.triplet}';">Details</button>`
                 }
                 //TODO: might need to attach a click event and use History.pushState() to mock what Link is doing
                 //so that we can maintain state and/or use redux and reduce API calls

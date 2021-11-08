@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import NavBar from '../components/NavBar';
-import Map from '../components/Map';
-import ArrowButton from '../components/ArrowButton';
-import Button from '../components/Button';
-import Modal from '../components/Modal';
-import Graph from '../components/Graph';
+import NavBar from './NavBar';
+import Map from './Map';
+import ArrowButton from './ArrowButton';
+import Button from './Button';
+import Modal from './Modal';
+import Graph from './Graph';
 import GeoJsonFeatureCollection from '../classes/GeoJsonFeatureCollection';
 import GeoJsonFeature from '../classes/GeoJsonFeature';
 import styled from 'styled-components';
 import axios from 'axios';
-import GraphableObservation from '../components/GraphableObservation';
+import GraphableObservation from './GraphableObservation';
 
 const MapWrapper = styled.div`
     padding-right: 10px;
@@ -150,7 +150,7 @@ class Details extends Component {
     //TODO:  Impliment redux to reduce API calls
     getStationTriplet() {
         let url = window.location.href;
-        return url.slice(url.indexOf("details/") + 8);
+        return url.slice(url.indexOf("stations/") + 8);
     }
 
     getStation(triplet) {

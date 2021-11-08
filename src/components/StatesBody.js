@@ -81,8 +81,8 @@ class Console extends Component {
         return (
             <div>
                 <NavBar home={true} about={true} search={true} />
-                    <h1>COLORADO</h1>
-                    <div>stations cards will go here</div>
+                    {/* <h1>COLORADO</h1> */}
+                    {/* <div>stations cards will go here</div> */}
                 <Footer/>
             </div>
         )

@@ -221,15 +221,29 @@ class LandingBody extends Component {
                     'background-position': 'center center',
                     'box-shadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
                     'width': '250px',
-                    'height': '167px',
+                    'height': '166px',
                     'margin': '10px',
                     'border-radius': '5px', 
                     'overflow': 'hidden',
-                    'opacity': '0.7'
+                    'opacity': '0.7',
+                    'display': 'flex',
+                    'justify-content': 'center',
+                    'cursor': 'pointer'
+                };
+                const stateTextStyle = {
+                    'background': 'white',
+                    'border-radius': '2px',
+                    'height': 'min-content',
+                    'width': 'min-content',
+                    'font-size': '1.4rem',
+                    'font-weight': '500',
+                    'padding': '0px 4px',
+                    'white-space': 'nowrap',
+                    'overflow': 'hidden'
                 }
                 return(
                 <div style={backGroundImgStyle} onClick={(ev)=> window.location.href = `/states/${stateKey}`}>
-                    <h1>{stateKey}</h1>
+                    <p style={stateTextStyle}>{stateKey}</p>
                 </div>)
         })
 
@@ -255,7 +269,7 @@ class LandingBody extends Component {
                         />
                         <Ul 
                             textEntered={this.state.searchPlaceHolder} 
-                            onClick={(ev)=> window.location.href = `/details/${ev.target.id}`}
+                            onClick={(ev)=> window.location.href = `/stations/${ev.target.id}`}
                         >
                             {stationsList}
                         </Ul>

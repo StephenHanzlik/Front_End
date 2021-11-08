@@ -227,9 +227,10 @@ class LandingBody extends Component {
                     'overflow': 'hidden',
                     'opacity': '0.7'
                 }
-                return(<div style={backGroundImgStyle}>
-                        <h1>{stateKey}</h1>
-                        </div>)
+                return(
+                <div style={backGroundImgStyle} onClick={(ev)=> window.location.href = `/states/${stateKey}`}>
+                    <h1>{stateKey}</h1>
+                </div>)
         })
 
         return(
@@ -248,7 +249,6 @@ class LandingBody extends Component {
                             type="text"
                             deviceType={deviceType}
                             // textEntered={this.state.searchPlaceHolder} 
-                            // placeholder="&#128269;  " 
                             placeholder="Enter a state or SNOTEL station  &#128269;  "
                             id={"searchInput"}
                             className='input::placeholder'

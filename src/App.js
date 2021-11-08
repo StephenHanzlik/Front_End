@@ -3,6 +3,7 @@ import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import MapPage from './pages/MapPage';
+import StatesPage from './pages/StatesPage';
 import Details from './pages/Details';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={LandingPage}/>
             <Route exact path="/map" component={MapPage}/>
+            <Route path="/states" component={StatesPage}/>
             <Route path="/details" component={Details}/>
           </Switch>
         </Router>

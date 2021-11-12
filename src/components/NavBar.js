@@ -11,7 +11,7 @@ const Nav = styled.div`
 `;
 const NavHeader = styled.div`
   max-width: 95%;
-  padding: ${ props => props.isLanding ? '10px 10px' : ''};
+  padding: ${props => props.isLanding ? '10px 10px' : ''};
   width: 100%;
   display: flex;
   align-items: center;
@@ -22,16 +22,14 @@ const Input = styled.input`
     padding: 0.5em;
     margin: 0.5em;
     height: 10%;
-    width: 15%;
-    // background: ${ props => props.textEntered ? "rgba(255,239,213,0.6)" : "none" }; 
     background: #f3f2ef;
     outline: none;
     border-radius: 3px;
     margin-left: auto;
-    // margin-top: -3px;
     text-align: center;
     border: 2px solid #ffb74d !important;
 `;
+
 
 class NavBar extends Component {
 
@@ -41,14 +39,11 @@ class NavBar extends Component {
         'font-size': '20px',
         'padding': '0px 10px 0px 10px',
         'font-weight': '500',
-        'text-decoration': 'none',
-        // 'margin-right': 'auto'\
-        // 'margin-left': 'auto'
+        'text-decoration': 'none'
       }
-
         return (
             <Nav>
-            <NavHeader isLanding={this.props.isLanding}>
+            <NavHeader isLanding={this.props.isLanding} >
               {/* <Link style={linkParagraphStyle} to='/'>Home</Link> */}
               {/* {this.props.link === 'explore' && 
                 <Link style={linkParagraphStyle} to='/console'>Explore</Link>

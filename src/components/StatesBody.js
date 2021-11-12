@@ -81,11 +81,9 @@ class Console extends Component {
 
 
     render() {
-        const deviceType = this.props.deviceType;
-
         return (
             <div>
-                <NavBar home={true} about={true} search={true} />
+                <NavBar home={true} about={true} search={true}/>
                     <h1>{this.getStateName()}</h1>
                     {/* <div>stations cards will go here</div> */}
                 <Footer/>

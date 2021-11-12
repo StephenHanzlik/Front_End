@@ -15,6 +15,10 @@ import Footer from './Footer';
 
 const MapWrapper = styled.div`
     padding-right: 10px;
+    display: flex;
+    justify-content: center;
+    padding-top: 5px;
+    padding-bottom: 20px
 `;
 
 const DataWrapper = styled.div`
@@ -45,9 +49,7 @@ const Column = styled.div`
 const GraphRow = styled.div`
     margin-top: 30px;
     display: flex;
-    // width: 100%;
     flex-direction: row;
-    // align-items: center;
     justify-content: center;
     display: ${ props => props.showGraph ? 'none' : 'inline-block' };
 `
@@ -303,7 +305,6 @@ class Details extends Component {
     render() {
 
         const stationNameStyle = {
-            // 'margin': '0 0 0 0',
             'margin': '10px',
             'font-size': '30px'
         }
@@ -374,13 +375,31 @@ class Details extends Component {
 
         const deviceType = this.props.deviceType;
 
+        let mapWidth;
+        let mapHeight;
 
+        if (deviceType === 'isBigScreen') {
+            mapWidth = '58';
+            mapHeight = '58';
+        } else if (deviceType === 'isDesktopOrLaptop') {
+            mapWidth = '58';
+            mapHeight = '58';
+        } else if (deviceType === 'isTablet') {
+            mapWidth = '78';
+            mapHeight = '38';
+        } else if (deviceType === 'isMobile') {
+            mapWidth = '78';
+            mapHeight = '25';
+        } else {
+            mapWidth = '78';
+            mapHeight = '58';
+        }
 
         return (
             // <div>{
             //     this.state && this.state.geoJson && currentObservation &&
                 <div>
-                    <NavBar home={true} map={true} about={true} search={true}/>
+                    <NavBar home={true} map={true} search={true}/>
                     <Row>
                         <Column>
                             <p style={stationNameStyle}>{this.state.stationName}</p>
@@ -468,8 +487,8 @@ class Details extends Component {
                                  lng={this.state.lng}
                                  lat={this.state.lat}
                                  zoom={12}
-                                 mapHeight={43}
-                                 mapWidth={30}
+                                 mapWidth={mapWidth}
+                                 mapHeight={mapHeight}
                                  mapType={'details'}
                                 />
                             }

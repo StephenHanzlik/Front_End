@@ -176,8 +176,7 @@ class Console extends Component {
 
         const timeSelectStyle = {
             'display': 'initial',
-            'max-width': '95px',
-            // 'margin-bottom': '20px',
+            'max-width': '95px'
         }
 
         const graphContainerStyle = {

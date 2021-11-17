@@ -39,6 +39,7 @@ const Row = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+    flex-wrap: wrap;
 `;
 
 const Column = styled.div`
@@ -470,6 +471,7 @@ class Details extends Component {
                                 stationName={graph.stationName}
                                 fixedOrDynamic={graph.fixedOrDynamic}
                                 deviceType={deviceType}
+                                parent={'stations'}
                             />  
                         ))
                         }

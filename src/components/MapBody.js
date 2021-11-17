@@ -251,6 +251,7 @@ class Console extends Component {
                             graphType={'snowDepth'}
                             observations={this.state.observations}
                             deviceType={deviceType}
+                            parent={'map'}
                         />
                         {/* <SelectRelative
                             // handleRelativeTimeChange={this.handleRelativeTimeChange}

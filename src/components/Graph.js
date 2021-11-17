@@ -9,6 +9,7 @@ import ObservationDataPoint from '../classes/ObservationDataPoint';
 const GraphWrapper = styled.div`
     // width: 1200px;
     width: ${props => props.deviceType === 'isBigScreen' || props.deviceType === 'isDesktopOrLaptop' ? '80rem': '35rem'};
+    margin-left: ${props => props.deviceType === 'isBigScreen' || props.deviceType === 'isDesktopOrLaptop' ? '': '150rem'};
     height: 30vh;
     // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     // border-radius: 5px;
@@ -39,41 +40,41 @@ class Graph extends Component {
     wrapObservations() {
         let graphType = this.props.graphType;
         let observations = this.props.observations;
-        let stationName = this.props.stationName;
-        let fixedOrDynamic = this.props.fixedOrDynamic;
-        let title;
-        switch (graphType){
-            case 'snowDepth':
-                title = 'Snow Depth';
-                break;
-            case 'changeInSnowDepth':
-                title = 'Change in Snow Depth';
-                break;
-            case 'snowWaterEquivalent':
-                title = 'Snow Water Equivalent';
-                break;
-            case 'changeInSnowWaterEquivalent':
-                title = 'Change in Snow Water Equivalent';
-                break;
-            case 'airTemperatureObserved':
-                title = 'Air Temperature Observed';
-                break;
-            case 'airTemperatureAverage':
-                title = 'Air Temperature Averagre';
-                break;
-            case 'airTemperatureMax':
-                title = 'Air Temperature Max';
-                break;
-            case 'airTemperatureMin':
-                title = 'Air Temperature Min';
-                break;   
-            default:
-                title = 'Snow Depth';
-        }
-        if(stationName){
-            title = `${title} - ${stationName} - ${fixedOrDynamic}   `
-        }
-        return this.safeParseAndWrap(observations, graphType, title);
+        // let stationName = this.props.stationName;
+        // let fixedOrDynamic = this.props.fixedOrDynamic;
+        // let title;
+        // switch (graphType){
+        //     case 'snowDepth':
+        //         title = 'Snow Depth';
+        //         break;
+        //     case 'changeInSnowDepth':
+        //         title = 'Change in Snow Depth';
+        //         break;
+        //     case 'snowWaterEquivalent':
+        //         title = 'Snow Water Equivalent';
+        //         break;
+        //     case 'changeInSnowWaterEquivalent':
+        //         title = 'Change in Snow Water Equivalent';
+        //         break;
+        //     case 'airTemperatureObserved':
+        //         title = 'Air Temperature Observed';
+        //         break;
+        //     case 'airTemperatureAverage':
+        //         title = 'Air Temperature Averagre';
+        //         break;
+        //     case 'airTemperatureMax':
+        //         title = 'Air Temperature Max';
+        //         break;
+        //     case 'airTemperatureMin':
+        //         title = 'Air Temperature Min';
+        //         break;   
+        //     default:
+        //         title = 'Snow Depth';
+        // }
+        // if(stationName){
+        //     title = `${title} - ${stationName} - ${fixedOrDynamic}`
+        // }
+        return this.safeParseAndWrap(observations, graphType, 'Snow Depth');
     }
 
     getMonthName(monthNumber) {
@@ -107,7 +108,7 @@ class Graph extends Component {
         }
     }
 
-    setDeviceWidth(deviceType) {
+    setDeviceWidth(deviceType, parent) {
         let width;
         let marginLeft;
         if (deviceType === 'isBigScreen') {
@@ -119,10 +120,14 @@ class Graph extends Component {
         } else if (deviceType === 'isTablet') {
             width = '40rem';
             marginLeft = '10px';
-        } else if (deviceType === 'isMobile') {
+        } else if (deviceType === 'isMobile' && parent === 'map') {
             width = '30rem';
             marginLeft = '7%';
-        } else {
+        } else if (deviceType === 'isMobile' && parent === 'stations') {
+            width = '30rem';
+            marginLeft = '-5%';
+        } 
+        else {
             width = '30rem';
             marginLeft = '7%';
         }
@@ -133,7 +138,7 @@ class Graph extends Component {
     }
 
     render() {
-        const deviceSetting = this.setDeviceWidth(this.props.deviceType);
+        const deviceSetting = this.setDeviceWidth(this.props.deviceType, this.props.parent);
         const graphWrapperStyle = {
             'height': '30vh',
             'margin-left': deviceSetting.marginLeft,

@@ -273,8 +273,8 @@ class Console extends Component {
                     {this.state.observations.length < 1 && this.state.stationTriplet === '' && !this.state.callMade && 
                         <PolaroidContainer deviceType={deviceType}>
                             <PolaroidDiscription>
-                            <p style={paragraphCardStyle}>To get started, click on a station <img src={snowFlake} style={snowFlakeStyle} alt='snowFlake'/> to see an overview of the 
-                            snow pack depth.  Click "Details" to see all available data for the station and access advanced graphing.</p>
+                            <p style={paragraphCardStyle}>Click on a station <img src={snowFlake} style={snowFlakeStyle} alt='snowFlake'/> to see an overview of the 
+                            snow pack depth.  Click "Details" to see all available data for the station.</p>
                             </PolaroidDiscription>
                         </PolaroidContainer>
                     }

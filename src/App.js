@@ -13,8 +13,8 @@ function App() {
           <Switch>
             <Route exact path="/" component={LandingPage}/>
             <Route exact path="/map" component={MapPage}/>
-            <Route path="/states" component={StatesPage}/>
-            <Route path="/stations" component={StationsPage}/>
+            <Route path="/states/*" component={StatesPage}/>
+            <Route path="/stations/*" component={StationsPage}/>
           </Switch>
         </Router>
       </div>

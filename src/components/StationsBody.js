@@ -160,7 +160,7 @@ class Details extends Component {
     //TODO:  Impliment redux to reduce API calls
     getStationTriplet() {
         let url = window.location.href;
-        return url.slice(url.indexOf("stations/") + 8);
+        return url.slice(url.indexOf("stations/") + 9);
     }
 
     getStation(triplet) {

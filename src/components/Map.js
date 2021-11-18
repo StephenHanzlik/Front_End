@@ -74,6 +74,8 @@ class Map extends Component {
                 markers.push(aMarker);
             });
         })
+        // Add zoom and rotation controls to the map.
+        map.addControl(new mapboxgl.NavigationControl());
     }
 
     render() {

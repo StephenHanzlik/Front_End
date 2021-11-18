@@ -19,6 +19,7 @@ const MapWrapper = styled.div`
 const GraphWrapper = styled.div`
     display: flex;
     justify-content: center;
+    overflow: hidden;
 `;
 
 const PolaroidContainer = styled.div`

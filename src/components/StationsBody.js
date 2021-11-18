@@ -52,6 +52,8 @@ const GraphRow = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+    overflow: hidden;
+    width: 100%;
     display: ${ props => props.showGraph ? 'none' : 'inline-block' };
 `
 

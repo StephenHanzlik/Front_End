@@ -122,10 +122,10 @@ class Graph extends Component {
             marginLeft = '10px';
         } else if (deviceType === 'isMobile' && parent === 'map') {
             width = '30rem';
-            marginLeft = '7%';
+            marginLeft = '8rem';
         } else if (deviceType === 'isMobile' && parent === 'stations') {
             width = '30rem';
-            marginLeft = '-5%';
+            marginLeft = '-1rem';
         } 
         else {
             width = '30rem';

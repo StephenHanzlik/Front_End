@@ -110,39 +110,48 @@ class Graph extends Component {
 
     setDeviceWidth(deviceType, parent) {
         let width;
-        let marginLeft;
+        let height;
+        let paddingLeft;
         if (deviceType === 'isBigScreen') {
             width = '60rem';
-            marginLeft = '10px';
+            height = '30vh';
+            paddingLeft = '45px';
         } else if (deviceType === 'isDesktopOrLaptop') {
-            width = '60rem';
-            marginLeft = '10px';
+            width = '54rem';
+            height = '30vh';
+            paddingLeft = '42px';
         } else if (deviceType === 'isTablet') {
-            width = '40rem';
-            marginLeft = '10px';
+            width = '42rem';
+            height = '25vh';
+            paddingLeft = '0px';
         } else if (deviceType === 'isMobile' && parent === 'map') {
             width = '30rem';
-            marginLeft = '8rem';
+            height = '30vh';
+            paddingLeft = '54px';
         } else if (deviceType === 'isMobile' && parent === 'stations') {
-            width = '30rem';
-            marginLeft = '-1rem';
+            width = '28rem';
+            height = '30vh';
+            paddingLeft = '0px';
         } 
         else {
             width = '30rem';
-            marginLeft = '7%';
+            height = '30vh';
         }
         return { 
             'width': width,
-            'marginLeft': marginLeft
+            'height': height,
+            'paddingLeft': paddingLeft
         }
     }
 
     render() {
         const deviceSetting = this.setDeviceWidth(this.props.deviceType, this.props.parent);
         const graphWrapperStyle = {
-            'height': '30vh',
-            'margin-left': deviceSetting.marginLeft,
-            'width': deviceSetting.width
+            'height': deviceSetting.height,
+            'margin-left': 'auto',
+            'margin-right': 'auto',
+            'width': deviceSetting.width,
+            'padding-left': deviceSetting.paddingLeft
         }
         return (
             // <GraphWrapper>

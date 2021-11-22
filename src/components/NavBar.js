@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
 
 const Nav = styled.div`
   // background: #3076AA; //blue from sky
@@ -30,8 +31,61 @@ const Input = styled.input`
     border: 2px solid #ffb74d !important;
 `;
 
+const Ul = styled.ul`
+    list-style-type: none;
+    // display: ${ props => props.textEntered ? "block" : "none" }; 
+    display: "block";
+    // background: ${ props => props.textEntered ? "rgba(255,239,213,0.6)" : "none" }; 
+    background: #f3f2ef;
+    height: 27%;
+    width: 27%;
+    margin-top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding-left: 2%;
+    padding-right: 2%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 26vh;
+    cursor: pointer;
+    border-radius: 3px;
+`
 
 class NavBar extends Component {
+
+    constructor(props) {
+      super(props);
+      this.state = { 
+          searchPlaceHolder: false, 
+          searchText: '',
+          stations: []
+      }
+      this.handleSearchChange = this.handleSearchChange.bind(this);
+    }
+
+    componentDidMount() {
+      this.getStations();
+    }
+
+    handleSearchChange(ev) {
+      this.setState({ 
+          searchPlaceHolder: true,
+          searchText: ev.target.value 
+      }); 
+    };
+
+    getStations() {
+      axios.get('/api/snotel/stations')
+          .then(response => {
+              let tempStations = response.data;
+              console.log("Landing Page - GET Stations Response", tempStations);
+              this.setState({
+                  stations: tempStations
+              })
+          })
+          .catch(error => console.log(error))
+  }
 
     render(){
       const linkParagraphStyle = {
@@ -41,6 +95,11 @@ class NavBar extends Component {
         'font-weight': '500',
         'text-decoration': 'none'
       }
+
+      const stationsList = this.state.stations
+      .filter(station => station.name.includes(this.state.searchText.toUpperCase()))
+      .map((station, index) => <li key={index} id={station.triplet}>{station.name}</li>);
+
         return (
             <Nav>
             <NavHeader isLanding={this.props.isLanding} >
@@ -58,16 +117,24 @@ class NavBar extends Component {
                 <Link style={linkParagraphStyle} to='/about'>About</Link>
               }
               {this.props.search &&
-                <Input 
-                //  onChange={this.handleSearchChange} 
-                //  onSelect={this.handleSearchChange} 
-                //  value={this.state.textEntered} 
-                 type="text"
-                //  textEntered={this.state.searchPlaceHolder} 
-                 placeholder="Search by station name &#128269;  " 
-                 id={"searchInput"}
-                 className='input::placeholder'
-                />                
+                <div>
+                  <Input 
+                  onChange={this.handleSearchChange} 
+                  value={this.state.textEntered} 
+                  type="text"
+                  //  textEntered={this.state.searchPlaceHolder} 
+                  placeholder="Search by station name &#128269;  " 
+                  id={"searchInput"}
+                  className='input::placeholder'
+                  /> 
+                  <Ul 
+                  textEntered={this.state.searchPlaceHolder} 
+                  onClick={(ev)=> window.location.href = `/stations/${ev.target.id}`}
+                  >
+                  {stationsList}
+                  </Ul>    
+                </div>
+           
               }
               
             </NavHeader>

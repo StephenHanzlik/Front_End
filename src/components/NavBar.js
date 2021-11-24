@@ -33,12 +33,11 @@ const Input = styled.input`
 
 const Ul = styled.ul`
     list-style-type: none;
-    // display: ${ props => props.textEntered ? "block" : "none" }; 
-    display: "block";
+    display: ${ props => props.textEntered ? "block" : "none" }; 
     // background: ${ props => props.textEntered ? "rgba(255,239,213,0.6)" : "none" }; 
-    background: #f3f2ef;
+    background: #ffffff;
     height: 27%;
-    width: 27%;
+    width: 87%;
     margin-top: 0px;
     margin-left: auto;
     margin-right: auto;
@@ -88,13 +87,21 @@ class NavBar extends Component {
   }
 
     render(){
+      const isLanding = this.props.isLanding;
       const linkParagraphStyle = {
         'color': '#ffb74d',
         'font-size': '20px',
         'padding': '0px 10px 0px 10px',
         'font-weight': '500',
-        'text-decoration': 'none'
-      }
+        'text-decoration': 'none',
+        'align-self': 'flex-start',
+        'margin-top': isLanding ? '0px' : '10px'
+      };
+
+      const searchContainerStyle = {
+        'margin-left': 'auto',
+        'z-index': '99'
+      };
 
       const stationsList = this.state.stations
       .filter(station => station.name.includes(this.state.searchText.toUpperCase()))
@@ -102,7 +109,7 @@ class NavBar extends Component {
 
         return (
             <Nav>
-            <NavHeader isLanding={this.props.isLanding} >
+            <NavHeader isLanding={isLanding} >
               {/* <Link style={linkParagraphStyle} to='/'>Home</Link> */}
               {/* {this.props.link === 'explore' && 
                 <Link style={linkParagraphStyle} to='/console'>Explore</Link>
@@ -117,7 +124,7 @@ class NavBar extends Component {
                 <Link style={linkParagraphStyle} to='/about'>About</Link>
               }
               {this.props.search &&
-                <div>
+                <div style={searchContainerStyle}>
                   <Input 
                   onChange={this.handleSearchChange} 
                   value={this.state.textEntered} 

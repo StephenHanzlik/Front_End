@@ -73,10 +73,11 @@ class Details extends Component {
             graphs: [],
             startDate: "",
             endDate: "",
-            defaultRelativeTime: 5184000000,//60 days
+            defaultRelativeTime: 2592000000,//60 days
             showModal: false,
             callMade: false,
-            stations: undefined
+            stations: undefined,
+            relativeTime: 2592000000
         };
         // this.toggleGraph = this.toggleGraph.bind(this);
         this.openModal = this.openModal.bind(this);
@@ -87,6 +88,8 @@ class Details extends Component {
         this.getDefaultObservations = this.getDefaultObservations.bind(this);
         this.buildGraph = this.buildGraph.bind(this);
         this.updateDynamicGraphs = this.updateDynamicGraphs.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleRelativeTimeChange = this.handleRelativeTimeChange.bind(this);
     }
 
     componentDidMount() {
@@ -103,7 +106,7 @@ class Details extends Component {
 
     getDefaultObservations(triplet) {
         let endDate = Date.now();
-        let startDate = endDate - this.state.defaultRelativeTime;//60 days
+        let startDate = endDate - this.state.relativeTime;//60 days
         
         //format the dates for the query params
         endDate = new Date(endDate).toJSON().slice(0, 10)
@@ -191,6 +194,11 @@ class Details extends Component {
                 })
             })
             .catch(error => console.log(error))
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        this.getDefaultObservations(this.state.stationTriplet);
     }
 
     getObservations(epochStart, epochEnd, triplet = this.state.stationTriplet, graphType, fixedOrDynamic, stationName) {
@@ -284,6 +292,12 @@ class Details extends Component {
         }
     }
 
+    handleRelativeTimeChange(event) { 
+        this.setState({
+            relativeTime: event.target.value
+        })
+    }
+
     // toggleGraph(graphType) {
     //     let tempGraphs = this.state.graphs;
     //     let index = tempGraphs.indexOf(graphType);
@@ -353,6 +367,11 @@ class Details extends Component {
             'padding': '0px 10px 0px 10px',
             'margin-bottom': '0px',
             'margin-top': '0px'
+        }
+
+        const timeSelectStyle = {
+            'display': 'initial',
+            'max-width': '95px'
         }
 
         const showGrayedBackground = this.state.showModal ? {display: "block"} : {display: "none"};
@@ -477,6 +496,16 @@ class Details extends Component {
                             />  
                         ))
                         }
+                        <form onSubmit={this.handleSubmit}>
+                            <select style={timeSelectStyle} name={'selectRelativeTimeInterval'} value={this.state.relativeTime} onChange={this.handleRelativeTimeChange}>
+                                <option value="604800000">7 days</option>
+                                <option value="2592000000">30 days</option>
+                                <option value="5184000000">60 days</option>
+                                <option value="7776000000">90 days</option>
+                                <option value="31536000000">365 days</option>
+                            </select>
+                            <input type="submit" value="Submit" />
+                        </form>
                     </GraphRow>
                     <div style={showLoadingRoller}>
                         <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>

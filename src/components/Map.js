@@ -39,9 +39,8 @@ class Map extends Component {
             this.props.geoJson.data.features.forEach((marker) => {
 
                 let el = document.createElement('div');
-                // el.style.backgroundImage = 'url(https://i.ibb.co/WvGxZpY/snowflake-1.jpg)';https://ibb.co/Jckx6G5
-                el.style.backgroundImage = 'url(https://i.ibb.co/wd6JGPM/snowflake-1-2.jpg)';
-                el.style.width = '27px';
+                el.style.backgroundImage = 'url(https://i.ibb.co/VNWxS6d/map-icon-flake.jpg)';
+                el.style.width = '27px';    
                 el.style.height = '26px';
                 el.style.cursor = 'pointer';
                 el.style.borderRadius = '50%'

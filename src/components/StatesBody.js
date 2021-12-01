@@ -6,6 +6,7 @@ import axios from 'axios';
 
 
 const Ul = styled.ul`
+    list-style-type: none;
 `
 
 class Console extends Component {
@@ -95,7 +96,7 @@ class Console extends Component {
 
 
     render() {
-        const stations = this.state.stations.map((station, index) => <li key={index} id={station.triplet}>{station.name} - {station.elevation}</li>);
+        const stations = this.state.stations.map((station, index) => <li key={index} id={station.triplet}>{station.name} - {station.elevation}ft</li>);
 
         return (
             <div>

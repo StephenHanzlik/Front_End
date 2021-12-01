@@ -7,7 +7,14 @@ import axios from 'axios';
 
 const Ul = styled.ul`
     list-style-type: none;
+    cursor: pointer;
 `
+
+const Row = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+`;
 
 class Console extends Component {
 
@@ -28,7 +35,7 @@ class Console extends Component {
     }
 
     getStations() {
-        axios.get(`/api/snotel/stations/${this.getStateAbbrev()}`)
+        axios.get(`/api/snotel/stations/state/${this.getStateAbbrev()}`)
             .then(response => {
                 console.log("response.data", response.data)
                 this.setState({
@@ -92,18 +99,35 @@ class Console extends Component {
         return stateName;
     }
 
-
-
-
     render() {
-        const stations = this.state.stations.map((station, index) => <li key={index} id={station.triplet}>{station.name} - {station.elevation}ft</li>);
+        const stationNameStyle = {
+            "color": "#293d52",
+            'margin-top': '0px',
+            'margin-bottom': '0px'
+        };
+        const stationElevationStyle = {
+            "color": "#516171",
+            'margin-top': '0px',
+            'margin-bottom': '0px'
+        };
+        
+        const stations = this.state.stations.map((station, index) => <li key={index} id={station.triplet}>
+            <Row id={station.triplet}>
+                <p id={station.triplet} style={stationNameStyle}>{station.name} -</p> 
+                <p id={station.triplet} style={stationElevationStyle}>{station.elevation}ft</p>
+            </Row>    
+            </li>);
 
         return (
             <div>
                 <NavBar home={true} about={true} search={true}/>
                     <h1>{this.getStateName()}</h1>
                     <div>
-                        <Ul>{stations}</Ul>
+                        <Ul
+                        onClick={(ev)=> window.location.href = `/stations/${ev.target.id}`}
+                        >
+                        {stations}
+                        </Ul>
                     </div>
                 <Footer/>
             </div>

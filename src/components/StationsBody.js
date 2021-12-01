@@ -170,7 +170,7 @@ class Details extends Component {
     }
 
     getStation(triplet) {
-        axios.get(`/api/snotel/stations/${triplet}`)
+        axios.get(`/api/snotel/stations/triplet/${triplet}`)
             .then(response => {
                 let observation = response.data[0];
                 this.setState({

@@ -15,8 +15,11 @@ class Console extends Component {
         this.state = {
             stations: []
         };
+        this.stateName = undefined;
+        this.stateAbbrev = undefined;
         this.getStations = this.getStations.bind(this);
         this.getStateName = this.getStateName.bind(this);
+        this.getStateAbbrev = this.getStateAbbrev.bind(this);
     }
 
     componentDidMount() {
@@ -24,7 +27,7 @@ class Console extends Component {
     }
 
     getStations() {
-        axios.get('/api/snotel/stations')
+        axios.get(`/api/snotel/stations/${this.getStateAbbrev()}`)
             .then(response => {
                 console.log("response.data", response.data)
                 this.setState({
@@ -34,10 +37,61 @@ class Console extends Component {
             .catch(error => console.log(error))
     }
 
-    getStateName() {
-        let url = window.location.href;
-        return url.slice(url.indexOf("stations/") + 30);
+    getStateAbbrev() {
+        const url = window.location.href;
+        return url.slice(url.indexOf("states/") + 7);
     }
+
+    getStateName() {
+        const stateAbbrev = this.getStateAbbrev();
+        let stateName;
+        switch (stateAbbrev) {
+            case "co":
+                stateName = "Colorado";
+                break;
+            case "ca":
+                stateName = "California";
+                break;
+            case "ut":
+                stateName = "Utah";
+                break;
+            case "wa":
+                stateName = "Washington";
+                break;
+            case "or":
+                stateName = "Oregon";
+                break;
+            case "mt":
+                stateName = "Montana";
+                break;
+            case "nm":
+                stateName = "New Mexico";
+                break;
+            case "wy":
+                stateName = "Wyoming";
+                break;
+            case "ak":
+                stateName = "Alaska";
+                break;
+            case "id":
+                stateName = "Idaho";
+                break;
+            case "az":
+                stateName = "Arizona";
+                break;
+            case "nv":
+                stateName = "Nevada";
+                break;
+            case "sd":
+                stateName = "South Dakota";
+                break;
+            default:
+                break;
+        };
+        return stateName;
+    }
+
+
 
 
     render() {

@@ -214,6 +214,50 @@ class LandingBody extends Component {
 
         const stateCards = this.generateStateCards().map((state, index) => {
                 const stateKey = Object.keys(state);
+                let stateAbbrev;
+                switch (stateKey[0]) {
+                    case "Colorado":
+                        stateAbbrev = "co";
+                        break;
+                    case "California":
+                        stateAbbrev = "ca";
+                        break;
+                    case "Utah":
+                        stateAbbrev = "ut";
+                        break;
+                    case "Washington":
+                        stateAbbrev = "wa";
+                        break;
+                    case "Oregon":
+                        stateAbbrev = "or";
+                        break;
+                    case "Montana":
+                        stateAbbrev = "mt";
+                        break;
+                    case "New Mexico":
+                        stateAbbrev = 'nm';
+                        break;
+                    case "Wyoming":
+                        stateAbbrev = "wy";
+                        break;
+                    case "Alaska":
+                        stateAbbrev = "ak";
+                        break;
+                    case "Idaho":
+                        stateAbbrev = "id";
+                        break;
+                    case "Arizona":
+                        stateAbbrev = "az";
+                        break;
+                    case "Nevada":
+                        stateAbbrev = "nv";
+                        break;
+                    case "South Dakota":
+                        stateAbbrev = "sd";
+                        break;
+                    default:
+                        break;
+                }
                 const backGroundImgStyle = {
                     'background-image': `url(${state[stateKey]})`,
                     'background-size': '100%',
@@ -242,7 +286,7 @@ class LandingBody extends Component {
                     'overflow': 'hidden'
                 }
                 return(
-                <div style={backGroundImgStyle} onClick={(ev)=> window.location.href = `/states/${stateKey}`}>
+                <div style={backGroundImgStyle} onClick={(ev)=> window.location.href = `/states/${stateAbbrev}`}>
                     <p style={stateTextStyle}>{stateKey}</p>
                 </div>)
         })

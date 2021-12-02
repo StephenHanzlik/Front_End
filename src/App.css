@@ -323,3 +323,28 @@ input::placeholder{
   font-weight: 350;
   margin-top: -44px;
 }
+
+/* card header */
+.cardHeader-isMobile {
+  font-size: 1.0rem;
+  font-weight: 450;
+  margin-top: -15px;
+}
+
+.cardHeader-isTablet {
+  font-size: 1.0rem;
+  font-weight: 450;
+  margin-top: -15px;
+}
+
+.cardHeader-isDesktopOrLaptop {
+  font-size: 1.56rem;
+  font-weight: 500;
+  margin-top: -15px;
+}
+
+.cardHeader-isBigScreen {
+  font-size: 1.56rem;
+  font-weight: 500;
+  margin-top: -15px;
+}

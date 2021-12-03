@@ -7,7 +7,6 @@ import axios from 'axios';
 
 const Ul = styled.ul`
     list-style-type: none;
-    cursor: pointer;
 `
 
 const Row = styled.div`
@@ -103,12 +102,14 @@ class Console extends Component {
         const stationNameStyle = {
             "color": "#293d52",
             'margin-top': '0px',
-            'margin-bottom': '0px'
+            'margin-bottom': '0px',
+            'cursor': 'pointer'
         };
         const stationElevationStyle = {
             "color": "#516171",
             'margin-top': '0px',
-            'margin-bottom': '0px'
+            'margin-bottom': '0px',
+            'cursor': 'pointer'
         };
         
         const stations = this.state.stations.map((station, index) => <li key={index} id={station.triplet}>

@@ -121,11 +121,13 @@ class LandingBody extends Component {
     }
 
     highLightItem(e) {
+        if(e.target.localName !== 'div') return; 
         e.stopPropagation();
-        e.target.style['margin-top'] = '-2px';
+        e.target.style['margin-top'] = '0px';
     }
 
     unHighLightItem(e) {
+        if(e.target.localName !== 'div') return; 
         e.stopPropagation();
         e.target.style['margin-top'] = '10px';
     }

@@ -120,7 +120,15 @@ class LandingBody extends Component {
         }); 
     }
 
-    
+    highLightItem(e) {
+        e.stopPropagation();
+        e.target.style['margin-top'] = '-2px';
+    }
+
+    unHighLightItem(e) {
+        e.stopPropagation();
+        e.target.style['margin-top'] = '10px';
+    }
 
     generateStateCards() {
         const states = [
@@ -222,7 +230,7 @@ class LandingBody extends Component {
                     'overflow': 'hidden'
                 }
                 return(
-                <div style={backGroundImgStyle} onClick={(ev)=> window.location.href = `/states/${stateAbbrev}`}>
+                <div style={backGroundImgStyle} onMouseEnter={this.highLightItem} onMouseLeave={this.unHighLightItem} onClick={(ev)=> window.location.href = `/states/${stateAbbrev}`}>
                     <p style={stateTextStyle}>{stateKey}</p>
                 </div>)
         })
@@ -257,7 +265,7 @@ class LandingBody extends Component {
                 </ButtonWrapper>
             </LandingHeaderContainer>
             <CardHeaderRow>
-                <p className={`cardHeader-${deviceType}`}>Select a State to see all available Stations</p>
+                <p className={`cardHeader-${deviceType}`}>Select a State to see the available Stations</p>
             </CardHeaderRow>
             <CardContainer>
                 <FlexWrapRow>

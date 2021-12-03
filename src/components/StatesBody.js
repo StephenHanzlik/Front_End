@@ -113,8 +113,8 @@ class Console extends Component {
         
         const stations = this.state.stations.map((station, index) => <li key={index} id={station.triplet}>
             <Row id={station.triplet}>
-                <p id={station.triplet} style={stationNameStyle}>{station.name} -</p> 
-                <p id={station.triplet} style={stationElevationStyle}>{station.elevation}ft</p>
+                <p id={station.triplet} onClick={(ev)=> window.location.href = `/stations/${ev.target.id}`} style={stationNameStyle}>{station.name} -</p> 
+                <p id={station.triplet} onClick={(ev)=> window.location.href = `/stations/${ev.target.id}`} style={stationElevationStyle}>{station.elevation}ft</p>
             </Row>    
             </li>);
 
@@ -123,9 +123,7 @@ class Console extends Component {
                 <NavBar home={true} about={true} search={true}/>
                     <h1>{this.getStateName()}</h1>
                     <div>
-                        <Ul
-                        onClick={(ev)=> window.location.href = `/stations/${ev.target.id}`}
-                        >
+                        <Ul>
                         {stations}
                         </Ul>
                     </div>

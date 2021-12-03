@@ -98,26 +98,36 @@ class Console extends Component {
         return stateName;
     }
 
+    highLightItem(e) {
+        // if(e.target.localName !== 'div') return; 
+        // e.stopPropagation();
+        e.target.style['color'] = '#ffb74d';
+    }
+
+    unHighLightItem(e) {
+        // if(e.target.localName !== 'div') return; 
+        // e.stopPropagation();
+        e.target.style['color'] = "#293d52";
+    }
+
     render() {
         const stationNameStyle = {
             "color": "#293d52",
-            'margin-top': '0px',
+            'margin-top': '2px',
             'margin-bottom': '0px',
             'cursor': 'pointer'
         };
         const stationElevationStyle = {
-            "color": "#516171",
-            'margin-top': '0px',
-            'margin-bottom': '0px',
-            'cursor': 'pointer'
+            "color": "#516171"
         };
         
-        const stations = this.state.stations.map((station, index) => <li key={index} id={station.triplet}>
-            <Row id={station.triplet}>
-                <p id={station.triplet} onClick={(ev)=> window.location.href = `/stations/${ev.target.id}`} style={stationNameStyle}>{station.name} -</p> 
-                <p id={station.triplet} onClick={(ev)=> window.location.href = `/stations/${ev.target.id}`} style={stationElevationStyle}>{station.elevation}ft</p>
-            </Row>    
-            </li>);
+        const stations = this.state.stations.map((station, index) => {
+            return <li key={index} id={station.triplet}>
+                        <Row id={station.triplet}>
+                            <p id={station.triplet} onMouseEnter={this.highLightItem} onMouseLeave={this.unHighLightItem} onClick={(ev)=> window.location.href=`/stations/${ev.target.id}`} style={stationNameStyle}>{station.name} - <span style={stationElevationStyle}>{station.elevation}ft</span></p> 
+                        </Row>    
+                    </li>
+        });
 
         return (
             <div>

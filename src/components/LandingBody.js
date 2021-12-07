@@ -267,7 +267,7 @@ class LandingBody extends Component {
                 </ButtonWrapper>
             </LandingHeaderContainer>
             <CardHeaderRow>
-                <p className={`cardHeader-${deviceType}`}>Select a State to see the available Stations</p>
+                <p className={`cardHeader-${deviceType}`}>Select a state to see the available stations</p>
             </CardHeaderRow>
             <CardContainer>
                 <FlexWrapRow>

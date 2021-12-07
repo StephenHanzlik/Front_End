@@ -99,14 +99,14 @@ class Console extends Component {
     }
 
     highLightItem(e) {
-        // if(e.target.localName !== 'div') return; 
-        // e.stopPropagation();
+        if(e.target.localName !== 'p') return; 
+        e.stopPropagation();
         e.target.style['color'] = '#ffb74d';
     }
 
     unHighLightItem(e) {
-        // if(e.target.localName !== 'div') return; 
-        // e.stopPropagation();
+        if(e.target.localName !== 'p') return; 
+        e.stopPropagation();
         e.target.style['color'] = "#293d52";
     }
 
@@ -117,14 +117,15 @@ class Console extends Component {
             'margin-bottom': '0px',
             'cursor': 'pointer'
         };
-        const stationElevationStyle = {
-            "color": "#516171"
-        };
+        // const stationElevationStyle = {
+        //     "color": "#516171"
+        // };
         
         const stations = this.state.stations.map((station, index) => {
             return <li key={index} id={station.triplet}>
-                        <Row id={station.triplet}>
-                            <p id={station.triplet} onMouseEnter={this.highLightItem} onMouseLeave={this.unHighLightItem} onClick={(ev)=> window.location.href=`/stations/${ev.target.id}`} style={stationNameStyle}>{station.name} - <span style={stationElevationStyle}>{station.elevation}ft</span></p> 
+                        <Row onMouseEnter={this.highLightItem} onMouseLeave={this.unHighLightItem} id={station.triplet}>
+                            <p onMouseEnter={this.highLightItem} onMouseLeave={this.unHighLightItem} onClick={(ev)=> window.location.href=`/stations/${ev.target.id}`} id={station.triplet} style={stationNameStyle}>{station.name} - {station.elevation}ft</p> 
+                            {/* <span style={stationElevationStyle}></span> */}
                         </Row>    
                     </li>
         });

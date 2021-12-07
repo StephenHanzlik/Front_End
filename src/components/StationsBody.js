@@ -54,7 +54,7 @@ const GraphRow = styled.div`
     justify-content: center;
     overflow: hidden;
     width: 100%;
-    display: ${ props => props.showGraph ? 'none' : 'inline-block' };
+    display: ${ props => props.showGraph ? 'inline-block' : 'none'};
 `
 
 class Details extends Component {
@@ -76,6 +76,7 @@ class Details extends Component {
             defaultRelativeTime: 2592000000,//60 days
             showModal: false,
             callMade: false,
+            callReturned: false,
             stations: undefined,
             relativeTime: 2592000000
         };
@@ -119,7 +120,8 @@ class Details extends Component {
                 let observations = response.data;
                 this.setState({ 
                     observations: observations,
-                    currentObservationIndex: observations.length - 1 
+                    currentObservationIndex: observations.length - 1,
+                    callReturned: true
                 }, this.buildDefaultGraphs(observations))
             })
             .catch(error => console.log(error))
@@ -375,10 +377,17 @@ class Details extends Component {
         }
 
         const showGrayedBackground = this.state.showModal ? {display: "block"} : {display: "none"};
-        const showLoadingRoller = this.state.callMade ? {display: "block", width: '1200px', 'margin-top': '110px', 'margin-right': 'auto', 'margin-left': 'auto'} : {display: "none"};
+        const showGraph = this.state.observations.length >= 1 && this.state.callReturned;
+        // const showGraph = false;
+        const showLoadingRoller = this.state.callMade && !this.state.callReturned ? {display: "block", width: '1200px', 'margin-top': '110px', 'margin-right': 'auto', 'margin-left': 'auto'} : {display: "none"};
+        // const showLoadingRoller = true ? {display: "block", width: '1200px', 'margin-top': '48px', 'height': '160px', 'margin-right': 'auto', 'margin-left': 'auto'} : {display: "none"};
 
         const graphTypes = ['snowDepth', 'changeInSnowDepth', 'snowWaterEquivalent', 'changeInSnowWaterEquivalent', 
             'airTemperatureObserved', 'airTemperatureAverage', 'airTemperatureMin', 'airTemperatureMax'];
+
+        const paragraphStyle = {
+            'font-size': '20px'
+        }
 
         let currentObservation;
         let observations = this.state.observations;
@@ -483,7 +492,7 @@ class Details extends Component {
                             }
                          </Column> 
                     </Row>
-                    <GraphRow showGraph={this.state.callMade}>
+                    <GraphRow showGraph={showGraph}>
                         {this.state.graphs && this.state.observations &&
                         this.state.graphs.map(graph =>(
                             <Graph
@@ -508,6 +517,7 @@ class Details extends Component {
                         </form>
                     </GraphRow>
                     <div style={showLoadingRoller}>
+                        <p style={paragraphStyle}>Fetching snow pack data...</p>
                         <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
                     </div>
 

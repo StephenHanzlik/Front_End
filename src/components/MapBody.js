@@ -259,7 +259,7 @@ class Console extends Component {
                             handleSubmit={this.handleSubmit}
                         /> */}
                         {/* This should probably be part of the graph component or its own componentif used on details page as well */}
-                        <form onSubmit={this.handleSubmit}>
+                        {/* <form onSubmit={this.handleSubmit}>
                             <select style={timeSelectStyle} name={'selectRelativeTimeInterval'} value={this.state.relativeTime} onChange={this.handleRelativeTimeChange}>
                                 <option value="604800000">7 days</option>
                                 <option value="2592000000">30 days</option>
@@ -268,7 +268,7 @@ class Console extends Component {
                                 <option value="31536000000">365 days</option>
                             </select>
                             <input type="submit" value="Submit" />
-                        </form>
+                        </form> */}
                     </div>
                     }
                     <div style={graphContainerStyle}>

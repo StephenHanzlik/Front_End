@@ -73,7 +73,7 @@ class Details extends Component {
             graphs: [],
             startDate: "",
             endDate: "",
-            defaultRelativeTime: 2592000000,//60 days
+            defaultRelativeTime: 2592000000,
             showModal: false,
             callMade: false,
             callReturned: false,
@@ -91,6 +91,7 @@ class Details extends Component {
         this.updateDynamicGraphs = this.updateDynamicGraphs.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleRelativeTimeChange = this.handleRelativeTimeChange.bind(this);
+        this.createTimeRangeForWinterSeason = this.createTimeRangeForWinterSeason.bind(this);
     }
 
     componentDidMount() {
@@ -105,16 +106,56 @@ class Details extends Component {
         // this.getRelativeDate();  
     }
 
-    getDefaultObservations(triplet) {
-        let endDate = Date.now();
-        let startDate = endDate - this.state.relativeTime;//60 days
-        
-        //format the dates for the query params
-        endDate = new Date(endDate).toJSON().slice(0, 10)
-        startDate = new Date(startDate).toJSON().slice(0, 10)
-        
-        console.log('Details - getDefaultObservations', `/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
+    createTimeRangeForWinterSeason() {
+        let endDate;
+        let startDate;
+        const relativeTime = this.state.relativeTime;
+        const startDateMonthAndYear = '10-15';
+        const endDateMonthAndYear = '07-30';
+        if(relativeTime.toString().startsWith("'")) {
+            switch(relativeTime) {
+                case "'21-'22":
+                    startDate = `2021-${startDateMonthAndYear}`;
+                    endDate = new Date(Date.now()).toJSON().slice(0, 10);
+                    break;
+                case "'20-'21":
+                    startDate = `2020-${startDateMonthAndYear}`;
+                    endDate = `2021-${endDateMonthAndYear}`;
+                    break;
+                case "'19-'20":
+                    startDate = `2019-${startDateMonthAndYear}`;
+                    endDate = `2020-${endDateMonthAndYear}`;
+                    break;
+                case "'18-'19":
+                    startDate = `2018-${startDateMonthAndYear}`;
+                    endDate = `2019-${endDateMonthAndYear}`;
+                    break;
+                case "'17-'18":
+                    startDate = `2017-${startDateMonthAndYear}`;
+                    endDate = `2018-${endDateMonthAndYear}`;
+                    break;
+                case "'16-'17":
+                    startDate = `2016-${startDateMonthAndYear}`;
+                    endDate = `2017-${endDateMonthAndYear}`;
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            endDate = Date.now();
+            startDate = endDate - this.state.relativeTime;
+            endDate = new Date(endDate).toJSON().slice(0, 10)
+            startDate = new Date(startDate).toJSON().slice(0, 10)
+        }
+        return {
+            startDate: startDate,
+            endDate: endDate
+        }
+    }
 
+    getDefaultObservations(triplet) {
+        const { endDate, startDate } = this.createTimeRangeForWinterSeason();
+        
         axios.get(`/api/snotel/observations/${triplet}?from=${startDate}&to=${endDate}`)
             .then(response => {
                 let observations = response.data;
@@ -512,6 +553,12 @@ class Details extends Component {
                                 <option value="5184000000">60 days</option>
                                 <option value="7776000000">90 days</option>
                                 <option value="31536000000">365 days</option>
+                                <option value="'21-'22">'21-'22</option>
+                                <option value="'20-'21">'20-'21</option>
+                                <option value="'19-'20">'19-'20</option>
+                                <option value="'18-'19">'18-'19</option>
+                                <option value="'17-'18">'17-'18</option>
+                                <option value="'16-'17">'16-'17</option>
                             </select>
                             <input type="submit" value="Submit" />
                         </form>

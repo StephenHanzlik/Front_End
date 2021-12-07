@@ -7,6 +7,7 @@ import axios from 'axios';
 
 const Ul = styled.ul`
     list-style-type: none;
+    margin-bottom: 40px;
 `
 
 const Row = styled.div`
@@ -132,7 +133,7 @@ class Console extends Component {
 
         return (
             <div>
-                <NavBar home={true} about={true} search={true}/>
+                <NavBar home={true} map={true} search={true}/>
                     <h1>{this.getStateName()}</h1>
                     <div>
                         <Ul>

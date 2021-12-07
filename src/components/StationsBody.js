@@ -110,13 +110,13 @@ class Details extends Component {
         let endDate;
         let startDate;
         const relativeTime = this.state.relativeTime;
-        const startDateMonthAndYear = '10-15';
+        const startDateMonthAndYear = '09-15';
         const endDateMonthAndYear = '07-30';
         if(relativeTime.toString().startsWith("'")) {
             switch(relativeTime) {
                 case "'21-'22":
                     startDate = `2021-${startDateMonthAndYear}`;
-                    endDate = new Date(Date.now()).toJSON().slice(0, 10);
+                    endDate = `2022-${endDateMonthAndYear}`;
                     break;
                 case "'20-'21":
                     startDate = `2020-${startDateMonthAndYear}`;

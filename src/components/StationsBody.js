@@ -493,43 +493,43 @@ class Details extends Component {
                         <Column>
                             <p style={dataTypeStyle}>Depth</p> 
                             {latestObservation &&
-                            <p style={dataStyle}>{latestObservation.snowDepth}"</p>
+                            <p style={dataStyle}>{latestObservation.snowDepth ? `${latestObservation.snowDepth}"` : "no data"}</p>
                             }
                            </Column>
                          <Column>
                             <p style={dataTypeStyle}>24hr Δ</p> 
                             {latestObservation &&
-                            <p style={dataStyle}>{latestObservation.changeInSnowDepth}"</p>
+                            <p style={dataStyle}>{latestObservation.changeInSnowDepth ? `${latestObservation.changeInSnowDepth}"` : "no data"}</p>
                             }
                         </Column>
                         <Column>
                             <p style={dataTypeStyle}>SW Equiv</p>
                             {latestObservation &&
-                            <p style={dataStyle}>{latestObservation.snowWaterEquivalent}"</p>
+                            <p style={dataStyle}>{latestObservation.snowWaterEquivalent ? `${latestObservation.snowWaterEquivalent}"` : "no data"}</p>
                             }           
                          </Column> 
                          <Column>
                             <p style={dataTypeStyle}>Temp</p> 
                             {latestObservation &&
-                            <p style={dataStyle}>{latestObservation.airTemperatureObserved}°F</p>
+                            <p style={dataStyle}>{latestObservation.airTemperatureObserved ? `${latestObservation.airTemperatureObserved}°F` : "no data"}</p>
                             }
                          </Column> 
                          <Column>
                             <p style={dataTypeStyle}>Temp Max</p> 
                             {latestObservation &&
-                            <p style={dataStyle}>{latestObservation.airTemperatureMax}°F</p>
+                            <p style={dataStyle}>{latestObservation.airTemperatureMax ? `${latestObservation.airTemperatureMax}°F` : "no data"}</p>
                             }
                          </Column>
                          <Column>
                             <p style={dataTypeStyle}>Temp Min</p> 
                             {latestObservation &&
-                            <p style={dataStyle}>{latestObservation.airTemperatureMin}°F</p>
+                            <p style={dataStyle}>{latestObservation.airTemperatureMin ?`${latestObservation.airTemperatureMin}°F` : "no data"}</p>
                             }
                          </Column>
                          <Column>
                             <p style={dataTypeStyle}>Temp Avg</p> 
                             {latestObservation &&
-                            <p style={dataStyle}>{latestObservation.airTemperatureAverage}°F</p>
+                            <p style={dataStyle}>{latestObservation.airTemperatureAverage ? `${latestObservation.airTemperatureAverage}°F` : "no data"}</p>
                             }
                          </Column> 
                     </Row>

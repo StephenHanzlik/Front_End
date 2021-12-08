@@ -233,19 +233,19 @@ class Console extends Component {
                         <Row>
                             <Column>
                                 <p style={dataTypeStyle}>Depth</p> 
-                                <p style={dataStyle}>{latestObservation.snowDepth}"</p>
+                                <p style={dataStyle}>{latestObservation.snowDepth ? `${latestObservation.snowDepth}"` : "not data"}</p>
                             </Column>
                             <Column>
                                 <p style={dataTypeStyle}>24hr Δ</p> 
-                                <p style={dataStyle}>{latestObservation.changeInSnowDepth}"</p>
+                                <p style={dataStyle}>{latestObservation.changeInSnowDepth ? `${latestObservation.changeInSnowDepth}"` : "no data"}</p>
                             </Column>
                             <Column>
                                 <p style={dataTypeStyle}>SW Equiv</p>
-                                <p style={dataStyle}>{latestObservation.snowWaterEquivalent}"</p>
+                                <p style={dataStyle}>{latestObservation.snowWaterEquivalent ? `${latestObservation.snowWaterEquivalent}"` : "no data"}</p>
                             </Column> 
                             <Column>
                                 <p style={dataTypeStyle}>Temp</p> 
-                                <p style={dataStyle}>{latestObservation.airTemperatureObserved}°F</p>
+                                <p style={dataStyle}>{latestObservation.airTemperatureObserved ? `${latestObservation.snowWaterEquivalent}°F` : "no data"}</p>
                             </Column> 
                         </Row>
                         <Graph

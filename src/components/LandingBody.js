@@ -239,7 +239,7 @@ class LandingBody extends Component {
 
         return(
         <div>
-            <NavBar map={true} about={true} isLanding={true}/>
+            <NavBar map={true} isLanding={true}/>
             <div className={`background-${deviceType}`}/>
             <LandingHeaderContainer>
               <LandingHeader deviceType={deviceType}/>

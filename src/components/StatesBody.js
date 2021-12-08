@@ -122,7 +122,19 @@ class Console extends Component {
         //     "color": "#516171"
         // };
         
-        const stations = this.state.stations.map((station, index) => {
+        const stations = this.state.stations.sort((a, b) => {
+            const nameA = a.name;
+            const nameB = b.name;
+            if (nameA < nameB) {
+                return -1;
+              }
+              if (nameA > nameB) {
+                return 1;
+              }
+            
+              // names must be equal
+              return 0;
+        }).map((station, index) => {
             return <li key={index} id={station.triplet}>
                         <Row onMouseEnter={this.highLightItem} onMouseLeave={this.unHighLightItem} id={station.triplet}>
                             <p onMouseEnter={this.highLightItem} onMouseLeave={this.unHighLightItem} onClick={(ev)=> window.location.href=`/stations/${ev.target.id}`} id={station.triplet} style={stationNameStyle}>{station.name} - {station.elevation}ft</p> 
